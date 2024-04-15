@@ -5,6 +5,7 @@ import { FC, useContext } from 'react'
 import { ThemeContext } from '../globals/theme/ThemeProvider'
 import { createPortal } from 'react-dom'
 import { Menu } from '@renderer/widgets/Menu'
+import { useAppSelector } from '../globals/redux/hooks'
 
 interface IApp {
     theme?: Theme
@@ -13,13 +14,14 @@ interface IApp {
 const App:FC<IApp> = ():JSX.Element=>{
 
     const theme = useContext(ThemeContext)
+    const isOpen = useAppSelector(state=>state.menu.isOpen)
 
     return(
         <div style={{backgroundColor: theme==='dark'? 'black': 'white'}} className={style.App}>
             <Header theme='light'/>
             {
                 createPortal(
-                    <Menu/>
+                   isOpen && <Menu/>
                     ,document.body)
             }
         </div>

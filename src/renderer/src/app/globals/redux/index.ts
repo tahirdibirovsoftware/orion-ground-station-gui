@@ -1,13 +1,11 @@
+import { configureStore } from '@reduxjs/toolkit';
+import menuReducer from '@renderer/widgets/Menu/model/menuSlice'
 
-
-import { configureStore } from '@reduxjs/toolkit'
-// ...
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    one: oneSlice.reducer,
-    two: twoSlice.reducer,
+    menu: menuReducer,
   },
-})
-export type RootState = ReturnType<typeof store.getState>
+});
 
-export default store
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
