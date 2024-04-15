@@ -1,0 +1,40 @@
+
+
+.Menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 20rem;
+    background-color: rgb(30, 30, 30);
+    color: white;
+}
+
+.close{
+    margin: 1rem;
+    cursor: pointer;
+    padding: .5rem;
+    border-radius: 50%;
+}
+
+.close:hover{
+    color: red;
+    padding: .5rem;
+    border-radius: 50%;
+}
+
+.section{
+    padding: 1rem;
+    border-top: 1px solid black;
+    width: 100%;
+    cursor: pointer;
+}
+
+.section:hover{
+    background-color: rgb(20, 20, 20);
+}
