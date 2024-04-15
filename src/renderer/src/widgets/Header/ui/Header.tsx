@@ -21,7 +21,7 @@ const Header:FC<IHeader> = ():JSX.Element => {
 
     return(
         <div style={{backgroundColor: theme==='dark'? 'black': 'white', border: theme==='dark'? '1px solid rgb(30, 30, 30)': '1px solid black'}} className={style.Header}>
-            <MenuOutlined onClick={toggle} style={{color: theme==='dark'? 'white': 'black', fontSize: '1.5rem'}}/>
+            <MenuOutlined className={style.menuButton} onClick={toggle} style={{color: theme==='dark'? 'white': 'black', fontSize: '1.5rem'}}/>
             <Logo size={2} color={theme==='dark'? 'white': 'black'}/>
             <Clock/>
         </div>
