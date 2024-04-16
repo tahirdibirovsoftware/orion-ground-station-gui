@@ -6,6 +6,7 @@ import { ThemeContext } from '../globals/theme/ThemeProvider'
 import { createPortal } from 'react-dom'
 import { Menu } from '@renderer/widgets/Menu'
 import { useAppSelector } from '../globals/redux/hooks'
+import { Mode } from '@renderer/processes/Mode/ui/Mode'
 
 interface IApp {
     theme?: Theme
@@ -19,6 +20,7 @@ const App:FC<IApp> = ():JSX.Element=>{
     return(
         <div style={{backgroundColor: theme==='dark'? 'black': 'white'}} className={style.App}>
             <Header theme='light'/>
+            <Mode></Mode>
             {
                 createPortal(
                    isOpen && <Menu/>
