@@ -11,7 +11,6 @@ const Flight = ():JSX.Element => {
             <Chart type='axes'/>
             <Chart type='descentRate'/>
             <Chart type='position'/>
-            <Chart/>
         </div>
     )
 }

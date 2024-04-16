@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartType, IChart } from '../model/types';
 
@@ -79,8 +79,10 @@ export const Chart:FC<IChart> = ({type}):JSX.Element => {
     ],
   };
 
+  const [zoom, setZoom] = useState(false)
+
   return (
-    <div className={style.Chart} style={{border: `1px solid ${theme==='dark'? 'rgb(30,30,30)': 'black'}`}}>
+    <div onClick={()=>setZoom(!zoom)} className={`${style.Chart} ${zoom && style.ZoomChart}`} style={{border: `1px solid ${theme==='dark'? 'rgb(30,30,30)': 'black'}`}}>
       <Line options={options} data={data} />
     </div>
   )
