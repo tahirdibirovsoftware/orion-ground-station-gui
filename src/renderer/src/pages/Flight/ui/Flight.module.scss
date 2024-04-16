@@ -1,8 +1,14 @@
 
 
 .Flight{
-    padding: 1rem;
-    // width: 100vw;
-    // height: 100vh;
+    padding: 3rem;
+    width: 100vw;
+    height: 100vh;
     color: white;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    align-content: flex-start;
+    align-items: start;
+    justify-content: center;
+    gap: 2rem;
 }
