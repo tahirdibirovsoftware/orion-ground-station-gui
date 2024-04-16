@@ -11,8 +11,13 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { Line } from 'react-chartjs-2';
+import { ChartType, IChart } from '../model/types';
+
+
+
+
 
 ChartJS.register(
   CategoryScale,
@@ -24,42 +29,59 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const, // Explicitly specifying the type as 'top'
-    },
-    title: {
-      display: true,
-      text: 'Monthly Average Temperature',
-    },
-  },
-};
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
-const temperatureData = [0, 2, 5, 10, 15, 20, 22];  // Example temperature data
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Temperature (°C)',
-      data: temperatureData,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    }
-  ],
-};
-
-export function Chart():JSX.Element {
+export const Chart:FC<IChart> = ({type}):JSX.Element => {
 
   const theme = useContext(ThemeContext)
 
+
+  const defineMode = ():unknown=> {
+    switch(type){
+      case 'temperature':
+        return 'T/t';
+      case 'pressure':
+        return 'P/t';
+      case 'voltage':
+        return 'V/t'
+      default:
+        return 'T/t'
+    }
+  }
+
+
+   const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const, // Explicitly specifying the type as 'top'
+      },
+      title: {
+        display: true,
+        text: defineMode(),
+      },
+    },
+  };
+  
+  const labels = [0, 2, 5, 10, 15, 20, 22];
+  
+  const temperatureData = [0, 2, 5, 10, 15, 20, 22];  // Example temperature data
+  
+   const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Temperature (°C)',
+        data: temperatureData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+
   return (
-    <div className={style.Chart} style={{border: `1px solid ${theme==='dark'? 'white': 'black'}`}}>
-      <Line options={options} data={data} />;
+    <div className={style.Chart} style={{border: `1px solid ${theme==='dark'? 'rgb(30,30,30)': 'black'}`}}>
+      <Line options={options} data={data} />
     </div>
   )
 }
