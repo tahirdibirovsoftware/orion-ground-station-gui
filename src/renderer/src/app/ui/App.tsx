@@ -14,7 +14,7 @@ interface IApp {
 
 const App:FC<IApp> = ():JSX.Element=>{
 
-    const theme = useContext(ThemeContext)
+    const [theme] = useContext(ThemeContext)
     const isOpen = useAppSelector(state=>state.menu.isOpen)
 
     return(

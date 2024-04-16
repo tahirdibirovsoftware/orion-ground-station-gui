@@ -19,16 +19,14 @@
     z-index: 2;
     position: relative;
     justify-content: center;
-    background-color: black;
     justify-self: center;
     align-self: center;
-    bottom: 2rem;
+    bottom: 3rem;
 }
 
 .overlay {
     width: 100vw;
     height: 100vh;
-    background-color: black;
     position: absolute;
     display: flex;
     justify-content: center;

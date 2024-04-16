@@ -33,7 +33,7 @@ ChartJS.register(
 
 export const Chart:FC<IChart> = ({type}):JSX.Element => {
 
-  const theme = useContext(ThemeContext)
+  const [theme] = useContext(ThemeContext)
 
 
   const defineMode = ():unknown=> {
@@ -81,8 +81,9 @@ export const Chart:FC<IChart> = ({type}):JSX.Element => {
 
   const [zoom, setZoom] = useState(false)
 
+
   return (
-    <div className={zoom ? style.overlay: ''}>
+    <div style={{backgroundColor: theme==='dark'? 'black' : 'white'}} className={zoom ? style.overlay: ''}>
     <div onClick={()=>setZoom(!zoom)} className={`${style.Chart} ${zoom && style.ZoomChart}`} style={{border: `1px solid ${theme==='dark'? 'rgb(30,30,30)': 'black'}`}}>
       <Line options={options} data={data} />
     </div>
