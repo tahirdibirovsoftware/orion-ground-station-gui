@@ -84,7 +84,7 @@ export const Chart:FC<IChart> = ({type}):JSX.Element => {
 
   return (
     <div style={{backgroundColor: theme==='dark'? 'black' : 'white'}} className={zoom ? style.overlay: ''}>
-    <div onClick={()=>setZoom(!zoom)} className={`${style.Chart} ${zoom && style.ZoomChart}`} style={{border: `1px solid ${theme==='dark'? 'rgb(30,30,30)': 'black'}`}}>
+    <div onClick={()=>setZoom(!zoom)} className={`${style.Chart} ${zoom && style.ZoomChart}`} style={{border: `1px solid ${theme==='dark'? 'rgb(30,30,30)': 'rgb(100,100,100)'}`}}>
       <Line options={options} data={data} />
     </div>
     </div>

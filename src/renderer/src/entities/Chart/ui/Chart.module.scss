@@ -1,11 +1,12 @@
 .Chart {
     display: flex;
-    width: 15rem;
-    height: 15rem;
+    width: 16rem;
+    height: 16rem;
     overflow: hidden;
     justify-content: center;
     align-items: center;
     padding: 1rem;
+    border-radius: 5px;
     cursor: pointer;
 }
 
