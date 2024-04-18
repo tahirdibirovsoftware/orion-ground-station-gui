@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react'
 import style from './Header.module.scss'
-import { Theme } from '@renderer/shared/model'
+import { Theme, themeConfig } from '@renderer/shared/model'
 import { ThemeContext } from '@renderer/app/globals/theme/ThemeProvider'
 import { MenuOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons'
 import { Logo } from '@renderer/entities/Logo'
@@ -24,7 +24,7 @@ const Header:FC<IHeader> = ():JSX.Element => {
       };
 
     return(
-        <div style={{backgroundColor: theme==='dark'? 'black': 'white', border: theme==='dark'? '1px solid rgb(30, 30, 30)': '1px solid black'}} className={style.Header}>
+        <div style={{backgroundColor: theme==='dark'? themeConfig.darkColor: themeConfig.lightColor, border: theme==='dark'? '1px solid rgb(10, 10, 10)': '1px solid black'}} className={style.Header}>
             <MenuOutlined className={style.menuButton} onClick={toggle} style={{color: theme==='dark'? 'white': 'black', fontSize: '1.5rem'}}/>
             <Logo size={2} color={theme==='dark'? 'white': 'black'}/>
             <div className={style.features}>

@@ -1,6 +1,6 @@
 import style from './app.module.scss'
 import { Header } from '@renderer/widgets/Header/ui/Header'
-import { Theme } from '@renderer/shared/model'
+import { Theme, themeConfig } from '@renderer/shared/model'
 import { FC, useContext } from 'react'
 import { ThemeContext } from '../globals/theme/ThemeProvider'
 import { createPortal } from 'react-dom'
@@ -18,7 +18,7 @@ const App:FC<IApp> = ():JSX.Element=>{
     const isOpen = useAppSelector(state=>state.menu.isOpen)
 
     return(
-        <div style={{backgroundColor: theme==='dark'? 'black': 'white'}} className={style.App}>
+        <div style={{backgroundColor: theme==='dark'? themeConfig.darkColor: themeConfig.lightColor}} className={style.App}>
             <Header theme='light'/>
             <Mode></Mode>
             {
