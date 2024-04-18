@@ -10,9 +10,6 @@
     cursor: pointer;
 }
 
-.Chart:hover {
-    border: 1px solid white;
-}
 
 .ZoomChart {
     width: 35rem;
@@ -22,7 +19,7 @@
     justify-content: center;
     justify-self: center;
     align-self: center;
-    bottom: 3rem;
+    bottom: 4rem;
 }
 
 .overlay {

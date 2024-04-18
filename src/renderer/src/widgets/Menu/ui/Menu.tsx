@@ -6,6 +6,7 @@ import { Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { ThemeContext } from '@renderer/app/globals/theme/ThemeProvider'
+import { themeConfig } from '@renderer/shared/model'
 
 const Menu = ():JSX.Element =>{
 
@@ -19,13 +20,13 @@ const Menu = ():JSX.Element =>{
 
     return(
         <div style={{
-            backgroundColor: theme==='dark'? 'rgb(30, 30, 30)': 'rgb(150, 150, 150)',
+            backgroundColor: theme==='dark'? themeConfig.darkWidget: themeConfig.lightWidget,
             color: theme==='dark' ? 'white':'black'
             }} className={style.Menu}>
             <CloseOutlined onClick={toggle} className={style.close} style={{fontSize: '1.5rem'}}/>
-            <div onClick={()=>navigate('/terminal')} className={style.section}>Terminal Mode</div>
-            <div onClick={()=>navigate('/flight')}  className={style.section} style={{borderBottom: '1px solid black'}}>Flight Mode</div>
-            <div className={style.Config}>
+            <div onClick={()=>navigate('/terminal')} className={style.section} style={{borderTop: `1px solid ${theme==='dark'? themeConfig.darkWidgetBorder : themeConfig.lightWidgetBorder}`}}>Terminal Mode</div>
+            <div onClick={()=>navigate('/flight')}  className={style.section} style={{borderTop: `1px solid ${theme==='dark'? themeConfig.darkWidgetBorder : themeConfig.lightWidgetBorder}`}}>Flight Mode</div>
+            <div className={style.Config} style={{borderTop: `1px solid ${theme==='dark'? themeConfig.darkWidgetBorder : themeConfig.lightWidgetBorder}`}}>
             <div className={style.baudRate}>
                 <span style={{ color: theme==='dark' ? 'white':'black'}}>BAUDRATE:</span>
                 <select className={style.options}>

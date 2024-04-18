@@ -14,6 +14,7 @@ import {
 import { FC, useContext, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { IChart } from '../model/types';
+import { themeConfig } from '@renderer/shared/model';
 
 
 
@@ -83,9 +84,9 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
 
 
   return (
-    <div style={{ backgroundColor: theme === 'dark' ? 'black' : 'white' }} className={zoom ? style.overlay : ''}>
-      <div onClick={() => setZoom(!zoom)} className={`${style.Chart} ${zoom && style.ZoomChart}`} style={{ border: `1px solid ${theme === 'dark' ? 'rgb(30,30,30)' : 'rgb(100,100,100)'}` }}>
-        <Line options={options} data={data} />
+    <div className={zoom ? style.overlay : ' '} style={{ background: theme === 'dark' ? themeConfig.darkColor : themeConfig.lightColor }}>
+      <div onClick={() => { setZoom(!zoom) }} className={[`${style.Chart} `, zoom ? `${style.ZoomChart}` : ''].join(' ')} style={{ backgroundColor: theme === 'dark' ? themeConfig.darkColor : themeConfig.lightColor, border: `1px solid ${theme === 'dark' ? themeConfig.lightWidgetBorder : themeConfig.darkWidgetBorder}` }}>
+        <Line onClick={(event) => event.stopPropagation()} style={{}} options={options} data={data} />
       </div>
     </div>
   )
