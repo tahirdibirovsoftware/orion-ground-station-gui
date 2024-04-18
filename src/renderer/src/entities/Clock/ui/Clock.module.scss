@@ -7,10 +7,13 @@
 .Clock{
     display: flex;
     padding: .5rem;
-    width: fit-content;
+    width: 10rem;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     align-items: center;
-    // border: 1px solid white;
+    text-align: center;
     border-radius: 3px;
     background-color: #111a2c;
 }
@@ -19,5 +22,5 @@
 .time{
     font-family: digital;
     color: white;
-    font-size: 1.5r+em;
+    font-size: 1.5rem;
 }
