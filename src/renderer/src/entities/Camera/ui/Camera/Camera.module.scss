@@ -1,0 +1,15 @@
+.Camera{
+    width: 16rem;
+    height: 16rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center
+    ;
+    border-radius: 5px;
+    background-color: rgb(30,60,60);
+}
+
+.CameraWithBorder{
+    border: 1px solid rgb(100,100,100);
+}

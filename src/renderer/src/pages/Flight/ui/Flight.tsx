@@ -1,6 +1,7 @@
 import {Chart} from '@renderer/entities/Chart/ui/Chart'
 import style from './Flight.module.scss'
-import { Camera } from '@renderer/entities/Chart/Camera/ui/Camera'
+import { Camera } from '@renderer/entities/Camera/ui/Camera/Camera'
+
 
 const Flight = ():JSX.Element => {
     return(
