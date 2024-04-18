@@ -1,5 +1,6 @@
 import {Chart} from '@renderer/entities/Chart/ui/Chart'
 import style from './Flight.module.scss'
+import { Camera } from '@renderer/entities/Chart/Camera/ui/Camera'
 
 const Flight = ():JSX.Element => {
     return(
@@ -11,6 +12,7 @@ const Flight = ():JSX.Element => {
             <Chart type='axes'/>
             <Chart type='descentRate'/>
             <Chart type='position'/>
+            <Camera/>
         </div>
     )
 }

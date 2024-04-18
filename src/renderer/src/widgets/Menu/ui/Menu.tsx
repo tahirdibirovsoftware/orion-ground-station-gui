@@ -2,7 +2,7 @@ import { CloseOutlined } from '@ant-design/icons'
 import style from './Menu.module.scss'
 import { useAppDispatch } from '@renderer/app/globals/redux/hooks'
 import { toggleMenu } from '../model/menuSlice'
-import { Button, InputNumber } from 'antd'
+import { Button, InputNumber, Select } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { ThemeContext } from '@renderer/app/globals/theme/ThemeProvider'
@@ -15,6 +15,7 @@ const Menu = ():JSX.Element =>{
     const isConnected = true
     const navigate = useNavigate()
     const [theme] = useContext(ThemeContext)
+    const baudRates = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400, 460800, 921600]
 
     return(
         <div style={{
@@ -27,11 +28,24 @@ const Menu = ():JSX.Element =>{
             <div className={style.Config}>
             <div className={style.baudRate}>
                 <span style={{ color: theme==='dark' ? 'white':'black'}}>BAUDRATE:</span>
-            <InputNumber placeholder='BAUDRATE:' className={style.NumInput} style={{backgroundColor: theme==='dark'? 'rgb(200,200,200)': 'white'}} />
+                <select className={style.options}>
+                <option className={style.cameraOption}>SELECT BAUDRATE</option>
+                {baudRates.map(baud=><option key={baud} value={baud}>{baud} baud</option>)}
+                </select>  
             </div>
             <div className={style.port}>
                 <span style={{ color: theme==='dark' ? 'white':'black'}}>PORT:</span>
-            <InputNumber placeholder='PORT:' style={{backgroundColor: theme==='dark'? 'rgb(200,200,200)': 'white'}} className={style.NumInput}/>
+                <select className={style.options}>
+                <option className={style.options}>SELECT PORT</option>
+                </select>    
+            </div>
+            
+            <div className={style.camera}>
+                <span style={{ color: theme==='dark' ? 'white':'black'}}>CAMERA:</span>
+           
+            <select className={style.options}>
+                <option className={style.cameraOption}>SELECT CAMERA</option>
+                </select>            
             </div>
             { isConnected ? <Button style={{background: 'green', color: 'white'}} type='text'>Connect</Button>: 
             <Button style={{background: 'red', color: 'white'}} type='text'>Disconnect</Button>
