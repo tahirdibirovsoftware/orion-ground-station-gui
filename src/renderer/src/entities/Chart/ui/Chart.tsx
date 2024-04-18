@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ThemeContext } from '@renderer/app/globals/theme/ThemeProvider';
 import style from './Chart.module.scss'
 
@@ -86,7 +87,8 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
   return (
     <div className={zoom ? style.overlay : ' '} style={{ background: theme === 'dark' ? themeConfig.darkColor : themeConfig.lightColor }}>
       <div onClick={() => { setZoom(!zoom) }} className={[`${style.Chart} `, zoom ? `${style.ZoomChart}` : ''].join(' ')} style={{ backgroundColor: theme === 'dark' ? themeConfig.darkColor : themeConfig.lightColor, border: `1px solid ${theme === 'dark' ? themeConfig.lightWidgetBorder : themeConfig.darkWidgetBorder}` }}>
-        <Line onClick={(event) => event.stopPropagation()} style={{}} options={options} data={data} />
+        {/* @ts-ignore */}
+        <Line onClick={(event) => event.stopPropagation()} options={options} data={data} />
       </div>
     </div>
   )
