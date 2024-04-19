@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import style from './System.module.scss'
 import { ISystemInfo } from '../model'
-import { useTerminalSkin } from '../lib'
+import { useTerminalSkin } from '@renderer/entities/Terminal/lib'
 
 const SystemInfo:FC<ISystemInfo> = ({pid, platform, arch}):JSX.Element => {
     return(
