@@ -1,9 +1,12 @@
+import { ITerminal } from '../model'
 import style from './Terminal.module.scss'
 
 
-const Termninal = ():JSX.Element=>{
+const Termninal = ({data, mode}:ITerminal):JSX.Element=>{
     return(
-        <div className={style.Terminal}></div>
+        <div className={style.Terminal}>
+
+        </div>
     )
 }
 

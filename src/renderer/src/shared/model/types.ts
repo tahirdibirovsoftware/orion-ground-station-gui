@@ -2,7 +2,7 @@ type Theme = 'dark' | 'light'
 
 export type {Theme}
 
-type SatStatus = 
+export type SatStatus = 
     0 |
     1 |
     3 |
