@@ -10,10 +10,12 @@ export const useTerminalSkin = ():Partial<React.CSSProperties | undefined> =>{
     if(theme==='dark'){
         skin.backgroundColor = themeConfig.darkWidget;
         skin.border=`1px solid ${themeConfig.lightWidgetBorder}`
+        skin.color=themeConfig.lightColor;
     }
     else{
         skin.backgroundColor = themeConfig.lightWidget;
         skin.border=`1px solid ${themeConfig.darkWidgetBorder}`
+        skin.color=themeConfig.darkColor;
     }
     return skin
 }

@@ -1,6 +1,10 @@
-
+@font-face {
+    font-family: terminal;
+    src: url('../fonts/modeseven-font/Modeseven-L3n5.ttf');
+}
 
 .Terminal{
+    font-family: terminal;
 }
 
 
@@ -12,16 +16,47 @@
     height: 15rem;
     grid-column: 1/4;
     border-radius: 5px;
-    padding: 1rem;
     overflow: scroll;
 }
+
 
 
 .tpDataPacket{
     display: flex;
     flex-direction: column;
     font-size: 1rem;
+    gap: .5rem;
+    border-top: 1px gray dashed;
+    border-bottom: 1px gray dashed;
+    padding: 1rem;
 }
-.tpData{
-    font-size: .5rem;
+
+.tpDataPacket >span{
+    font-family: terminal;
 }
+
+
+
+
+/* Width, height, and color of the scrollbar track */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
