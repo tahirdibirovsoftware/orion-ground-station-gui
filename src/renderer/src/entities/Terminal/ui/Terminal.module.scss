@@ -6,10 +6,17 @@
 .Terminal{
     font-family: terminal;
     box-shadow: 1px 1px 5px 1px rgb(20,20,20);
+    cursor: pointer;
 }
 
 
-.TerminalFull{}
+.TerminalFull{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: scroll;
+  height: 70%;
+}
 
 .TerminalPreview{
     background-color: purple;

@@ -2,7 +2,7 @@ import { Chart } from '@renderer/entities/Chart/ui/Chart'
 import style from './Flight.module.scss'
 import { Camera } from '@renderer/entities/Camera/ui/Camera/Camera'
 import { Termninal } from '@renderer/entities/Terminal/ui/Terminal'
-import { generateMockTelemetryData } from '@renderer/shared/lib/mockTelemetryGenerator'
+import { useMockDataFlow } from '@renderer/entities/Terminal/lib'
 
 
 const Flight = (): JSX.Element => {
@@ -18,7 +18,7 @@ const Flight = (): JSX.Element => {
                 <Chart type='descentRate' />
                 <Chart type='position' />
                 <Camera />
-                <Termninal data={generateMockTelemetryData()} mode='preview'/>
+                <Termninal data={useMockDataFlow()} mode='preview'/>
             </div>
         </>
     )

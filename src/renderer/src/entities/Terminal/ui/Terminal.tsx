@@ -1,15 +1,17 @@
 import { ITerminal } from '../model'
 import style from './Terminal.module.scss'
 import { useTerminalSkin } from '../lib'
+import { useTerminalSwitcher } from '../lib/useTerminalSwitcher'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 const Termninal = ({ data, mode }: ITerminal): JSX.Element => {
-
-
-    console.log(data)
+    const {pathname} = useLocation()
+    const navigate = useNavigate()
+    const switchTerminal  = (): void => useTerminalSwitcher(pathname, navigate)
 
     return (
-        <div style={useTerminalSkin()} className={`${style.Terminal} ${mode === 'preview' ? style.TerminalPreview : style.TerminalFull}`}>
+        <div onClick={()=>switchTerminal()} style={useTerminalSkin()} className={`${style.Terminal} ${mode === 'preview' ? style.TerminalPreview : style.TerminalFull}`}>
             {
                 data.map(data => (
                     <div key={data.packetNumber} className={style.tpDataPacket}>
