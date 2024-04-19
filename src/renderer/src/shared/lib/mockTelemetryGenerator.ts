@@ -30,10 +30,11 @@ export function generateMockTelemetryData(): Array<ITelemetry> {
       gps1Longitude: LONGITUDE_RANGE[0] + Math.random() * (LONGITUDE_RANGE[1] - LONGITUDE_RANGE[0]),
       gps1Altitude: Math.random() * MAX_ALTITUDE,
       pitch: Math.random() * 360 - 180, // -180 to 180 degrees
-      roll: Math.random() * 360 - 180, 
+      roll: Math.random() * 360 - 180,
+      YAW: Math.random() * 360 - 180, // -180 to 180 degrees
       iotData: Math.random() < 0.5 ? { // 50% chance of having IoT data
-        temperature: Math.random() * MAX_TEMPERATURE,
-        humidity: Math.random() * MAX_HUMIDITY 
+      temperature: Math.random() * MAX_TEMPERATURE,
+      humidity: Math.random() * MAX_HUMIDITY 
       } : 0,
       teamId: 1 // Replace with your desired team ID
     });

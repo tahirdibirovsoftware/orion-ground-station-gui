@@ -33,6 +33,7 @@ export interface ITelemetry{
     gps1Altitude: number,
     pitch: number,
     roll: number,
+    YAW: number,
     iotData: IIoTData | 0
     teamId: number
 }

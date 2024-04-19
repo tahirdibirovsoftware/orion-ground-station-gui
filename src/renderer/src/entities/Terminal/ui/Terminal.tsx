@@ -29,6 +29,7 @@ const Termninal = ({ data, mode }: ITerminal): JSX.Element => {
                         <span  >GPS 1 LONGITUDE: {data.gps1Longitude}</span>
                         <span  >PITCH: {data.pitch}</span>
                         <span >ROLL: {data.roll}</span>
+                        <span >YAW: {data.YAW}</span>
                         <span >IOT DATA: {JSON.stringify(data.iotData)}</span>
                         <span  >TEAM ID: {data.teamId}</span>
                     </div>
