@@ -1,8 +1,27 @@
 
 
-.Terminal{}
+.Terminal{
+}
 
 
 .TerminalFull{}
 
-.TerminalPreview{}
+.TerminalPreview{
+    background-color: purple;
+    width: 100%;
+    height: 15rem;
+    grid-column: 1/4;
+    border-radius: 5px;
+    padding: 1rem;
+    overflow: scroll;
+}
+
+
+.tpDataPacket{
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+}
+.tpData{
+    font-size: .5rem;
+}
