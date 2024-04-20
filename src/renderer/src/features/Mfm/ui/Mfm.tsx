@@ -1,6 +1,7 @@
 import { Button } from 'antd'
 import style from './Mfm.module.scss'
 import { useTerminalSkin } from '@renderer/entities/Terminal/lib'
+import { SendOutlined } from '@ant-design/icons'
 
 const Mfm = ():JSX.Element => {
 
@@ -20,7 +21,7 @@ const Mfm = ():JSX.Element => {
             <select style={useTerminalSkin()} className={style.Selector} name="" id="">
                  {staticValues.map(value=><option className={style.Option} key={value} value={value}>{value}</option>)}
             </select>
-            <Button style={{...useTerminalSkin(), border: 'unset', backgroundColor: 'rgb(0,160,255)', color: 'white'}}>Send</Button>
+            <Button style={{...useTerminalSkin(), border: 'unset', backgroundColor: 'rgb(0,160,255)', color: 'white'}}>SEND</Button>
         </div>
     )
 }
