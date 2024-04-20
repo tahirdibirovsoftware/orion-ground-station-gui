@@ -16,7 +16,7 @@ export function generateMockTelemetryData(): Array<ITelemetry> {
     telemetryData.push({
       packetNumber: i + 1,
       satelliteStatus: Math.floor(Math.random() * 6) as SatStatus, // Random status 0-5
-      errorCode: Math.floor(Math.random() * 100), 
+      errorCode: Math.floor(Math.random() * 31), 
       missionTime: new Date(), // Current time, adjust if needed
       pressure1: Math.random() * MAX_PRESSURE,
       pressure2: Math.random() * MAX_PRESSURE,
