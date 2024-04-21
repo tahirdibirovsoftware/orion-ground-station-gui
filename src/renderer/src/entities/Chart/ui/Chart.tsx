@@ -33,7 +33,7 @@ ChartJS.register(
 
 
 
-export const Chart: FC<IChart> = ({ type }): JSX.Element => {
+export const Chart: FC<IChart> = ({ type, mainData, optionalData }): JSX.Element => {
 
   const [theme] = useContext(ThemeContext)
 
@@ -92,17 +92,23 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
 
   const labels = [0, 2, 5, 10, 15, 20, 22];
 
-  const temperatureData = [0, 2, 5, 10, 15, 20, 22];  // Example temperature data
 
   const data = {
     labels,
     datasets: [
       {
         label: defineMode().label,
-        data: temperatureData,
+        data: mainData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      }
+      },
+      optionalData?.length ?
+      {
+        label: defineMode().label,
+        data: optionalData,
+        borderColor: 'gold',
+        backgroundColor: 'gold',
+      }: {},
     ],
   };
 
