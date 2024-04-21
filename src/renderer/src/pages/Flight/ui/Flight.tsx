@@ -15,9 +15,9 @@ const Flight = (): JSX.Element => {
                 <Chart type='temperature' />
                 <Chart type='pressure' />
                 <Chart type='voltage' />
-                <Chart type='altitude' />
-                <Chart type='axes' />
                 <Chart type='descentRate' />
+                <Chart type='position' />
+                <Chart type='position' />
                 <Chart type='position' />
                 <Camera />
                 <Termninal data={useMockDataFlow()} mode='preview'/>
