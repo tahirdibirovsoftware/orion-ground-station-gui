@@ -74,3 +74,10 @@
     cursor: pointer;
     color: gray;
 }
+
+
+.FileManager{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
