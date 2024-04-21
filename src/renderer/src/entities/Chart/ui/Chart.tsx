@@ -57,6 +57,8 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: true,
+  aspectRatio: 1,
     plugins: {
       legend: {
         position: 'top' as const, // Explicitly specifying the type as 'top'
@@ -77,7 +79,7 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
       },
       y: {
         grid: {
-          color: theme==='dark' ? 'white' : 'black' // Set y-axis grid lines to white
+          color: theme==='dark' ? 'white' : 'black', // Set y-axis grid lines to white
         },
         ticks: {
           color: theme==='dark' ? 'white' : 'black' // Set y-axis ticks to white
