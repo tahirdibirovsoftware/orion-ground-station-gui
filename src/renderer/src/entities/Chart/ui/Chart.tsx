@@ -52,6 +52,7 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
   }
 
 
+
   const options = {
     responsive: true,
     plugins: {
@@ -63,7 +64,27 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
         text: defineMode(),
       },
     },
+    scales: {
+      x: {
+        grid: {
+          color: theme==='dark' ? 'white' : 'black' // Set x-axis grid lines to white
+        },
+        ticks: {
+          color: theme==='dark' ? 'white' : 'black' // Set x-axis ticks to white
+        }
+      },
+      y: {
+        grid: {
+          color: theme==='dark' ? 'white' : 'black' // Set y-axis grid lines to white
+        },
+        ticks: {
+          color: theme==='dark' ? 'white' : 'black' // Set y-axis ticks to white
+        }
+      }
+    }
   };
+  
+
 
   const labels = [0, 2, 5, 10, 15, 20, 22];
 
