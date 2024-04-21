@@ -38,16 +38,18 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
   const [theme] = useContext(ThemeContext)
 
 
-  const defineMode = (): unknown => {
+  const defineMode = (): {text: string, label: string} => {
     switch (type) {
       case 'temperature':
-        return 'T/t';
+        return {text: 'T/t', label: 'Temperature'};
       case 'pressure':
-        return 'P/t';
+        return {text:'P/t', label: 'Pressure'};
       case 'voltage':
-        return 'V/t'
+        return {text:'V/t', label: 'Voltage'};
+      case 'descentRate':
+        return {text: 'm/s', label: 'Descent Rate'};
       default:
-        return 'T/t'
+        return {text:'', label: ''}
     }
   }
 
@@ -61,7 +63,7 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
       },
       title: {
         display: true,
-        text: defineMode(),
+        text: defineMode().text,
       },
     },
     scales: {
@@ -94,7 +96,7 @@ export const Chart: FC<IChart> = ({ type }): JSX.Element => {
     labels,
     datasets: [
       {
-        label: 'Temperature (°C)',
+        label: defineMode().label,
         data: temperatureData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
