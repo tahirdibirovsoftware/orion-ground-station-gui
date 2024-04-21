@@ -14,7 +14,7 @@ const Menu = (): JSX.Element => {
 
     const toggle = (): void => { dispatch(toggleMenu()) }
     const isConnected = true
-    const isRecoring = true
+    const isRecoring = false
     const navigate = useNavigate()
     const [theme] = useContext(ThemeContext)
     const baudRates = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400, 460800, 921600]
