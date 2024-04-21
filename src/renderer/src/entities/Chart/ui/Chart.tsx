@@ -108,7 +108,7 @@ export const Chart: FC<IChart> = ({ type, mainData, optionalData }): JSX.Element
         data: optionalData,
         borderColor: 'gold',
         backgroundColor: 'gold',
-      }: {},
+      }:{label: 'Not Provided'},
     ],
   };
 
