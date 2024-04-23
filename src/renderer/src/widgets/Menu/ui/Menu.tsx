@@ -27,8 +27,8 @@ const Menu = (): JSX.Element => {
             color: theme === 'dark' ? 'white' : 'black'
         }} className={style.Menu}>
             <CloseOutlined onClick={toggle} className={style.close} style={{ fontSize: '1.5rem' }} />
-            <div onClick={() => navigate('/terminal')} className={style.section} style={{ borderTop: `1px solid ${theme === 'dark' ? themeConfig.darkWidgetBorder : themeConfig.lightWidgetBorder}` }}>Terminal Mode</div>
-            <div onClick={() => navigate('/flight')} className={style.section} style={{ borderTop: `1px solid ${theme === 'dark' ? themeConfig.darkWidgetBorder : themeConfig.lightWidgetBorder}` }}>Flight Mode</div>
+            <div onClick={() => navigate('/terminal')} className={style.section} style={{ borderTop: `1px solid ${theme === 'dark' ? themeConfig.darkWidgetBorder : themeConfig.lightWidgetBorder}` }}>Terminal Mod</div>
+            <div onClick={() => navigate('/flight')} className={style.section} style={{ borderTop: `1px solid ${theme === 'dark' ? themeConfig.darkWidgetBorder : themeConfig.lightWidgetBorder}` }}>Uçuş Modu</div>
             <div className={style.Config} style={{ borderTop: `1px solid ${theme === 'dark' ? themeConfig.darkWidgetBorder : themeConfig.lightWidgetBorder}` }}>
                 <div className={style.baudRate}>
                     <span style={{ color: theme === 'dark' ? 'white' : 'black' }}>BAUDRATE:</span>
