@@ -3,7 +3,7 @@
 .Ias{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2,1fr);
+    // grid-template-rows: repeat(2,1fr);
     gap: .2rem;
     padding: .5rem;
     border-radius: 5px;
@@ -30,4 +30,20 @@
 }
 .bitSuccess{
     background-color: red;
+}
+
+.warnMessage{
+    padding: .3rem;
+    border: unset;
+    font-size: .8rem;
+    border-radius: 5px;
+}
+
+.errorMonitor{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    right: 0;
 }
