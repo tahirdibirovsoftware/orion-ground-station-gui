@@ -47,9 +47,9 @@ export const Chart: FC<IChart> = ({ type, mainData, optionalData }): JSX.Element
       case 'voltage':
         return {text:'V/t', label: 'Gerilim'};
       case 'descentRate':
-        return {text: 'm/s', label: 'İniş Hızı'};
+        return {text: 'm/t', label: 'İniş Hızı'};
       case 'altitude':
-        return {text: 'h', label: 'Yükseklik'}
+        return {text: 'h/t', label: 'Yükseklik'}
       default:
         return {text:'', label: ''}
     }
