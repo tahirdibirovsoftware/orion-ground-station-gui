@@ -1,13 +1,21 @@
-
+.MainContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-items: center;
+}
 
 .Flight{
     padding: 1rem;
-    width: 100vw;
-    height: 100vh;
+    width: fit-content;
+    height: fit-content;
     color: white;
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    align-content: flex-start;
+    grid-template-columns: auto auto auto auto auto auto;
+ 
     align-items: start;
     justify-content: center;
     overflow: hidden;
@@ -25,7 +33,12 @@
     gap: .5rem;
 }
 
-// .realInfo{
-//     display: flex;
-//     gap: 1rem;
-// }
+.realInfo{
+    display: flex;
+    gap: 1rem;
+}
+
+.controller{
+    display: flex;
+    gap: 1rem;
+}

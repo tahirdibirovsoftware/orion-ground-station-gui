@@ -1,4 +1,4 @@
-import { CloseOutlined, FileTextOutlined, VideoCameraAddOutlined, VideoCameraOutlined } from '@ant-design/icons'
+import { CloseOutlined, FileTextOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import style from './Menu.module.scss'
 import { useAppDispatch } from '@renderer/app/globals/redux/hooks'
 import { toggleMenu } from '../model/menuSlice'
@@ -47,6 +47,19 @@ const Menu = (): JSX.Element => {
                     <Button style={{ background: 'red', color: 'white' }} type='text'>Disconnect</Button>
                 }
 
+
+                <div className={style.port}>
+                    <span style={{ color: theme === 'dark' ? 'white' : 'black' }}>IoT PORT:</span>
+                    <select className={style.options}>
+                        <option className={style.options}>SELECT IoT PORT</option>
+                    </select>
+                </div>
+
+                {isConnected ? <Button style={{ background: 'green', color: 'white' }} type='text'>Connect IoT</Button> :
+                    <Button style={{ background: 'red', color: 'white' }} type='text'>Disconnect IoT</Button>
+                }
+
+
                 <div className={style.camera}>
                     <span style={{ color: theme === 'dark' ? 'white' : 'black' }}>CAMERA:</span>
 
@@ -58,10 +71,10 @@ const Menu = (): JSX.Element => {
                     !isRecoring ? <Button style={{ background: 'rgb(255,0,0)', color: 'rgb(255,255,255)', border: 'unset' }}>Record</Button>
                         : <Button style={{ background: 'rgb(100,100,100)', color: 'rgb(255,255,255)', border: 'unset' }}>Stop/Save</Button>
                 }
-           
-           <div className={style.FileManager}>
-            <h2 style={{...useTerminalSkin(), border: 'unset'}}>File Management</h2>
-                    <Button icon={<VideoCameraOutlined/>} type='primary'>Get Recorded Video</Button>
+
+                <div className={style.FileManager}>
+                    <h2 style={{ ...useTerminalSkin(), border: 'unset' }}>File Management</h2>
+                    <Button icon={<VideoCameraOutlined />} type='primary'>Get Recorded Video</Button>
                     <Button icon={<FileTextOutlined />} type='primary'>Get Recorded Data</Button>
                 </div>
             </div>

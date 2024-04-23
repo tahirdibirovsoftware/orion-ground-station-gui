@@ -6,8 +6,8 @@ import icon from '../../resources/icon.png?asset'
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1400,
-    height: 1000,
+    // width: 2000,
+    // height: 1000,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -17,6 +17,7 @@ function createWindow(): void {
     }
   })
 
+  mainWindow.maximize()
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
