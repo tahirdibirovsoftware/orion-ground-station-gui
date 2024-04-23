@@ -41,13 +41,15 @@ export const Chart: FC<IChart> = ({ type, mainData, optionalData }): JSX.Element
   const defineMode = (): {text: string, label: string} => {
     switch (type) {
       case 'temperature':
-        return {text: 'T/t', label: 'Temperature'};
+        return {text: 'T/t', label: 'Sıcaklık'};
       case 'pressure':
-        return {text:'P/t', label: 'Pressure'};
+        return {text:'P/t', label: 'Basınç'};
       case 'voltage':
-        return {text:'V/t', label: 'Voltage'};
+        return {text:'V/t', label: 'Gerilim'};
       case 'descentRate':
-        return {text: 'm/s', label: 'Descent Rate'};
+        return {text: 'm/s', label: 'İniş Hızı'};
+      case 'altitude':
+        return {text: 'h', label: 'Yükseklik'}
       default:
         return {text:'', label: ''}
     }

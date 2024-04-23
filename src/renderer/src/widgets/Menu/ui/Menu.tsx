@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { CloseOutlined, FileTextOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import style from './Menu.module.scss'
 import { useAppDispatch } from '@renderer/app/globals/redux/hooks'
@@ -32,18 +33,18 @@ const Menu = (): JSX.Element => {
                 <div className={style.baudRate}>
                     <span style={{ color: theme === 'dark' ? 'white' : 'black' }}>BAUDRATE:</span>
                     <select className={style.options}>
-                        <option className={style.cameraOption}>SELECT BAUDRATE</option>
+                        <option className={style.cameraOption}>BAUDRATE'i seç</option>
                         {baudRates.map(baud => <option key={baud} value={baud}>{baud} baud</option>)}
                     </select>
                 </div>
                 <div className={style.port}>
                     <span style={{ color: theme === 'dark' ? 'white' : 'black' }}>PORT:</span>
                     <select className={style.options}>
-                        <option className={style.options}>SELECT PORT</option>
+                        <option className={style.options}>PORT'u seç</option>
                     </select>
                 </div>
 
-                {isConnected ? <Button style={{ background: 'green', color: 'white' }} type='text'>Connect</Button> :
+                {isConnected ? <Button style={{ background: 'green', color: 'white' }} type='text'>Bağlan</Button> :
                     <Button style={{ background: 'red', color: 'white' }} type='text'>Disconnect</Button>
                 }
 
@@ -51,20 +52,20 @@ const Menu = (): JSX.Element => {
                 <div className={style.port}>
                     <span style={{ color: theme === 'dark' ? 'white' : 'black' }}>IoT PORT:</span>
                     <select className={style.options}>
-                        <option className={style.options}>SELECT IoT PORT</option>
+                        <option className={style.options}>IoT PORT'u SEÇ</option>
                     </select>
                 </div>
 
-                {isConnected ? <Button style={{ background: 'green', color: 'white' }} type='text'>Connect IoT</Button> :
+                {isConnected ? <Button style={{ background: 'green', color: 'white' }} type='text'>IoT'ye Bağlan</Button> :
                     <Button style={{ background: 'red', color: 'white' }} type='text'>Disconnect IoT</Button>
                 }
 
 
                 <div className={style.camera}>
-                    <span style={{ color: theme === 'dark' ? 'white' : 'black' }}>CAMERA:</span>
+                    <span style={{ color: theme === 'dark' ? 'white' : 'black' }}>KAMERA:</span>
 
                     <select className={style.options}>
-                        <option className={style.cameraOption}>SELECT CAMERA</option>
+                        <option className={style.cameraOption}>KAMERAYI SEÇ</option>
                     </select>
                 </div>
                 {
@@ -73,9 +74,9 @@ const Menu = (): JSX.Element => {
                 }
 
                 <div className={style.FileManager}>
-                    <h2 style={{ ...useTerminalSkin(), border: 'unset' }}>File Management</h2>
-                    <Button icon={<VideoCameraOutlined />} type='primary'>Get Recorded Video</Button>
-                    <Button icon={<FileTextOutlined />} type='primary'>Get Recorded Data</Button>
+                    <h2 style={{ ...useTerminalSkin(), border: 'unset' }}>Dosya yönetimi</h2>
+                    <Button icon={<VideoCameraOutlined />} type='primary'>Kaydedilmiş Videoyu Alın</Button>
+                    <Button icon={<FileTextOutlined />} type='primary'>Kayıtlı Verileri Alın</Button>
                 </div>
             </div>
 

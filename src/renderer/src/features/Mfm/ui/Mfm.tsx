@@ -20,7 +20,7 @@ const Mfm = ():JSX.Element => {
             <select style={useTerminalSkin()} className={style.Selector} name="" id="">
                  {staticValues.map(value=><option className={style.Option} key={value} value={value}>{value}</option>)}
             </select>
-            <Button style={{...useTerminalSkin(), border: 'unset', backgroundColor: 'rgb(0,160,255)', color: 'white'}}>SEND</Button>
+            <Button style={{...useTerminalSkin(), border: 'unset', backgroundColor: 'rgb(0,160,255)', color: 'white'}}>GÖNDER</Button>
         </div>
     )
 }

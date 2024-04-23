@@ -7,7 +7,7 @@ const AltitudeDiff:FC<IAltitudeDiff> = ({altitudeDifference}):JSX.Element => {
 
     return(
         <div style={useTerminalSkin()} className={style.AltitudeDiff}>
-            <span>Altitude Difference: {altitudeDifference}</span>
+            <span>İRTİFA FARKI: {altitudeDifference}</span>
         </div>
     )
     
