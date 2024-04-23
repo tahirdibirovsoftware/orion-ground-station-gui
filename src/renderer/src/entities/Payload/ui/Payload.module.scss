@@ -1,0 +1,13 @@
+.Payload{
+    display: flex;
+    width: 16rem;
+    height: 12rem;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px 1px rgb(100,100,100);
+    position: relative;
+    align-self: center;
+}

@@ -1,7 +1,6 @@
 import { Button } from 'antd'
 import style from './Mfm.module.scss'
 import { useTerminalSkin } from '@renderer/entities/Terminal/lib'
-import { SendOutlined } from '@ant-design/icons'
 
 const Mfm = ():JSX.Element => {
 

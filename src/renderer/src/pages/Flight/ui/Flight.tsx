@@ -6,6 +6,9 @@ import { useMockDataFlow } from '@renderer/entities/Terminal/lib'
 import { Ias } from '@renderer/entities/Ias/ui/Ias'
 import { Mfm } from '@renderer/features/Mfm/ui/Mfm'
 import { useEffect, useState } from 'react'
+import { ParachuteControl } from '@renderer/features/Mfm/ui/ParachuteControl'
+import { Map } from '@renderer/entities/Map'
+import { Payload } from '@renderer/entities/Payload'
 
 
 const Flight = (): JSX.Element => {
@@ -13,10 +16,16 @@ const Flight = (): JSX.Element => {
     const [pressure1Data, setPressure1Data] = useState<Array<number>>([])
     const [pressure2Data, setPressure2Data] = useState<Array<number>>([])
     const [voltageData, setVoltageData] = useState<Array<number>>([])
+    const [descentRate, setDescentRate] = useState<Array<number>>([])
+    const [altitude1, setAltitude1] = useState<Array<number>>([])
+    const [altitude2, setAltitude2] = useState<Array<number>>([])
     const mockTempData = useMockDataFlow().map(packet=>packet.temp)
     const mockPressure1Data = useMockDataFlow().map(packet=>packet.pressure1)
     const mockPressure2Data = useMockDataFlow().map(packet=>packet.pressure2)
     const mockVoltageData = useMockDataFlow().map(packet=>packet.voltageLevel)
+    const mockDescentRate = useMockDataFlow().map(packet=>packet.descentRate)
+    const mockAltitude1 = useMockDataFlow().map(packet=>packet.altitude1)
+    const mockAltitude2 = useMockDataFlow().map(packet=>packet.altitude2)
 
     useEffect(()=>{
         setInterval(()=>{
@@ -24,6 +33,9 @@ const Flight = (): JSX.Element => {
             setPressure1Data(mockPressure1Data)
             setPressure2Data(mockPressure2Data)
             setVoltageData(mockVoltageData)
+            setDescentRate(mockDescentRate)
+            setAltitude1(mockAltitude1)
+            setAltitude2(mockAltitude2)
         },1000)
     })
 
@@ -34,15 +46,18 @@ const Flight = (): JSX.Element => {
                 <Chart type='temperature' mainData={tempData}/>
                 <Chart type='pressure' mainData={pressure1Data} optionalData={pressure2Data}/>
                 <Chart type='voltage' mainData={voltageData}/>
-                <Chart type='descentRate' />
-                <Chart type='position' />
-                <Chart type='position' />
-                <Chart type='position' />
-                <Camera />
+                <Chart type='descentRate' mainData={descentRate}/>
+                <Chart type='altitude' mainData={altitude1} optionalData={altitude2}/>
+            
+                <Map/>
+                <Payload/>
+                <Camera/>
+            
                 <Termninal data={useMockDataFlow()} mode='preview'/>
                 <div className={style.flightWrapper}>
                 <Ias errorCode={useMockDataFlow()[0].errorCode}/>
                 <Mfm/>
+                <ParachuteControl/>
                 </div>
             </div>
         </>
