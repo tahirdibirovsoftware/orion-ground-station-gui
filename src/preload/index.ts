@@ -4,7 +4,10 @@ import { SerialPort } from 'serialport'
 
 // Custom APIs for renderer
 const api = {
-  getPortList: (): Promise<ReturnType<typeof SerialPort.list>>=>ipcRenderer.invoke('port-list')
+  getPortList: (): Promise<ReturnType<typeof SerialPort.list>>=>ipcRenderer.invoke('port-list'),
+  onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort.list>) => void):void => {
+    ipcRenderer.on('port-list-updated', (event, ports) => callback(ports));
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

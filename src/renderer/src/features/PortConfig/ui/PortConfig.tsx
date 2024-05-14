@@ -9,8 +9,8 @@ const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
     const [devices, setDevices] = useState<SerialPortListType>([]);
 
     useEffect(() => {
-        window.api.getPortList().then(devices => setDevices(devices));
-        
+        window.api.getPortList().then(setDevices);
+        window.api.onPortListUpdated(setDevices);
     }, []);
 
     return (

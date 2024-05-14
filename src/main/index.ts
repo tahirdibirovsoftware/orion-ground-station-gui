@@ -1,8 +1,9 @@
-import { app, shell, BrowserWindow, ipcMain, webContents } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { portlist } from './PortConfig/lib/portList'
+import udev from 'udev';
 
 function createWindow(): void {
   // Create the browser window.
@@ -37,15 +38,6 @@ function createWindow(): void {
   }
 
  
-  mainWindow.webContents.session.on('select-serial-port', (event, portlist, webContents, callback)=>{
-    mainWindow.webContents.session.on('serial-port-added',(event, port)=>{
-      console.log(port)
-      ipcMain.handle('port-list', async ()=>{
-        return await portlist()
-      })
-    })
-  })
-  
 
 }
 
@@ -73,6 +65,26 @@ app.whenReady().then(() => {
     return await portlist()
   })
 
+
+  //Start Monitor USB
+
+
+  const monitor = udev.monitor();
+  monitor.on('add', async () => {
+    const ports = await portlist();
+    BrowserWindow.getAllWindows().forEach(window => {
+      window.webContents.send('port-list-updated', ports);
+    });
+  });
+
+  monitor.on('remove', async () => {
+    const ports = await portlist();
+    BrowserWindow.getAllWindows().forEach(window => {
+      window.webContents.send('port-list-updated', ports);
+    });
+  });
+
+  //End Monitor USB
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
