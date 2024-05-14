@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { portlist } from './PortConfig/lib/portList'
 
 function createWindow(): void {
   // Create the browser window.
@@ -54,6 +55,11 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
+
+
+  ipcMain.handle('port-list', async ()=>{
+    return await portlist()
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

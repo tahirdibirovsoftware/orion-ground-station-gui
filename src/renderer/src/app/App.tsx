@@ -1,4 +1,3 @@
-// import { useEffect } from 'react';
 import { Mode } from '../processes';
 import { Header } from '../widgets/Header';
 import { Menu } from '../widgets/Menu/ui/Menu';
@@ -9,13 +8,6 @@ const App = ():JSX.Element => {
 
   const menuActive = useAppSelector(state=>state.menuReducer.isActive)
 
-  // useEffect(()=>{
-  //   window.ipcRenderer.send('hi')
-  //   window.ipcRenderer.on('hi', (event, data)=>{
-  //     console.log(data)
-  //     console.log('hey')
-  //   })
-  // },[])
 
   return(
     <div className='App'>

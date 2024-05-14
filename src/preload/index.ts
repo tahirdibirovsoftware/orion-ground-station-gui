@@ -1,8 +1,11 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { SerialPort } from 'serialport'
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+  getPortList: (): Promise<ReturnType<typeof SerialPort.list>>=>ipcRenderer.invoke('port-list')
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

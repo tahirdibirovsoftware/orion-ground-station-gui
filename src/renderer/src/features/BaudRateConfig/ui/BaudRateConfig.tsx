@@ -12,7 +12,7 @@ const BaudRateConfig:FC<IBaudRateConfig> = ({type}): JSX.Element => {
             <span>BaudRate: </span>
             <select>
                 {
-                    baudRates.map(baudRate => <option value={baudRate}>{baudRate}</option>)
+                    baudRates.map(baudRate => <option key={baudRate} value={baudRate}>{baudRate}</option>)
                 }
             </select>
 

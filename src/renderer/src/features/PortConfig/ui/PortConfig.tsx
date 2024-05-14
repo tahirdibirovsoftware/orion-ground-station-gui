@@ -1,21 +1,32 @@
-import { FC } from 'react'
-import style from './PortConfig.module.scss'
-import { IPortConfig } from '../model/types'
+import { FC, useEffect, useState } from 'react';
+import style from './PortConfig.module.scss';
+import { IPortConfig } from '../model/types';
+import { SerialPort } from 'serialport';
 
-const PortConfig:FC<IPortConfig> = ({type}):JSX.Element => {
+type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
 
-    const ports = ["/dev/ttyS0", "/dev/ttyS1", "/dev/ttyUSB0", "/dev/ttyAMA0"]
+const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
+    const [devices, setDevices] = useState<SerialPortListType>([]);
 
-    return(
+    useEffect(() => {
+        window.api.getPortList().then(devices => setDevices(devices));
+        
+    }, []);
+
+    return (
         <div className={style.Port}>
-                <span>PORT: </span>
-                 <select>
-                 {
-                    ports.map(port=><option value={port}>{port}</option>)
-                }
-                 </select>
+            <span>PORT: </span>
+            <select>
+                {Boolean(!devices.filter(device=>device.manufacturer).length) && <option>Not Connected</option>}
+                {devices.length > 0 &&
+                    devices.map(device => ( device.manufacturer &&
+                        <option key={device.path} value={device.path}>
+                            {device.manufacturer || 'Not Active'}
+                        </option> 
+                    ))}
+            </select>
         </div>
-    )
-}
+    );
+};
 
-export { PortConfig }
+export { PortConfig };
