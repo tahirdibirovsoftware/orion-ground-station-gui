@@ -1,0 +1,12 @@
+.BaudRate{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.BaudRate > select {
+    padding: .2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: unset;
+}

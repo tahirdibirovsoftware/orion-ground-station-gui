@@ -1,36 +1,22 @@
-import { FC, useContext } from 'react'
-import style from './Header.module.scss'
-import { Theme, themeConfig } from '@renderer/shared/model'
-import { ThemeContext } from '@renderer/app/globals/theme/ThemeProvider'
-import { MenuOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons'
-import { Logo } from '@renderer/entities/Logo'
-import { Clock } from '@renderer/entities/Clock'
-import { useAppDispatch } from '@renderer/app/globals/redux/hooks'
-import { toggleMenu } from '@renderer/widgets/Menu/model/menuSlice'
-import Switch from 'antd/es/switch'
+import { Logo } from '../../../entities/Logo';
+import { Timer } from '../../../entities/Timer';
+import { MenuToggler } from '../../../features/MenuToggler';
+import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import style from './Header.module.scss';
 
-interface IHeader {
-    theme?: Theme,
+const localStyles: React.CSSProperties = {
+    ...themeSetter('dark'),
+    borderTop: 'unset',
+    borderRight: 'unset',
+    borderLeft: 'unset',
 }
 
-const Header:FC<IHeader> = ():JSX.Element => {
-
-    const dispatch = useAppDispatch()
-    const [theme, setTheme] = useContext(ThemeContext)
-
-    const toggle = ():void=> {dispatch(toggleMenu())}
-    const onChange = (checked: boolean) => {
-        setTheme(theme === 'dark' ? 'light': 'dark')
-      };
-
+const Header = ():JSX.Element => {
     return(
-        <div style={{backgroundColor: theme==='dark'? themeConfig.darkColor: themeConfig.lightColor, border: theme==='dark'? '1px solid rgb(10, 10, 10)': '1px solid black'}} className={style.Header}>
-            <MenuOutlined className={style.menuButton} onClick={toggle} style={{color: theme==='dark'? 'white': 'black', fontSize: '1.5rem'}}/>
-            <Logo size={2} color={theme==='dark'? 'white': 'black'}/>
-            <div className={style.features}>
-            <Clock/>
-            <Switch style={{background: 'black'}} checkedChildren={<SunOutlined />} unCheckedChildren={<MoonOutlined />} onChange={onChange} />
-            </div>
+        <div style={localStyles} className={style.Header}>
+            <MenuToggler/>
+            <Logo size={2} title='Orion'/>
+            <Timer size={4}/>
         </div>
     )
 }

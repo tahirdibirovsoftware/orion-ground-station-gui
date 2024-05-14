@@ -1,0 +1,30 @@
+.ButtonBasic{
+    border: unset !important;
+    color: white !important;
+    outline: unset !important;
+    cursor: pointer !important;
+    padding: .8rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.ButtonConnect{
+    background-color: rgba($color: #00aa00, $alpha: 1.0);
+    @extend .ButtonBasic
+}
+
+.ButtonConnect:hover{
+    background-color: rgba($color: #00aa00, $alpha: .6) !important;
+    @extend .ButtonBasic;
+}
+
+.ButtonDisconnect{
+    background-color: rgba($color: #aa0000, $alpha: 1.0);
+    @extend .ButtonBasic
+}
+
+.ButtonDisconnect:hover{
+    background-color: rgba($color: #aa0000, $alpha: .6) !important;
+    @extend .ButtonBasic;
+}

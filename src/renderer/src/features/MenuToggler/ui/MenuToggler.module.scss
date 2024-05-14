@@ -1,0 +1,18 @@
+.MenuToggler{
+    padding: .5rem;
+    display: flex;
+    width: 3.2em;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    border-radius: .2rem;
+    cursor: pointer;
+}
+
+
+
+.Icon:hover{
+    color: red !important;
+}

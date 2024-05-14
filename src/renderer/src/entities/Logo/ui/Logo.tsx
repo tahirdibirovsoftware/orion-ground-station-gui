@@ -1,15 +1,19 @@
-import { FC } from 'react'
-import style from './Logo.module.scss'
+import { FC } from 'react';
+import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import style from './Logo.module.scss';
+import { ILogo } from '../model/types';
 
-interface ILogo {
-    size: number,
-    color: string
+const localStyles:React.CSSProperties = {
+    color: themeSetter('dark').color
 }
 
-const Logo:FC<ILogo> = ({size, color}):JSX.Element => {
+const Logo:FC<ILogo> = ({title, size}):JSX.Element => {
     return(
-            <span style={{fontSize: size+'rem', color}} className={style.text}>ORION<span>&#8482;</span></span>
+        <span style={{...localStyles, fontSize: `${size}rem`}} className={style.Logo}>
+            {title}
+            <span>&trade;</span>
+        </span>
     )
 }
 
-export {Logo}
+export {Logo};

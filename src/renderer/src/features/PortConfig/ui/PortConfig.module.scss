@@ -1,0 +1,12 @@
+.Port{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.Port > select {
+    padding: .2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: unset;
+}

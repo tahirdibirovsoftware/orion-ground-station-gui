@@ -1,0 +1,21 @@
+.App{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(50, 50, 50);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(10, 10, 10);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }

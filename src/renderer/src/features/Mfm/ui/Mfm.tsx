@@ -1,26 +1,41 @@
-import { Button } from 'antd'
-import style from './Mfm.module.scss'
-import { useTerminalSkin } from '@renderer/entities/Terminal/lib'
+import React, { useContext } from 'react';
+import style from './Mfm.module.scss';
+import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
+import { Button } from 'antd';
 
 const Mfm = ():JSX.Element => {
 
-    const staticValues = [0, 1,2,3,4,5,6,7,8,9, 'R','G','B', 'N']
+    const commands = ['N','R', 'G', 'B',0,1,2,3,4,5,6,7,8,9]
+    const {theme} = useContext(ThemeContext)
+
+    let localStyles:React.CSSProperties = {
+        ...themeSetter(theme)        
+    }
 
     return(
-        <div style={useTerminalSkin()} className={style.Mfm}>
-            <select style={useTerminalSkin()} className={style.Selector} name="" id="">
-                {staticValues.map(value=><option className={style.Option} key={value} value={value}>{value}</option>)}
+        <div style={localStyles} className={style.Mfm}>
+            <select style={localStyles}>
+                {
+                    commands.map(command=><option key={command} value={command}>{command}</option>)
+                }
             </select>
-            <select style={useTerminalSkin()} className={style.Selector} name="" id="">
-                 {staticValues.map(value=><option className={style.Option} key={value} value={value}>{value}</option>)}
+            <select style={localStyles}>
+                {
+                    commands.map(command=><option key={command} value={command}>{command}</option>)
+                }
             </select>
-            <select style={useTerminalSkin()} className={style.Selector} name="" id="">
-                {staticValues.map(value=><option className={style.Option} key={value} value={value}>{value}</option>)}
+            <select style={localStyles}>
+                {
+                    commands.map(command=><option key={command} value={command}>{command}</option>)
+                }
             </select>
-            <select style={useTerminalSkin()} className={style.Selector} name="" id="">
-                 {staticValues.map(value=><option className={style.Option} key={value} value={value}>{value}</option>)}
+            <select style={localStyles}>
+                {
+                    commands.map(command=><option key={command} value={command}>{command}</option>)
+                }
             </select>
-            <Button style={{...useTerminalSkin(), border: 'unset', backgroundColor: 'rgb(0,160,255)', color: 'white'}}>GÖNDER</Button>
+            <Button type='primary'>Send</Button>
         </div>
     )
 }

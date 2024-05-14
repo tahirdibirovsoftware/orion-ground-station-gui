@@ -1,0 +1,17 @@
+@font-face {
+    font-family: digital;
+    src: url('../fonts/digital-7-font/Digital7-rg1mL.ttf');
+}
+
+.Timer{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .2rem;
+    overflow: hidden;
+}
+
+.Timer > span{
+    font-family: digital;
+}

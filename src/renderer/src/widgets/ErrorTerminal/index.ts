@@ -1,0 +1,1 @@
+export { ErrorTerminal } from './ui/ErrorTerminal'

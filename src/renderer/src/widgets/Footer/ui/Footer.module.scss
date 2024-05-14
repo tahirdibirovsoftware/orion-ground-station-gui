@@ -1,0 +1,25 @@
+.Footer{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+.teknofestLogo{
+    width: 10rem;
+}
+
+.naaLogo{
+    padding: 1rem;
+    border-radius: 1rem;
+    font-weight: 900;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.copy{
+    font-weight: 100;
+}

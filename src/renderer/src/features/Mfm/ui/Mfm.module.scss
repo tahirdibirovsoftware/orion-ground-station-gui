@@ -1,16 +1,23 @@
-
 .Mfm{
-    padding: .4rem;
+    padding: .5rem;
+    border-radius: .3rem;
     display: flex;
-    gap: .4rem;
+    width: 98%;
+    overflow: hidden;
     justify-content: center;
-    align-items: center;
-    border-radius: 5px;
+    gap: .5rem;
 }
 
-.Selector{
-    padding: .3rem;
+.Mfm>select{
+    border-radius: .2rem;
     outline: unset;
     cursor: pointer;
-    
+}
+
+.Mfm Button{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
