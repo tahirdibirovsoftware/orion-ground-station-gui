@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, webContents } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -35,6 +35,18 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+ 
+  mainWindow.webContents.session.on('select-serial-port', (event, portlist, webContents, callback)=>{
+    mainWindow.webContents.session.on('serial-port-added',(event, port)=>{
+      console.log(port)
+      ipcMain.handle('port-list', async ()=>{
+        return await portlist()
+      })
+    })
+  })
+  
+
 }
 
 // This method will be called when Electron has finished
