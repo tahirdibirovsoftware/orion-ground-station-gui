@@ -9,14 +9,23 @@
     gap: 5%;
 }
 
-.startButton{
-    background-color: green;
+.baseButton{
     color: white;
     outline: none;
     border: unset;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+}
+
+.startButton{
+    background-color: green;
+    @extend .baseButton;
+    
 }
 .stopButton{
     background-color: red;
-    color: white;
-    border: unset
+    @extend .baseButton;
 }
