@@ -30,7 +30,7 @@ export const dataParser = (data: string, delimetr: string): ITelemetry | string 
             YAW: Number(splittedTelemetry[17]),
             LNLN: splittedTelemetry[18],
             iotData: Number(splittedTelemetry[19]),
-            teamId: Number(splittedTelemetry[30])
+            teamId: Number(splittedTelemetry[20])
     
     
         }
@@ -48,9 +48,9 @@ const flightPortStarter = (baudRate: number, path: string): void => {
     const flightPort = new SerialPort({ baudRate, path })
     const parser = flightPort.pipe(new ReadlineParser())
     parser.on('data', (data) => {
-        console.log(data)
+        console.log(dataParser(data, '*'))
     })
 
 }
 
-console.log(dataParser(mockTelemetry, '*'))
+flightPortStarter(57600, '/dev/ttyUSB0')
