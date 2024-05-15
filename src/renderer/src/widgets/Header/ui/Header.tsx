@@ -1,5 +1,5 @@
+import { DataController } from '@renderer/widgets/DataController';
 import { Logo } from '../../../entities/Logo';
-import { Timer } from '../../../entities/Timer';
 import { MenuToggler } from '../../../features/MenuToggler';
 import { themeSetter } from '../../../shared/config/theme/themeSetter';
 import style from './Header.module.scss';
@@ -16,7 +16,7 @@ const Header = ():JSX.Element => {
         <div style={localStyles} className={style.Header}>
             <MenuToggler/>
             <Logo size={2} title='Orion'/>
-            <Timer size={4}/>
+            <DataController/>
         </div>
     )
 }

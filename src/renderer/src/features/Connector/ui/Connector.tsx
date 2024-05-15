@@ -1,37 +1,46 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import style from './Connector.module.scss';
 import { IConnector } from '../model/types';
 import { Button } from 'antd';
+import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
+import { connectToFlight, connectToIoT } from '../model/connectorSlice';
 
-type ConnectionStatus = 'connected' | 'disconnected'
 
-const Connector:FC<IConnector> = ({type}):JSX.Element => {
+const Connector: FC<IConnector> = ({ type }): JSX.Element => {
 
-    const [isConnected, setIsConnected] = useState(false)
+    const dispatch = useAppDispatch()
+    const isConnected = useAppSelector(state => type === 'flight' ? state.connectorReducer.flightConnect : state.connectorReducer.iotConnect) === 'connected'
 
-    const connectionAdapter = (status: ConnectionStatus):void=>{
-        if(type==='flight'){}
-        if(type==='iot'){}
+    const connectHandler = (): void => {
+        if (type === 'flight') {
+            //Connection Logic
+            dispatch(connectToFlight('connected'))
+        }
+        else if (type === 'iot') {
+            //Connection Logic
+            dispatch(connectToIoT('connected'))
+        }
     }
 
-    const connectHandler = ():void => {
-        connectionAdapter('connected')
-        setIsConnected(true)
+    const disconnectHandler = (): void => {
+        if (type === 'flight') {
+            //Discnnection Logic
+            dispatch(connectToFlight('disconnected'))
+        }
+        else if (type === 'iot') {
+            //Disconnection Logic
+            dispatch(connectToIoT('disconnected'))
+        }
     }
 
-    const disconnectHandler = ():void => {
-        connectionAdapter('disconnected')
-        setIsConnected(false)
-    }
-
-    return(
+    return (
         <div className={style.Connector}>
             {
                 !isConnected ? <Button onClick={connectHandler} size='small' type='text' className={style.ButtonConnect}>{'Connect'.toUpperCase()}</Button> :
-                <Button onClick={disconnectHandler} size='small' type='text' className={style.ButtonDisconnect}>{'Disconnect'.toUpperCase()}</Button>
+                    <Button onClick={disconnectHandler} size='small' type='text' className={style.ButtonDisconnect}>{'Disconnect'.toUpperCase()}</Button>
             }
         </div>
     )
 }
 
-export {Connector}
+export { Connector }

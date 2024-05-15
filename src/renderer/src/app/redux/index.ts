@@ -1,14 +1,16 @@
 // src/app/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import { menuReducer } from '../../features/MenuToggler';
+import { menuReducer } from '@renderer/features/MenuToggler';
 import { portConfigReducer } from '@renderer/features/PortConfig';
 import {baudRateReducer } from '@renderer/features/BaudRateConfig';
+import { connectorReducer } from '@renderer/features/Connector';
 
 const store = configureStore({
   reducer: {
     menuReducer: menuReducer.default,
     portConfigReducer: portConfigReducer.default,
-    baudRateReducer: baudRateReducer.default
+    baudRateReducer: baudRateReducer.default,
+    connectorReducer: connectorReducer.default
   },
 });
 

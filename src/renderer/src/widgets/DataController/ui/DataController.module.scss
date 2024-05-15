@@ -1,0 +1,22 @@
+.DataController{
+    display: flex;
+    padding: .3%;
+    overflow: hidden;
+    border-radius: .3rem;
+    width: 25%;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+
+.startButton{
+    background-color: green;
+    color: white;
+    outline: none;
+    border: unset;
+}
+.stopButton{
+    background-color: red;
+    color: white;
+    border: unset
+}
