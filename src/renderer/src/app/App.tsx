@@ -4,16 +4,18 @@ import { Menu } from '../widgets/Menu/ui/Menu';
 import { useAppSelector } from './redux/hooks';
 import './styles/App.scss';
 
-const App = ():JSX.Element => {
+const App = (): JSX.Element => {
 
-  const menuActive = useAppSelector(state=>state.menuReducer.isActive)
-
-
-  return(
+  const menuActive = useAppSelector(state => state.menuReducer.isActive)
+  const port = useAppSelector(state => state.portConfigReducer)
+  const baudRate = useAppSelector(state => state.baudRateReducer)
+  console.log(port)
+  console.log(baudRate)
+  return (
     <div className='App'>
-      {menuActive && <Menu/>}
-      <Header/>
-      <Mode/>
+      {menuActive && <Menu />}
+      <Header />
+      <Mode />
     </div>
   )
 }
