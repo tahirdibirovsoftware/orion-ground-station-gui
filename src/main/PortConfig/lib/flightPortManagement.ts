@@ -6,10 +6,10 @@ import { ITelemetry, SatStatus } from '../../../global/types/types'
 export const dataParser = (data: string, delimetr: string): ITelemetry | string => {
 
 
-    try{
+    try {
         const splittedTelemetry = data.split(delimetr)
         const jsonTelemetry: ITelemetry = {
-    
+
             packetNumber: Number(splittedTelemetry[0]),
             satelliteStatus: Number(splittedTelemetry[1]) as SatStatus,
             errorCode: Number(splittedTelemetry[2]),
@@ -31,11 +31,11 @@ export const dataParser = (data: string, delimetr: string): ITelemetry | string 
             LNLN: splittedTelemetry[18],
             iotData: Number(splittedTelemetry[19]),
             teamId: Number(splittedTelemetry[20])
-    
-    
+
+
         }
         return jsonTelemetry
-    }catch(error){
+    } catch (error) {
         return new Error('Corrupted Data | Hatalı Veri').message
     }
 
@@ -43,14 +43,13 @@ export const dataParser = (data: string, delimetr: string): ITelemetry | string 
 }
 
 
-const flightPortStarter = (baudRate: number, path: string): void => {
-
+export const flightPortStarter = (baudRate: number, path: string, callback: Function): any => {
+  console.log('Main', baudRate)
     const flightPort = new SerialPort({ baudRate, path })
     const parser = flightPort.pipe(new ReadlineParser())
-    parser.on('data', (data) => {
-        console.log(dataParser(data, '*'))
+   parser.on('data', (data) => {
+        callback(dataParser(data, '*'))
     })
-
+    return parser
 }
-
-flightPortStarter(57600, '/dev/ttyUSB0')
+// flightPortStarter(57600, '/dev/ttyACM0', console.log)

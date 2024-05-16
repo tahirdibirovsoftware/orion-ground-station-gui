@@ -1,13 +1,15 @@
-import { ElectronAPI } from '@electron-toolkit/preload'
-
-interface IApi {
-  getPortList: ()=> Promise<ReturnType<typeof SerialPort.list>>,
-  onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort.list>) => void)=>void
-}
+import { SerialPort } from 'serialport';
 
 declare global {
   interface Window {
-    electron: ElectronAPI
-    api: IApi
+    api: {
+      getPortList: () => Promise<ReturnType<typeof SerialPort['list']>>;
+      onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort['list']>) => void) => void;
+      connectToFlight: (path: string, baudRate: number) => void,
+      getFlightData: (callback)=>any,
+      disconnectFlight: ()=>void
+    };
   }
 }
+
+export {};

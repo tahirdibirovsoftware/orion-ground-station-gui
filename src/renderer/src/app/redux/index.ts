@@ -4,7 +4,7 @@ import { menuReducer } from '@renderer/features/MenuToggler';
 import { portConfigReducer } from '@renderer/features/PortConfig';
 import {baudRateReducer } from '@renderer/features/BaudRateConfig';
 import { connectorReducer } from '@renderer/features/Connector';
-import { dataControllerReducer } from '@renderer/widgets/DataController';
+import { dataControllerReducer, dataStoreReducer } from '@renderer/widgets/DataController';
 
 const store = configureStore({
   reducer: {
@@ -12,7 +12,8 @@ const store = configureStore({
     portConfigReducer: portConfigReducer.default,
     baudRateReducer: baudRateReducer.default,
     connectorReducer: connectorReducer.default,
-    dataControllerReducer: dataControllerReducer.default
+    dataControllerReducer: dataControllerReducer.default,
+    dataStoreReducer: dataStoreReducer.default
   },
 });
 

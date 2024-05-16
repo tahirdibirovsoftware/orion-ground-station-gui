@@ -1,30 +1,41 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
-import { SerialPort } from 'serialport'
-import { ITelemetry } from '../global/types/types';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { contextBridge, ipcRenderer } from 'electron';
+import { electronAPI } from '@electron-toolkit/preload';
+import { SerialPort } from 'serialport';
 
-// Custom APIs for renderer
 const api = {
-  getPortList: (): Promise<ReturnType<typeof SerialPort.list>>=>ipcRenderer.invoke('port-list'),
-  onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort.list>) => void):void => {
+  getPortList: (): Promise<ReturnType<typeof SerialPort.list>> => ipcRenderer.invoke('port-list'),
+  onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort.list>) => void): void => {
     ipcRenderer.on('port-list-updated', (event, ports) => callback(ports));
   },
-  connectToFlight: (path:string, baudRate:number):Promise<ITelemetry> => ipcRenderer.invoke('connect-to-flight', {path, baudRate})
-}
+  connectToFlight: (path: string, baudRate: number): void => {
+    console.log('Sending connect-to-flight event');
+    console.log(`Path: ${path}, BaudRate: ${baudRate}`);
+    ipcRenderer.send('connect-to-flight', { path, baudRate });
+  },
+  getFlightData: (callback: (data: any) => void): void => {
+    ipcRenderer.on('flight-data', (event, data) => callback(data));
+  },
+  disconnectFlight: ():void=>ipcRenderer.send('disconnect-flight')
+};
 
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
+    contextBridge.exposeInMainWorld('electron', electronAPI);
+    contextBridge.exposeInMainWorld('api', api);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 } else {
-  // @ts-ignore (define in dts)
-  window.electron = electronAPI
-  // @ts-ignore (define in dts)
-  window.api = api
+  // @ts-ignore
+  window.electron = electronAPI;
+  // @ts-ignore
+  window.api = api;
+}
+
+// Extend the window interface with the api object
+declare global {
+  interface Window {
+    api: typeof api;
+  }
 }

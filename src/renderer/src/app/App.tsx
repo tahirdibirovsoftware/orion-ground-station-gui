@@ -9,6 +9,9 @@ const App = (): JSX.Element => {
   const menuActive = useAppSelector(state => state.menuReducer.isActive)
   const port = useAppSelector(state => state.portConfigReducer)
   const baudRate = useAppSelector(state => state.baudRateReducer)
+  const dataStore = useAppSelector(state=> state.dataStoreReducer)
+  console.log(window.api)
+  console.log('datastore:',dataStore)
   console.log(port)
   console.log(baudRate)
   return (
