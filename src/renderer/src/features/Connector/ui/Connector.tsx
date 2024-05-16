@@ -13,9 +13,9 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
     (state) => type === 'flight' ? state.connectorReducer.flightConnect : state.connectorReducer.iotConnect
   ) === 'connected';
   const flightBaudRate = useAppSelector((state) => state.baudRateReducer.flightBaudRate);
-  const iotBaudRate = useAppSelector((state) => state.baudRateReducer.iotBaudRate);
+//   const iotBaudRate = useAppSelector((state) => state.baudRateReducer.iotBaudRate);
   const flightPath = useAppSelector((state) => state.portConfigReducer.flightPath);
-  const iotPath = useAppSelector((state) => state.portConfigReducer.iotPath);
+//   const iotPath = useAppSelector((state) => state.portConfigReducer.iotPath);
 
   const dataHandler = (data:ITelemetry):void => {dispatch(addTelemetry(data))};
 
@@ -25,16 +25,18 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
       window.api.getFlightData(dataHandler);
       dispatch(connectToFlight('connected'));
     } else if (type === 'iot') {
-      
+      //IoT Connection Logic
       dispatch(connectToIoT('connected'));
     }
   };
 
   const disconnectHandler = (): void => {
     if (type === 'flight') {
+        //Flight Disconnection logic
         window.api.disconnectFlight()
       dispatch(connectToFlight('disconnected'));
     } else if (type === 'iot') {
+        //IoT Disconnection logic
       dispatch(connectToIoT('disconnected'));
     }
   };
