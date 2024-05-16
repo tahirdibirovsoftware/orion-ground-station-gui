@@ -5,7 +5,7 @@ import { SerialPort } from 'serialport';
 import { ITelemetry } from '../global/types/types';
 
 const api = {
-  getPortList: (): Promise<ReturnType<typeof SerialPort.list>> => ipcRenderer.invoke('port-list'),
+  getPortList: async (): Promise<ReturnType<typeof SerialPort.list>> => await ipcRenderer.invoke('port-list'),
   onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort.list>) => void): void => {
     ipcRenderer.on('port-list-updated', (_, ports) => callback(ports));
   },
