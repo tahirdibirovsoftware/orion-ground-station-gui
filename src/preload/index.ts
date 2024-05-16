@@ -2,6 +2,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 import { SerialPort } from 'serialport';
+import { ITelemetry } from '../global/types/types';
 
 const api = {
   getPortList: (): Promise<ReturnType<typeof SerialPort.list>> => ipcRenderer.invoke('port-list'),
@@ -13,7 +14,7 @@ const api = {
     console.log(`Path: ${path}, BaudRate: ${baudRate}`);
     ipcRenderer.send('connect-to-flight', { path, baudRate });
   },
-  getFlightData: (callback: (data: any) => void): void => {
+  getFlightData: (callback: (data: ITelemetry) => void): void => {
     ipcRenderer.on('flight-data', (event, data) => callback(data));
   },
   disconnectFlight: ():void=>ipcRenderer.send('disconnect-flight')

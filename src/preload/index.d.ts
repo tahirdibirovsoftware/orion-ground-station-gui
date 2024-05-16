@@ -6,7 +6,7 @@ declare global {
       getPortList: () => Promise<ReturnType<typeof SerialPort['list']>>;
       onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort['list']>) => void) => void;
       connectToFlight: (path: string, baudRate: number) => void,
-      getFlightData: (callback)=>any,
+      getFlightData: (callback)=>void,
       disconnectFlight: ()=>void
     };
   }

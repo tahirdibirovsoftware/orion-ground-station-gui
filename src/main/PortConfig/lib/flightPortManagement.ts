@@ -43,7 +43,7 @@ export const dataParser = (data: string, delimetr: string): ITelemetry | string 
 }
 
 
-export const flightPortStarter = (baudRate: number, path: string, callback: Function): any => {
+export const flightPortStarter = (baudRate: number, path: string, callback): SerialPort => {
   console.log('Main', baudRate)
     const flightPort = new SerialPort({ baudRate, path })
     const parser = flightPort.pipe(new ReadlineParser())

@@ -5,6 +5,7 @@ import icon from '../../resources/icon.png?asset';
 import { portlist } from './PortConfig/lib/portList';
 import udev from 'udev';
 import { flightPortStarter } from './PortConfig/lib/flightPortManagement';
+import { ITelemetry } from '../global/types/types';
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -41,7 +42,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  ipcMain.on('ping', () => console.log('pong'));
+
 
   createWindow();
 
@@ -50,7 +51,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on('connect-to-flight', (event, { path, baudRate }) => {
-    const port = flightPortStarter(baudRate, path, (data)=>{
+    const port = flightPortStarter(baudRate, path, (data:ITelemetry)=>{
         event.sender.send('flight-data', data)
     })
     ipcMain.on('disconnect-flight', ()=>port.close())
