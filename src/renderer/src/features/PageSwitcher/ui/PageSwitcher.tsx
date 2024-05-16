@@ -1,4 +1,4 @@
-import { BrowserRouter, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import style from './PageSwitcher.module.scss'
 import { FC, useContext } from 'react'
 import { IPageSwitcher } from '../model/types'
