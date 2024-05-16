@@ -24,13 +24,14 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
       window.api.getFlightData(dataHandler);
       dispatch(connectToFlight('connected'));
     } else if (type === 'iot') {
-        window.api.disconnectFlight()
+      
       dispatch(connectToIoT('connected'));
     }
   };
 
   const disconnectHandler = (): void => {
     if (type === 'flight') {
+        window.api.disconnectFlight()
       dispatch(connectToFlight('disconnected'));
     } else if (type === 'iot') {
       dispatch(connectToIoT('disconnected'));

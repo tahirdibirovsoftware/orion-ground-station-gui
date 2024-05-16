@@ -50,9 +50,10 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on('connect-to-flight', (event, { path, baudRate }) => {
-    flightPortStarter(baudRate, path, (data)=>{
+    const port = flightPortStarter(baudRate, path, (data)=>{
         event.sender.send('flight-data', data)
     })
+    ipcMain.on('disconnect-flight', ()=>port.close())
     });
   });
 

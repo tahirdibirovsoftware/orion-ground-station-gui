@@ -50,6 +50,7 @@ export const flightPortStarter = (baudRate: number, path: string, callback: Func
    parser.on('data', (data) => {
         callback(dataParser(data, '*'))
     })
-    return parser
+    return flightPort
 }
-// flightPortStarter(57600, '/dev/ttyACM0', console.log)
+
+//  flightPortStarter(57600, '/dev/ttyACM0', console.log)
