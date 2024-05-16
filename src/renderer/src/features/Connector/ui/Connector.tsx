@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { connectToFlight, connectToIoT } from '../model/connectorSlice';
 import { addTelemetry } from '@renderer/widgets/DataController/model/dataStoreSlice';
+import { ITelemetry } from 'src/global/types/types';
 
 const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   const flightPath = useAppSelector((state) => state.portConfigReducer.flightPath);
   const iotPath = useAppSelector((state) => state.portConfigReducer.iotPath);
 
-  const dataHandler = (data) => dispatch(addTelemetry(data));
+  const dataHandler = (data:ITelemetry):void => {dispatch(addTelemetry(data))};
 
   const connectHandler = (): void => {
     if (type === 'flight') {
