@@ -36,11 +36,11 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   const disconnectHandler = (): void => {
     if (type === 'flight') {
         //Flight Disconnection logic
-        window.api.disconnectFlight()
+        window.api.disconnectFlight(flightPath)
       dispatch(connectToFlight('disconnected'));
     } else if (type === 'iot') {
         //IoT Disconnection logic
-        window.api.disconnectIot()
+        window.api.disconnectIot(iotPath)
       dispatch(connectToIoT('disconnected'));
     }
   };

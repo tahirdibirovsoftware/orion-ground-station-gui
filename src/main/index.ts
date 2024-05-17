@@ -8,7 +8,7 @@ import { flightPortStarter } from './PortConfig/lib/flightPortManagement';
 import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
 
-function createWindow(): void {
+function createWindow():void {
   const mainWindow = new BrowserWindow({
     show: false,
     autoHideMenuBar: true,
@@ -43,30 +43,80 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-
-
   createWindow();
 
   ipcMain.handle('port-list', async () => {
     return await portlist();
   });
 
-  ipcMain.on('connect-to-flight', (event, { path, baudRate }) => {
-    const port = flightPortStarter(baudRate, path, (data:ITelemetry)=>{
-        event.sender.send('flight-data', data)
-    })
-    ipcMain.on('disconnect-flight', ()=>port.close())
+  const flightPorts = new Map();
+  const iotPorts = new Map();
+
+  ipcMain.on('connect-to-flight', (event, data) => {
+    if (!data || !data.path || !data.baudRate) {
+      console.error('Invalid connect-to-flight data:', data);
+      return;
+    }
+    const { path, baudRate } = data;
+    if (flightPorts.has(path)) {
+      const existingPort = flightPorts.get(path);
+      if (existingPort.isOpen) {
+        existingPort.close();
+      }
+    }
+    const port = flightPortStarter(baudRate, path, (data: ITelemetry) => {
+      event.sender.send('flight-data', data);
     });
+    flightPorts.set(path, port);
   });
 
+  ipcMain.on('disconnect-flight', (event, data) => {
+    if (!data || !data.path) {
+      console.error('Invalid disconnect-flight data:', data);
+      return;
+    }
+    const { path } = data;
+    if (flightPorts.has(path)) {
+      const port = flightPorts.get(path);
+      if (port.isOpen) {
+        port.close();
+      }
+      flightPorts.delete(path);
+    }
+  });
 
-  ipcMain.on('connect-to-iot', (event, {path, baudRate})=>{
-    const port = iotPortStarter(baudRate, path, (data: IIoTTelemetry)=>{
-      event.sender.send('iot-data', data)
-    })
-    ipcMain.on('disconnect-iot', ()=>port.close())
-  })
+  ipcMain.on('connect-to-iot', (event, data) => {
+    if (!data || !data.path || !data.baudRate) {
+      console.error('Invalid connect-to-iot data:', data);
+      return;
+    }
+    const { path, baudRate } = data;
+    if (iotPorts.has(path)) {
+      const existingPort = iotPorts.get(path);
+      if (existingPort.isOpen) {
+        existingPort.close();
+      }
+    }
+    const port = iotPortStarter(baudRate, path, (data: IIoTTelemetry) => {
+      event.sender.send('iot-data', data);
+    });
+    iotPorts.set(path, port);
+  });
 
+  ipcMain.on('disconnect-iot', (event, data) => {
+    if (!data || !data.path) {
+      console.error('Invalid disconnect-iot data:', data);
+      return;
+    }
+    const { path } = data;
+    if (iotPorts.has(path)) {
+      const port = iotPorts.get(path);
+      if (port.isOpen) {
+        port.close();
+      }
+      iotPorts.delete(path);
+    }
+  });
 
   const monitor = udev.monitor();
   monitor.on('add', async () => {
@@ -87,9 +137,9 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
 });

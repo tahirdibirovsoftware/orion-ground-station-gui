@@ -7,10 +7,10 @@ declare global {
       onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort['list']>) => void) => void;
       connectToFlight: (path: string, baudRate: number) => void,
       getFlightData: (callback)=>void,
-      disconnectFlight: ()=>void,
+      disconnectFlight: (path: string)=>void,
       connectToIot: (path: string, baudRate: number)=> void,
       getIotData: (callback: (data: IIoTTelemetry) => void) => void,
-      disconnectIot: ()=> void
+      disconnectIot: (path: string)=> void
     };
   }
 }

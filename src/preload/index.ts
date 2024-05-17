@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { contextBridge, ipcRenderer } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 import { SerialPort } from 'serialport';
@@ -17,14 +16,14 @@ const api = {
   getFlightData: (callback: (data: ITelemetry) => void): void => {
     ipcRenderer.on('flight-data', (_, data) => callback(data));
   },
-  disconnectFlight: (): void => ipcRenderer.send('disconnect-flight'),
+  disconnectFlight: (path: string): void => ipcRenderer.send('disconnect-flight', { path }),
   connectToIot: (path: string, baudRate: number): void => {
     ipcRenderer.send('connect-to-iot', { path, baudRate });
   },
   getIotData: (callback: (data: IIoTTelemetry) => void): void => {
-    ipcRenderer.on('iot-data', (_, data) => callback(data))
+    ipcRenderer.on('iot-data', (_, data) => callback(data));
   },
-  disconnectIot: ():void => ipcRenderer.send('disconnect-iot')
+  disconnectIot: (path: string): void => ipcRenderer.send('disconnect-iot', { path }),
 };
 
 if (process.contextIsolated) {
