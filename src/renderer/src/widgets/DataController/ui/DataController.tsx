@@ -5,18 +5,20 @@ import { PlayCircleOutlined, StopOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { controlTheFlow } from '../model/dataControllerSlice';
 import { addPersistedTelemetry, clearPersistedTelemetry } from '../model/persistedFlightDataStoreSlice';
+import { ITelemetry } from 'src/global/types/types';
 
 const DataController = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const flowState = useAppSelector(state => state.dataControllerReducer.dataFlow);
     const flightData = useAppSelector(state => state.flightDataStoreReducer);
     const flightConnectionState = useAppSelector(state => state.connectorReducer.flightConnect);
+    const persistedFlightDataHandler = (data:ITelemetry):void => {dispatch(addPersistedTelemetry(data))};
 
-    // useEffect(() => {
-    //     if (flightConnectionState === 'connected' && flowState === 'started') {
-    //         flightData.forEach(data => dispatch(addPersistedTelemetry(data)));
-    //     }
-    // }, [flightConnectionState, flowState, flightData, dispatch]);
+    useEffect(() => {
+        if (flightConnectionState === 'connected' && flowState === 'started') {
+            window.api.getFlightData(persistedFlightDataHandler)
+        }
+    }, [flightConnectionState, flowState, flightData, dispatch]);
 
     const startFlow = (): void => {
         dispatch(controlTheFlow('started'));
