@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import style from './DataController.module.scss';
 import { Button } from 'antd';
 import { PlayCircleOutlined, StopOutlined } from '@ant-design/icons';
@@ -18,8 +17,9 @@ const DataController = (): JSX.Element => {
     const startFlow = (): void => {
         if (flightConnectionState === 'connected') {
             window.api.getFlightData(persistedFlightDataHandler)
+            dispatch(controlTheFlow('started'));
         }
-        dispatch(controlTheFlow('started'));
+       
     };
 
     const stopFlow = (): void => {
