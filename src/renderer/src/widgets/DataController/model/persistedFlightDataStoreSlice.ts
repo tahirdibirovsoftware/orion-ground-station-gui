@@ -14,8 +14,8 @@ const persistedFlightDataStoreSlice = createSlice({
     name: 'persistedFlightDataStoreSlice',
     initialState,
     reducers: {
-        addPersistedTelemetry: (state, action: PayloadAction<ITelemetry>) => {
-            state.push(action.payload);
+        addPersistedTelemetry: (_, action: PayloadAction<Array<ITelemetry>>) => {
+            return action.payload;
         },
         // Add more reducers as needed
     },
