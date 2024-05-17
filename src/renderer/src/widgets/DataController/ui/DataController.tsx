@@ -10,17 +10,15 @@ import { ITelemetry } from 'src/global/types/types';
 const DataController = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const flowState = useAppSelector(state => state.dataControllerReducer.dataFlow);
-    const flightData = useAppSelector(state => state.flightDataStoreReducer);
+    // const flightData = useAppSelector(state => state.flightDataStoreReducer);
     const flightConnectionState = useAppSelector(state => state.connectorReducer.flightConnect);
     const persistedFlightDataHandler = (data:ITelemetry):void => {dispatch(addPersistedTelemetry(data))};
 
-    useEffect(() => {
-        if (flightConnectionState === 'connected' && flowState === 'started') {
-            window.api.getFlightData(persistedFlightDataHandler)
-        }
-    }, [flightConnectionState, flowState, flightData, dispatch]);
 
     const startFlow = (): void => {
+        if (flightConnectionState === 'connected') {
+            window.api.getFlightData(persistedFlightDataHandler)
+        }
         dispatch(controlTheFlow('started'));
     };
 

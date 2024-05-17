@@ -11,7 +11,7 @@ const App = (): JSX.Element => {
   const baudRate = useAppSelector(state => state.baudRateReducer)
   const flightDataStore = useAppSelector(state=> state.flightDataStoreReducer)
   const iotDataStore = useAppSelector(state=>state.iotDataStoreReducer)
-  const persistedData= useAppSelector(state=>state.persistedFlightDataStoreReducer)
+  const persistedData= useAppSelector(state=>state.persistedFlightDataStoreReducer.flightData)
 
   console.log('persistedData:', persistedData)
   console.log('flightDatastore:', flightDataStore)
