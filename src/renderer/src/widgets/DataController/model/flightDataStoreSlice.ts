@@ -3,8 +3,8 @@ import type { ITelemetry } from '../../../../../global/types/types';
 
 export const initialState: Array<ITelemetry> = [];
 
-const dataStoreSlice = createSlice({
-    name: 'dataStoreSlice',
+const flightDataStoreSlice = createSlice({
+    name: 'flightDataStoreSlice',
     initialState,
     reducers: {
         addTelemetry: (state, action: PayloadAction<ITelemetry>) => {
@@ -14,5 +14,5 @@ const dataStoreSlice = createSlice({
     },
 });
 
-export const { addTelemetry } = dataStoreSlice.actions;
-export default dataStoreSlice.reducer;
+export const { addTelemetry } = flightDataStoreSlice.actions;
+export default flightDataStoreSlice.reducer;

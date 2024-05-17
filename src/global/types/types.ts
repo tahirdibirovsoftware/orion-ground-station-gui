@@ -34,3 +34,8 @@ LNLN: string,
 iotData: IIoTData | number
 teamId: number
 }
+
+export interface IIoTTelemetry {
+    temperature: number,
+    humidity: number
+}

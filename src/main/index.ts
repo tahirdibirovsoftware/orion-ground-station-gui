@@ -5,7 +5,8 @@ import icon from '../../resources/icon.png?asset';
 import { portlist } from './PortConfig/lib/portList';
 import udev from 'udev';
 import { flightPortStarter } from './PortConfig/lib/flightPortManagement';
-import { ITelemetry } from '../global/types/types';
+import { IIoTTelemetry, ITelemetry } from '../global/types/types';
+import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -57,6 +58,15 @@ app.whenReady().then(() => {
     ipcMain.on('disconnect-flight', ()=>port.close())
     });
   });
+
+
+  ipcMain.on('connect-to-iot', (event, {path, baudRate})=>{
+    const port = iotPortStarter(baudRate, path, (data: IIoTTelemetry)=>{
+      event.sender.send('iot-data', data)
+    })
+    ipcMain.on('disconnect-iot', ()=>port.close())
+  })
+
 
   const monitor = udev.monitor();
   monitor.on('add', async () => {

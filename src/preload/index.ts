@@ -2,7 +2,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 import { SerialPort } from 'serialport';
-import { ITelemetry } from '../global/types/types';
+import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 
 const api = {
   getPortList: async (): Promise<ReturnType<typeof SerialPort.list>> => await ipcRenderer.invoke('port-list'),
@@ -17,7 +17,14 @@ const api = {
   getFlightData: (callback: (data: ITelemetry) => void): void => {
     ipcRenderer.on('flight-data', (_, data) => callback(data));
   },
-  disconnectFlight: ():void=>ipcRenderer.send('disconnect-flight')
+  disconnectFlight: (): void => ipcRenderer.send('disconnect-flight'),
+  connectToIot: (path: string, baudRate: number): void => {
+    ipcRenderer.send('connect-to-iot', { path, baudRate });
+  },
+  getIotData: (callback: (data: IIoTTelemetry) => void): void => {
+    ipcRenderer.on('iot-data', (_, data) => callback(data))
+  },
+  disconnectIot: ():void => ipcRenderer.send('disconnect-iot')
 };
 
 if (process.contextIsolated) {

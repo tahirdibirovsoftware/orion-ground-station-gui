@@ -4,7 +4,7 @@ import { menuReducer } from '@renderer/features/MenuToggler';
 import { portConfigReducer } from '@renderer/features/PortConfig';
 import {baudRateReducer } from '@renderer/features/BaudRateConfig';
 import { connectorReducer } from '@renderer/features/Connector';
-import { dataControllerReducer, dataStoreReducer } from '@renderer/widgets/DataController';
+import { dataControllerReducer, flightDataStoreReducer, iotDataStoreReducer } from '@renderer/widgets/DataController';
 
 const store = configureStore({
   reducer: {
@@ -13,7 +13,8 @@ const store = configureStore({
     baudRateReducer: baudRateReducer.default,
     connectorReducer: connectorReducer.default,
     dataControllerReducer: dataControllerReducer.default,
-    dataStoreReducer: dataStoreReducer.default
+    flightDataStoreReducer: flightDataStoreReducer.default,
+    iotDataStoreReducer: iotDataStoreReducer.default
   },
 });
 

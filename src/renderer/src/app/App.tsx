@@ -9,9 +9,11 @@ const App = (): JSX.Element => {
   const menuActive = useAppSelector(state => state.menuReducer.isActive)
   const port = useAppSelector(state => state.portConfigReducer)
   const baudRate = useAppSelector(state => state.baudRateReducer)
-  const dataStore = useAppSelector(state=> state.dataStoreReducer)
+  const flightDataStore = useAppSelector(state=> state.flightDataStoreReducer)
+  const iotDataStore = useAppSelector(state=>state.iotDataStoreReducer)
   console.log(window.api)
-  console.log('datastore:',dataStore)
+  console.log('flightDatastore:', flightDataStore)
+  console.log('iotDatastore:', iotDataStore)
   console.log(port)
   console.log(baudRate)
   return (
