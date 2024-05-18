@@ -1,1 +1,1 @@
-export { LineChart } from './ui/LineChart'
+export { ParentLineChart } from './ui/LineChart'

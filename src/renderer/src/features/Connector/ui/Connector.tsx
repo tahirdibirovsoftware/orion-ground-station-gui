@@ -18,8 +18,12 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   const flightPath = useAppSelector((state) => state.portConfigReducer.flightPath);
   const iotPath = useAppSelector((state) => state.portConfigReducer.iotPath);
 
+
   const flightDataHandler = (data:ITelemetry):void => {dispatch(addTelemetry(data))};
   const iotDataHandler = (data: IIoTTelemetry): void => {dispatch(addIotData(data))}
+  const isIoTReady = Boolean(iotPath)
+  const isFlightReady = Boolean(flightPath)
+  const isAvailable = ():boolean => type === 'flight' ? isFlightReady : isIoTReady
 
   const connectHandler = (): void => {
     if (type === 'flight') {
@@ -48,7 +52,7 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   return (
     <div className={style.Connector}>
       {!isConnected ? (
-        <Button onClick={connectHandler} size="small" type="text" className={style.ButtonConnect}>
+        <Button disabled={!isAvailable()} style={!isAvailable() ? {opacity: .3, cursor: 'default'}: {}} onClick={connectHandler} size="small" type="text" className={style.ButtonConnect}>
           {'Connect'.toUpperCase()}
         </Button>
       ) : (
