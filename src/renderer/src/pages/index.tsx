@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { FlightMode } from "./FlightMode"
 import { TerminalMode } from "./TerminalMode"
 
@@ -9,6 +9,7 @@ const Router = ():JSX.Element => {
     <Routes>
         <Route path="/flight" element={<FlightMode/>}/>
         <Route path="/terminal" element={<TerminalMode/>}/>
+        <Route path="*" element={<Navigate to={'/flight'}/>}/>
     </Routes>
   )
 
