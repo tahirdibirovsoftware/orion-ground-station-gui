@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import style from './Connector.module.scss';
 import { IConnector } from '../model/types';
 import { Button } from 'antd';
@@ -24,6 +24,16 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   const isIoTReady = Boolean(iotPath)
   const isFlightReady = Boolean(flightPath)
   const isAvailable = ():boolean => type === 'flight' ? isFlightReady : isIoTReady
+  console.log('is av:', flightPath)
+
+
+  useEffect(()=>{
+    if(type==='flight'){
+      !flightPath && dispatch(connectToFlight('disconnected')) 
+    }
+    if(type==='iot') !iotPath && dispatch(connectToIoT('disconnected'))
+  },[iotPath, flightPath])
+
 
   const connectHandler = (): void => {
     if (type === 'flight') {
@@ -51,7 +61,7 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
 
   return (
     <div className={style.Connector}>
-      {!isConnected ? (
+      {(!isConnected) ? (
         <Button disabled={!isAvailable()} style={!isAvailable() ? {opacity: .3, cursor: 'default'}: {}} onClick={connectHandler} size="small" type="text" className={style.ButtonConnect}>
           {'Connect'.toUpperCase()}
         </Button>

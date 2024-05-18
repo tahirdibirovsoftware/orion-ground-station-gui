@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import style from './PortConfig.module.scss';
 import { IPortConfig } from '../model/types';
 import { SerialPort } from 'serialport';
-import { useAppDispatch } from '@renderer/app/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { setFlightConfig, setIoTConfig } from '../model/PortConfigSlice';
 
 type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
@@ -10,11 +10,21 @@ type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
 const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
     const [devices, setDevices] = useState<SerialPortListType>([]);
     const dispatch = useAppDispatch();
+    const paths = useAppSelector(state=>state.portConfigReducer.flightPath)
     const selectRef = useRef<HTMLSelectElement>(null);
     useEffect(() => {
         window.api.getPortList().then(setDevices);
         window.api.onPortListUpdated(setDevices);
     }, []);
+
+    useEffect(()=>{
+        console.log('paths: ',paths)
+        console.log('devices: ', devices)
+        if(!devices.filter(device => device.manufacturer).length){
+            dispatch(setFlightConfig({path: ''}))
+            dispatch(setIoTConfig({path: ''}))
+        }
+    },[devices])
 
     const setDevice = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         if (type === 'flight') {
