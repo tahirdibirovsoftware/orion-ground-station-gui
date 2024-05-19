@@ -3,10 +3,15 @@ import { electronAPI } from '@electron-toolkit/preload';
 import { SerialPort } from 'serialport';
 import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 
+type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
+
 const api = {
-  getPortList: async (): Promise<ReturnType<typeof SerialPort.list>> => await ipcRenderer.invoke('port-list'),
-  onPortListUpdated: (callback: (ports: ReturnType<typeof SerialPort.list>) => void): void => {
-    ipcRenderer.on('port-list-updated', (_, ports) => callback(ports));
+  getPortList: async (): Promise<SerialPortListType> => await ipcRenderer.invoke('port-list'),
+  onPortListUpdated: (callback: (ports: SerialPortListType) => void): void => {
+    ipcRenderer.on('port-list-updated', async (_, ports: Promise<ReturnType<typeof SerialPort.list>>) => {
+      const resolvedPorts = await ports; // Await the promise directly
+      callback(resolvedPorts);
+    });
   },
   connectToFlight: (path: string, baudRate: number): void => {
     console.log('Sending connect-to-flight event');
@@ -34,13 +39,14 @@ if (process.contextIsolated) {
     console.error(error);
   }
 } else {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   window.electron = electronAPI;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   window.api = api;
 }
 
-// Extend the window interface with the api object
 declare global {
   interface Window {
     api: typeof api;

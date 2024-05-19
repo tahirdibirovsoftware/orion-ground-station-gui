@@ -7,18 +7,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { routeHandler } from '../lib/routeHandler';
 
 
-const Terminal:FC<ITerminal> = ({mode='demo'}):JSX.Element => {
+const Terminal: FC<ITerminal> = ({ mode = 'demo', data }): JSX.Element => {
 
     const navigate = useNavigate()
     const location = useLocation()
 
     const { theme } = useContext(ThemeContext)
-    const localeStyles:React.CSSProperties = {
+    const localeStyles: React.CSSProperties = {
         ...themeSetter(theme),
-        height: mode==='demo' ? '20%' : '100%'
+        height: mode === 'demo' ? '20%' : '100%'
     }
 
-    const thLocaleStyle:React.CSSProperties = {
+    const thLocaleStyle: React.CSSProperties = {
         ...themeSetter(theme),
         borderTop: 'unset',
         borderLeft: 'unset'
@@ -47,19 +47,44 @@ const Terminal:FC<ITerminal> = ({mode='demo'}):JSX.Element => {
         'TEAM NUMBER'
     ]
 
-    return(
-        <div onClick={()=>routeHandler(location, navigate)} style={localeStyles} className={style.Terminal}>
+    return (
+        <div onClick={() => routeHandler(location, navigate)} style={localeStyles} className={style.Terminal}>
             <table>
                 <tr >
-                   {
-                    dataTypes.map(dataType=><th style={thLocaleStyle
+                    {
+                        dataTypes.map(dataType => <th key={dataType} style={thLocaleStyle
 
-                    }>{dataType}</th>)
-                   }
+                        }>{dataType}</th>)
+                    }
                 </tr>
+                {
+                    data.map(data=>(
+                        <tr key={data.packetNumber}>
+                        <td>{data.packetNumber}</td>
+                        <td>{data.satelliteStatus}</td>
+                        <td>{data.errorCode}</td>
+                        <td>{data.missionTime && data.missionTime.toLocaleString()}</td>
+                        <td>{data.pressure1}</td>
+                        <td>{data.pressure2}</td>
+                        <td>{data.altitude1}</td>
+                        <td>{data.descentRate}</td>
+                        <td>{data.temp}</td>
+                        <td>{data.voltageLevel}</td>
+                        <td>{data.gps1Altitude}</td>
+                        <td>{data.gps1Longitude}</td>
+                        <td>{data.gps1Altitude}</td>
+                        <td>{data.pitch}</td>
+                        <td>{data.roll}</td>
+                        <td>{data.YAW}</td>
+                        <td>{data.LNLN}</td>
+                        <td>{data.iotData.toLocaleString()}</td>
+                        <td>{data.teamId}</td>
+                        </tr>
+                    ))
+                }
             </table>
         </div>
     )
 }
 
-export {Terminal}
+export { Terminal }

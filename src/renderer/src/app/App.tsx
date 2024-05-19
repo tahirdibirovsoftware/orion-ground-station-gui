@@ -7,8 +7,6 @@ import './styles/App.scss';
 const App = (): JSX.Element => {
 
   const menuActive = useAppSelector(state => state.menuReducer.isActive)
-  const port = useAppSelector(state => state.portConfigReducer)
-  const baudRate = useAppSelector(state => state.baudRateReducer)
   const flightDataStore = useAppSelector(state=> state.flightDataStoreReducer)
   const iotDataStore = useAppSelector(state=>state.iotDataStoreReducer)
   const persistedData= useAppSelector(state=>state.persistedFlightDataStoreReducer.flightData)
@@ -16,13 +14,13 @@ const App = (): JSX.Element => {
   console.log('persistedData:', persistedData)
   console.log('flightDatastore:', flightDataStore)
   console.log('iotDatastore:', iotDataStore)
-  console.log(port)
-  console.log(baudRate)
+
+
   return (
     <div className='App'>
       {menuActive && <Menu />}
       <Header />
-      <Mode />
+      <Mode data={flightDataStore}/>
     </div>
   )
 }

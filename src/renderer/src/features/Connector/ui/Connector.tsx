@@ -18,22 +18,20 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   const flightPath = useAppSelector((state) => state.portConfigReducer.flightPath);
   const iotPath = useAppSelector((state) => state.portConfigReducer.iotPath);
 
+  const flightDataHandler = (data: ITelemetry): void => { dispatch(addTelemetry(data)); };
+  const iotDataHandler = (data: IIoTTelemetry): void => { dispatch(addIotData(data)); };
+  const isIoTReady = Boolean(iotPath);
+  const isFlightReady = Boolean(flightPath);
+  const isAvailable = (): boolean => type === 'flight' ? isFlightReady : isIoTReady;
 
-  const flightDataHandler = (data:ITelemetry):void => {dispatch(addTelemetry(data))};
-  const iotDataHandler = (data: IIoTTelemetry): void => {dispatch(addIotData(data))}
-  const isIoTReady = Boolean(iotPath)
-  const isFlightReady = Boolean(flightPath)
-  const isAvailable = ():boolean => type === 'flight' ? isFlightReady : isIoTReady
-  console.log('is av:', flightPath)
-
-
-  useEffect(()=>{
-    if(type==='flight'){
-      !flightPath && dispatch(connectToFlight('disconnected')) 
+  useEffect(() => {
+    if (type === 'flight' && !flightPath) {
+      dispatch(connectToFlight('disconnected'));
     }
-    if(type==='iot') !iotPath && dispatch(connectToIoT('disconnected'))
-  },[iotPath, flightPath])
-
+    if (type === 'iot' && !iotPath) {
+      dispatch(connectToIoT('disconnected'));
+    }
+  }, [dispatch, type, flightPath, iotPath]);
 
   const connectHandler = (): void => {
     if (type === 'flight') {
@@ -41,20 +39,18 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
       window.api.getFlightData(flightDataHandler);
       dispatch(connectToFlight('connected'));
     } else if (type === 'iot') {
-      window.api.connectToIot(iotPath, iotBaudRate)
-      window.api.getIotData(iotDataHandler)
+      window.api.connectToIot(iotPath, iotBaudRate);
+      window.api.getIotData(iotDataHandler);
       dispatch(connectToIoT('connected'));
     }
   };
 
   const disconnectHandler = (): void => {
     if (type === 'flight') {
-        //Flight Disconnection logic
-        window.api.disconnectFlight(flightPath)
+      window.api.disconnectFlight(flightPath);
       dispatch(connectToFlight('disconnected'));
     } else if (type === 'iot') {
-        //IoT Disconnection logic
-        window.api.disconnectIot(iotPath)
+      window.api.disconnectIot(iotPath);
       dispatch(connectToIoT('disconnected'));
     }
   };
@@ -62,7 +58,7 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   return (
     <div className={style.Connector}>
       {(!isConnected) ? (
-        <Button disabled={!isAvailable()} style={!isAvailable() ? {opacity: .3, cursor: 'default'}: {}} onClick={connectHandler} size="small" type="text" className={style.ButtonConnect}>
+        <Button disabled={!isAvailable()} style={!isAvailable() ? { opacity: .3, cursor: 'default' } : {}} onClick={connectHandler} size="small" type="text" className={style.ButtonConnect}>
           {'Connect'.toUpperCase()}
         </Button>
       ) : (

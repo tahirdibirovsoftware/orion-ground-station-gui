@@ -1,12 +1,14 @@
+import { FC } from 'react';
 import { Terminal } from '../../../widgets/Terminal';
 import style from './TerminlaMode.module.scss';
+import { ITerminal } from '../model/types';
 
 
 
-const TerminalMode = ():JSX.Element => {
+const TerminalMode:FC<ITerminal> = ({data}):JSX.Element => {
     return(
         <div className={style.TerminalMode}>
-            <Terminal mode='full'/>
+            <Terminal data={data} mode='full'/>
         </div>
     )
 }

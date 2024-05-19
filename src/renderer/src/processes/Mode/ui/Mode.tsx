@@ -1,16 +1,17 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { Router } from '../../../pages';
 import { themeSetter } from '../../../shared/config/theme/themeSetter';
 import style from './Mode.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { SatController } from '../../../widgets/SatController';
+import { IMode } from '../model/types';
 
 
-const Mode = ():JSX.Element => {
+const Mode:FC<IMode> = ({data}):JSX.Element => {
 
     const { theme } = useContext(ThemeContext) 
 
-    let localStyles:React.CSSProperties = {
+    const localStyles:React.CSSProperties = {
         ...themeSetter(theme),
         borderTop: 'unset',
         borderRight: 'unset',
@@ -20,7 +21,7 @@ const Mode = ():JSX.Element => {
 
     return(
         <div className={style.Mode} style={localStyles}>
-            <Router/>
+            <Router data={data}/>
             <SatController/>
         </div>
     )

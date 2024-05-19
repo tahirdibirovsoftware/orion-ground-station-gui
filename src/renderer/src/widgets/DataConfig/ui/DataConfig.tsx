@@ -14,7 +14,7 @@ const DataConfig:FC<IDataConfig> = ({type}):JSX.Element =>{
 
     
 
-    let localStyles:React.CSSProperties = {
+    const localStyles:React.CSSProperties = {
         ...themeSetter(theme),
         borderTop: 'unset',
         borderRight: 'unset',
