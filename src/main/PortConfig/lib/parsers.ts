@@ -7,27 +7,27 @@ export const flightDataParser = (data: string, delimiter: string): ITelemetry | 
             throw new Error('Insufficient data fields');
         }
         const jsonFlightTelemetry: ITelemetry = {
-            packetNumber: Number(splittedTelemetry[0]),
-            satelliteStatus: Number(splittedTelemetry[1]) as SatStatus,
-            errorCode: Number(splittedTelemetry[2]),
+            packetNumber: parseFloat(splittedTelemetry[0]),
+            satelliteStatus: parseFloat(splittedTelemetry[1]) as SatStatus,
+            errorCode: parseFloat(splittedTelemetry[2]),
             missionTime: splittedTelemetry[3],
-            pressure1: Number(splittedTelemetry[4]),
-            pressure2: Number(splittedTelemetry[5]),
-            altitude1: Number(splittedTelemetry[6]),
-            altitude2: Number(splittedTelemetry[7]),
-            altitudeDifference: Number(splittedTelemetry[8]),
-            descentRate: Number(splittedTelemetry[9]),
-            temp: Number(splittedTelemetry[10]),
-            voltageLevel: Number(splittedTelemetry[11]),
-            gps1Latitude: Number(splittedTelemetry[12]),
-            gps1Longitude: Number(splittedTelemetry[13]),
-            gps1Altitude: Number(splittedTelemetry[14]),
-            pitch: Number(splittedTelemetry[15]),
-            roll: Number(splittedTelemetry[16]),
-            YAW: Number(splittedTelemetry[17]),
+            pressure1: parseFloat(splittedTelemetry[4]),
+            pressure2: parseFloat(splittedTelemetry[5]),
+            altitude1: parseFloat(splittedTelemetry[6]),
+            altitude2: parseFloat(splittedTelemetry[7]),
+            altitudeDifference: parseFloat(splittedTelemetry[8]),
+            descentRate: parseFloat(splittedTelemetry[9]),
+            temp: parseFloat(splittedTelemetry[10]),
+            voltageLevel: parseFloat(splittedTelemetry[11]),
+            gps1Latitude: parseFloat(splittedTelemetry[12]),
+            gps1Longitude: parseFloat(splittedTelemetry[13]),
+            gps1Altitude: parseFloat(splittedTelemetry[14]),
+            pitch: parseFloat(splittedTelemetry[15]),
+            roll: parseFloat(splittedTelemetry[16]),
+            YAW: parseFloat(splittedTelemetry[17]),
             LNLN: splittedTelemetry[18],
-            iotData: Number(splittedTelemetry[19]),
-            teamId: Number(splittedTelemetry[20])
+            iotData: parseFloat(splittedTelemetry[19]),
+            teamId: parseFloat(splittedTelemetry[20])
         };
         return jsonFlightTelemetry;
     } catch (error) {

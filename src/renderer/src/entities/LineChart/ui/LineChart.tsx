@@ -25,7 +25,8 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
     else return mainYTitle;
   };
 
-  const options = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const options: any = {
     responsive: true,
     maintainAspectRatio: true,
     aspectRatio: 1,
@@ -68,6 +69,10 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
           display: true,
           text: yTitle(),
           color: 'white',
+          font: {
+            size: 10,
+          },
+          align: 'start' as const,
         },
       },
     },

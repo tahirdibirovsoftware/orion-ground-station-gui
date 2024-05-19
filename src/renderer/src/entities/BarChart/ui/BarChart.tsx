@@ -24,7 +24,8 @@ const ParentBarChart: FC<IBarChart> = ({ title, mainLabelTitle, optionalLabelTit
     else return mainYTitle;
   };
 
-  const options = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const options: any = {
     responsive: true,
     maintainAspectRatio: true,
     aspectRatio: 1,
@@ -67,6 +68,10 @@ const ParentBarChart: FC<IBarChart> = ({ title, mainLabelTitle, optionalLabelTit
           display: true,
           text: yTitle(),
           color: 'white',
+          font: {
+            size: 10,
+          },
+          align: 'start' as const,
         },
       },
     },
