@@ -109,7 +109,7 @@ const ParentBarChart: FC<IBarChart> = ({ title, mainLabelTitle, optionalLabelTit
       setLocalStyles({
         ...localeStyles,
         zIndex: 3,
-        width: '80vw',
+        width: '60vw',
         height: '80vh',
         position: 'fixed',
         top: '50%',
