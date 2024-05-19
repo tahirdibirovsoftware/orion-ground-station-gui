@@ -1,1 +1,1 @@
-export { BarChart } from './ui/BarChart'
+export { ParentBarChart } from './ui/BarChart'

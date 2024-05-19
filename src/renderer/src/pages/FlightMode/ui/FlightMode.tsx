@@ -5,6 +5,7 @@ import style from './FlightMode.module.scss';
 import { IFlight } from '../model/types';
 
 const FlightMode:FC<IFlight> = ({data}):JSX.Element => {
+  
     return(
         <div className={style.FlightMode}>
             <Visualizer data={data}/>

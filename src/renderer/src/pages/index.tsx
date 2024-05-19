@@ -9,7 +9,7 @@ interface IRouter {
 }
 
 const Router:FC<IRouter> = ({data}):JSX.Element => {
-
+ 
   return(
     <Routes>
         <Route path="/flight" element={<FlightMode data={data}/>}/>

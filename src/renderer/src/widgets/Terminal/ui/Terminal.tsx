@@ -67,6 +67,7 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', data }): JSX.Element => {
                         <td>{data.pressure1}</td>
                         <td>{data.pressure2}</td>
                         <td>{data.altitude1}</td>
+                        <td>{data.altitude2}</td>
                         <td>{data.descentRate}</td>
                         <td>{data.temp}</td>
                         <td>{data.voltageLevel}</td>
@@ -77,7 +78,7 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', data }): JSX.Element => {
                         <td>{data.roll}</td>
                         <td>{data.YAW}</td>
                         <td>{data.LNLN}</td>
-                        <td>{data.iotData.toLocaleString()}</td>
+                        <td>{String(data.iotData)}</td>
                         <td>{data.teamId}</td>
                         </tr>
                     ))

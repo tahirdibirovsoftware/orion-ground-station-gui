@@ -1,18 +1,11 @@
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import style from './BarChart.module.scss';
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useContext } from 'react';
+import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { FC, useContext } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
+import { filteredData } from '@renderer/entities/LineChart';
+import { IBarChart } from '../model/types';
 
 ChartJS.register(
   CategoryScale,
@@ -23,78 +16,88 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const ParentBarChart: FC<IBarChart> = ({ title, mainLabelTitle, optionalLabelTitle, mainXTitle, mainYTitle, optionalYTitle, mainData, optionalData }): JSX.Element => {
+  const { theme } = useContext(ThemeContext);
+
+  const yTitle = (): string | undefined => {
+    if (optionalYTitle) return `${mainYTitle} / ${optionalYTitle}`;
+    else return mainYTitle;
+  };
+
+  const options = {
     responsive: true,
-    maintainAspectRatio: true,  // Important for responsive resizing
+    maintainAspectRatio: true,
     aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'top' as const,
+    interaction: {
+      mode: 'index' as const,
+      intersect: false,
     },
-    title: {
-      display: true,
-      text: 'Altitude vs Time',
-    },
-  },
-  scales: {
-    x: {
-      ticks: {
-        color: 'white',  // Set the color of the x-axis labels
-      },
-      grid: {
-        color: 'white',  // Set the color of the grid lines
-      },
+    stacked: false,
+    plugins: {
       title: {
         display: true,
-        text: 'Time (s)',
-        color: 'white'
+        text: title,
       },
     },
-    y: {
-      ticks: {
-        color: 'white',  // Set the color of the y-axis labels
+    scales: {
+      x: {
+        ticks: {
+          color: 'white',
+        },
+        grid: {
+          color: 'white',
+        },
+        title: {
+          display: true,
+          text: `${mainXTitle}`,
+          color: 'white',
+        },
       },
-      grid: {
-        color: 'white',  // Set the color of the grid lines
-      },
-      title: {
+      y: {
+        type: 'linear' as const,
         display: true,
-        text: 'Altitude (m)',
-        color: 'white'
+        position: 'left' as const,
+        ticks: {
+          color: 'white',
+        },
+        grid: {
+          color: 'white',
+        },
+        title: {
+          display: true,
+          text: yTitle(),
+          color: 'white',
+        },
       },
     },
-  },
-};
+  };
 
-const labels = ['0s', '10s', '20s', '30s', '40s', '50s', '60s'];
+  // Generate label data
+  const labels = filteredData(mainData)?.time;
 
-const generateAltitudeData = (numPoints):Array<number> => {
-  return Array.from({ length: numPoints }, () => Math.floor(Math.random() * 1000));
-};
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: mainLabelTitle,
+        data: mainData && filteredData(mainData).outputData,
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        yAxisID: 'y',
+      },
+      {
+        label: optionalLabelTitle,
+        data: optionalData && filteredData(optionalData).outputData,
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        yAxisID: 'y',
+      },
+    ],
+  };
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Altitude 1',
-      data: generateAltitudeData(labels.length),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Altitude 2',
-      data: generateAltitudeData(labels.length),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
-
-export const BarChart = ():JSX.Element=> {
-
-    const { theme } = useContext(ThemeContext)
-
-    return (
+  return (
     <div style={themeSetter(theme)} className={style.BarChart}>
-        <Bar options={options} data={data} />;
+      <Bar options={options} data={data} />
     </div>
-  )
-}
+  );
+};
+
+export { ParentBarChart };

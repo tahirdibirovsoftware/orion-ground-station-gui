@@ -1,6 +1,6 @@
 
 
-export interface ILineChart {
+export interface IBarChart {
     title: string;
     mainLabelTitle: string;
     optionalLabelTitle?: string; 

@@ -17,16 +17,17 @@ ChartJS.register(
   Legend
 );
 
-
-
-const ParentLineChart: FC<ILineChart> = ({ title, mainXTitle, mainYTitle, optionalXTitle, optionalYTitle, mainData, optionalData }): JSX.Element => {
+const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelTitle, mainXTitle, mainYTitle, optionalYTitle, mainData, optionalData }): JSX.Element => {
   const { theme } = useContext(ThemeContext);
 
-
+  const yTitle = (): string | undefined => {
+    if (optionalYTitle) return `${mainYTitle} / ${optionalYTitle}`;
+    else return mainYTitle;
+  };
 
   const options = {
     responsive: true,
-    maintainAspectRatio: true,  // Important for responsive resizing
+    maintainAspectRatio: true,
     aspectRatio: 1,
     interaction: {
       mode: 'index' as const,
@@ -49,8 +50,8 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainXTitle, mainYTitle, option
         },
         title: {
           display: true,
-          text: `${mainXTitle}/${optionalXTitle}`,
-          color: 'white'
+          text: `${mainXTitle}`,
+          color: 'white',
         },
       },
       y: {
@@ -65,37 +66,35 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainXTitle, mainYTitle, option
         },
         title: {
           display: true,
-          text: `${mainYTitle}/${optionalYTitle}`,
-          color: 'white'
+          text: yTitle(),
+          color: 'white',
         },
       },
     },
   };
 
-
   // Generate label data
-  const labels = filteredData(mainData)?.time
+  const labels = filteredData(mainData)?.time;
 
   const data = {
     labels,
     datasets: [
       {
-        label: 'Pressure',
+        label: mainLabelTitle,
         data: mainData && filteredData(mainData).outputData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         yAxisID: 'y',
       },
       {
-        label: 'Pressure',
+        label: optionalLabelTitle,
         data: optionalData && filteredData(optionalData).outputData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
         yAxisID: 'y',
       },
     ],
   };
-
 
   return (
     <div style={themeSetter(theme)} className={style.LineChart}>

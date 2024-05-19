@@ -1,12 +1,12 @@
-import { IIoTTelemetry, ITelemetry, SatStatus } from "../../../global/types/types"
+import { IIoTTelemetry, ITelemetry, SatStatus } from "../../../global/types/types";
 
-export const flightDataParser = (data: string, delimetr: string): ITelemetry | string => {
-
-
+export const flightDataParser = (data: string, delimiter: string): ITelemetry | string => {
     try {
-        const splittedTelemetry = data.split(delimetr)
+        const splittedTelemetry = data.split(delimiter);
+        if (splittedTelemetry.length < 21) {
+            throw new Error('Insufficient data fields');
+        }
         const jsonFlightTelemetry: ITelemetry = {
-
             packetNumber: Number(splittedTelemetry[0]),
             satelliteStatus: Number(splittedTelemetry[1]) as SatStatus,
             errorCode: Number(splittedTelemetry[2]),
@@ -28,23 +28,25 @@ export const flightDataParser = (data: string, delimetr: string): ITelemetry | s
             LNLN: splittedTelemetry[18],
             iotData: Number(splittedTelemetry[19]),
             teamId: Number(splittedTelemetry[20])
-
-
-        }
-        return jsonFlightTelemetry
+        };
+        return jsonFlightTelemetry;
     } catch (error) {
-        return new Error('Corrupted Data | Hatalı Veri').message
+        return `Error: ${(error as Error).message}`;
     }
+};
 
-
-}
-
-
-export const iotDataParser = (data: string, delimetr: string):IIoTTelemetry => {
-    const splittedIotData = data.split(delimetr)
-    const jsonIotTelemetry:IIoTTelemetry = {
-        temperature: Number(splittedIotData[0]),
-        humidity: Number(splittedIotData[1])
+export const iotDataParser = (data: string, delimiter: string): IIoTTelemetry => {
+    try {
+        const splittedIotData = data.split(delimiter);
+        if (splittedIotData.length < 2) {
+            throw new Error('Insufficient data fields');
+        }
+        const jsonIotTelemetry: IIoTTelemetry = {
+            temperature: Number(splittedIotData[0]),
+            humidity: Number(splittedIotData[1])
+        };
+        return jsonIotTelemetry;
+    } catch (error) {
+        throw new Error(`Error: ${(error as Error).message}`);
     }
-    return jsonIotTelemetry
-}
+};
