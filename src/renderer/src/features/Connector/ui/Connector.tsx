@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { connectToFlight, connectToIoT } from '../model/connectorSlice';
 import { addTelemetry, resetTelemetry } from '@renderer/widgets/DataController/model/flightDataStoreSlice';
 import { IIoTTelemetry, ITelemetry } from 'src/global/types/types';
-import { addIotData } from '@renderer/widgets/DataController/model/iotDataStoreSlice';
+import { addIotData, resetIotTelemetryData } from '@renderer/widgets/DataController/model/iotDataStoreSlice';
 
 const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -53,6 +53,7 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
     } else if (type === 'iot') {
       window.api.disconnectIot(iotPath);
       dispatch(connectToIoT('disconnected'));
+      dispatch(resetIotTelemetryData());
     }
   };
 

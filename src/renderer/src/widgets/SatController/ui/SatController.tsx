@@ -12,7 +12,7 @@ import { SatStatus } from '../../../entities/SatStatus'
 import { ISatController } from '../model/types'
 
 
-const SatController:FC<ISatController> = ({data}):JSX.Element => {
+const SatController:FC<ISatController> = ({flightData, iotData}):JSX.Element => {
 
     const { theme } = useContext(ThemeContext)
 
@@ -20,16 +20,16 @@ const SatController:FC<ISatController> = ({data}):JSX.Element => {
         ...themeSetter(theme)
     }
 
-    const satStatus = data[data.length-1].satelliteStatus
-    const errorCode = data[data.length-1].errorCode
-    const altitudeDifference = data[data.length-1].altitudeDifference
+    const satStatus = flightData[flightData.length-1].satelliteStatus
+    const errorCode = flightData[flightData.length-1].errorCode
+    const altitudeDifference = flightData[flightData.length-1].altitudeDifference
 
     return(
         <div style={localStyles} className={style.SatController}>
             <SatStatus satStatus={satStatus}/>
             <Mfm/>
             <AltDiff altitudeDifference={altitudeDifference}/>
-            <IoTManager/>
+            <IoTManager iotData={iotData}/>
             <ParachuteCR/>
             <Ias errorCode={errorCode}/>
             <ErrorTerminal errorCode={errorCode}/>

@@ -7,7 +7,7 @@ import { SatController } from '../../../widgets/SatController';
 import { IMode } from '../model/types';
 
 
-const Mode:FC<IMode> = ({flightData}):JSX.Element => {
+const Mode:FC<IMode> = ({flightData, iotData}):JSX.Element => {
 
     const { theme } = useContext(ThemeContext) 
 
@@ -22,7 +22,7 @@ const Mode:FC<IMode> = ({flightData}):JSX.Element => {
     return(
         <div className={style.Mode} style={localStyles}>
             <Router flightData={flightData}/>
-            <SatController data={flightData}/>
+            <SatController flightData={flightData} iotData={iotData}/>
         </div>
     )
 }

@@ -50,6 +50,7 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
     return (
         <div onClick={() => routeHandler(location, navigate)} style={localeStyles} className={style.Terminal}>
             <table>
+                <thead>
                 <tr >
                     {
                         dataTypes.map(dataType => <th key={dataType} style={thLocaleStyle
@@ -57,8 +58,10 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
                         }>{dataType}</th>)
                     }
                 </tr>
+                </thead>
+                <tbody>
                 {
-                  (flightData[flightData?.length-1].packetNumber>0) && flightData.map(data=>(
+                  (flightData[flightData?.length-1].packetNumber>0) && flightData.slice(1).map(data=>(
                         <tr key={data.packetNumber}>
                         <td>{data.packetNumber}</td>
                         <td>{data.satelliteStatus}</td>
@@ -83,6 +86,7 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
                         </tr>
                     ))
                 }
+                </tbody>
             </table>
         </div>
     )
