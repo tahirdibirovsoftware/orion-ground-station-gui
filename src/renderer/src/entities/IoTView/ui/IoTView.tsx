@@ -18,7 +18,9 @@ const IoTView:FC<IIOTView> = ({iotData}):JSX.Element => {
         
 
         <div style={localStyles} className={style.IoTView}>
-            <span>IoT Data: {temperature}&deg;C, {humidity}%</span>
+            <span>{temperature} &deg;C</span>
+            <span>|</span>
+            <span>{humidity}%</span>
         </div>
     )
 }

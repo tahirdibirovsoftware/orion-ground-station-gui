@@ -2,4 +2,14 @@
     padding: 1rem;
     border-radius: .3rem;
     width: 98%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    background-color: blue !important;
+    border: unset !important;
+}
+
+.IoTView > span{
+    color: white;
+    font-weight: 600;
 }

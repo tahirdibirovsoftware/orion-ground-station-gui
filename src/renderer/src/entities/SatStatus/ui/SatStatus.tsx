@@ -5,9 +5,10 @@ import { themeSetter } from '../../../shared/config/theme/themeSetter';
 import { ISatStatus } from '../model/types';
 
 
-const SatStatus:FC<ISatStatus> = ({satStatus}):JSX.Element => {
+const SatStatus:FC<ISatStatus> = ({flightData}):JSX.Element => {
 
-    
+    const satStatus = flightData[flightData.length-1].satelliteStatus
+    const isAvailable = Boolean(flightData[flightData.length-1].packetNumber)
     const { theme } = useContext(ThemeContext)
 
     const localStyles:React.CSSProperties = {
@@ -25,7 +26,7 @@ const SatStatus:FC<ISatStatus> = ({satStatus}):JSX.Element => {
 
     return(
         <div style={localStyles} className={style.SatStatus}>
-            <span>{satStatuses[satStatus]}</span>
+            <span>{isAvailable && satStatuses[satStatus].toUpperCase()}</span>
         </div>
     )
 }

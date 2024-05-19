@@ -20,13 +20,13 @@ const SatController:FC<ISatController> = ({flightData, iotData}):JSX.Element => 
         ...themeSetter(theme)
     }
 
-    const satStatus = flightData[flightData.length-1].satelliteStatus
+    
     const errorCode = flightData[flightData.length-1].errorCode
     const altitudeDifference = flightData[flightData.length-1].altitudeDifference
 
     return(
         <div style={localStyles} className={style.SatController}>
-            <SatStatus satStatus={satStatus}/>
+            <SatStatus flightData={flightData}/>
             <Mfm/>
             <AltDiff altitudeDifference={altitudeDifference}/>
             <IoTManager iotData={iotData}/>

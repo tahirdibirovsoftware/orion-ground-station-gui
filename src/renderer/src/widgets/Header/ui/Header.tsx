@@ -1,8 +1,10 @@
+import { StatusBar } from '@renderer/widgets/StatusBar';
 import { Logo } from '../../../entities/Logo';
 import { MenuToggler } from '../../../features/MenuToggler';
 import { themeSetter } from '../../../shared/config/theme/themeSetter';
 import style from './Header.module.scss';
-import BatteryGauge from 'react-battery-gauge';
+import { FC } from 'react';
+import { IHeader } from '../model/types';
 
 const localStyles: React.CSSProperties = {
     ...themeSetter('dark'),
@@ -11,12 +13,12 @@ const localStyles: React.CSSProperties = {
     borderLeft: 'unset',
 }
 
-const Header = ():JSX.Element => {
+const Header:FC<IHeader> = ({flightData}):JSX.Element => {
     return(
         <div style={localStyles} className={style.Header}>
             <MenuToggler/>
             <Logo size={2} title='Orion'/>
-            <BatteryGauge size={80} value={30}/>
+            <StatusBar flightData={flightData}/>
         </div>
     )
 }

@@ -20,7 +20,7 @@ const Timer:FC<ITimer> = ({size}):JSX.Element => {
 
     const localStyles:React.CSSProperties = {
         color: 'rgba(200,200,200,1)',
-        backgroundColor: 'rgba(80,80,180)',
+        backgroundColor: 'rgba(30,30,30)',
         width: `${size}em`,
         height: `${size/3}em`,
         fontSize: `${size/2}em`

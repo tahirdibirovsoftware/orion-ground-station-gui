@@ -19,7 +19,7 @@ const App = (): JSX.Element => {
   return (
     <div className='App'>
       {menuActive && <Menu />}
-      <Header />
+      <Header flightData={flightDataStore}/>
       <Mode flightData={flightDataStore} iotData={iotDataStore}/>
     </div>
   )
