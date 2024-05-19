@@ -1,21 +1,11 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import style from './Timer.module.scss';
 import { ITimer } from '../model/types';
 
-const Timer:FC<ITimer> = ({size}):JSX.Element => {
+const Timer:FC<ITimer> = ({size, flightData}):JSX.Element => {
 
-    const [hours, setHours] = useState<number>(0)
-    const [minutes, setMinutes] = useState<number>(0)
-    const [seconds, setSeconds] = useState<number>(0)
-
-
-    useEffect(()=>{
-        setInterval(()=>{
-            setHours(new Date().getHours())
-            setMinutes(new Date().getMinutes())
-            setSeconds(new Date().getSeconds())
-        },1000)
-    },[])
+    const gpsDate = flightData[flightData.length-1].missionTime
+     const gpsArrayDate = typeof gpsDate ==='string' && gpsDate.split(':')
 
 
     const localStyles:React.CSSProperties = {
@@ -29,9 +19,13 @@ const Timer:FC<ITimer> = ({size}):JSX.Element => {
 
     return(
         <div style={localStyles} className={style.Timer}>
-            <span>{hours}:</span>
-            <span>{minutes<10 ? '0' + minutes: minutes}:</span>
-            <span>{seconds<10 ? '0' + seconds: seconds}</span>
+            { gpsDate &&
+                <>
+                <span>{gpsArrayDate[3]<10 && '0'}{gpsArrayDate[3]}:</span>
+                <span>{gpsArrayDate[4]<10 && '0'}{gpsArrayDate[4]}:</span>
+                <span>{gpsArrayDate[5]<10 && '0'}{gpsArrayDate[5]}</span>
+                </>
+            }
         </div>
     )
 }

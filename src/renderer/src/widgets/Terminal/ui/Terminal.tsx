@@ -63,26 +63,26 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
                 {
                   (flightData[flightData?.length-1].packetNumber>0) && flightData.slice(1).map(data=>(
                         <tr key={data.packetNumber}>
-                        <td>{data.packetNumber}</td>
-                        <td>{data.satelliteStatus}</td>
-                        <td>{data.errorCode}</td>
-                        <td>{data.missionTime && data.missionTime.toLocaleString()}</td>
-                        <td>{data.pressure1}</td>
-                        <td>{data.pressure2}</td>
-                        <td>{data.altitude1}</td>
-                        <td>{data.altitude2}</td>
-                        <td>{data.descentRate}</td>
-                        <td>{data.temp}</td>
-                        <td>{data.voltageLevel}</td>
-                        <td>{data.gps1Altitude}</td>
-                        <td>{data.gps1Longitude}</td>
-                        <td>{data.gps1Altitude}</td>
-                        <td>{data.pitch}</td>
-                        <td>{data.roll}</td>
-                        <td>{data.YAW}</td>
-                        <td>{data.LNLN}</td>
-                        <td>{String(data.iotData)}</td>
-                        <td>{data.teamId}</td>
+                        <td style={thLocaleStyle}>{data.packetNumber}</td>
+                        <td style={thLocaleStyle}>{data.satelliteStatus}</td>
+                        <td style={thLocaleStyle}>{data.errorCode}</td>
+                        <td style={thLocaleStyle}>{data.missionTime && data.missionTime.toLocaleString()}</td>
+                        <td style={thLocaleStyle}>{data.pressure1}</td>
+                        <td style={thLocaleStyle}>{data.pressure2}</td>
+                        <td style={thLocaleStyle}>{data.altitude1}</td>
+                        <td style={thLocaleStyle}>{data.altitude2}</td>
+                        <td style={thLocaleStyle}>{data.descentRate}</td>
+                        <td style={thLocaleStyle}>{data.temp}</td>
+                        <td style={thLocaleStyle}>{data.voltageLevel}</td>
+                        <td style={thLocaleStyle}>{data.gps1Altitude}</td>
+                        <td style={thLocaleStyle}>{data.gps1Longitude}</td>
+                        <td style={thLocaleStyle}>{data.gps1Altitude}</td>
+                        <td style={thLocaleStyle}>{data.pitch}</td>
+                        <td style={thLocaleStyle}>{data.roll}</td>
+                        <td style={thLocaleStyle}>{data.YAW}</td>
+                        <td style={thLocaleStyle}>{data.LNLN}</td>
+                        <td style={thLocaleStyle}>{String(data.iotData)}</td>
+                        <td style={thLocaleStyle}>{data.teamId}</td>
                         </tr>
                     ))
                 }

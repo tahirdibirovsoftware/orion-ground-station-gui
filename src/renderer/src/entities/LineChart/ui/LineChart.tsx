@@ -2,7 +2,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import style from './LineChart.module.scss';
 import { Line } from 'react-chartjs-2';
 import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
-import { FC, useContext } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { ILineChart } from '../model/types';
 import { filteredData } from '../lib/dataFilter';
@@ -19,6 +19,12 @@ ChartJS.register(
 
 const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelTitle, mainXTitle, mainYTitle, optionalYTitle, mainData, optionalData }): JSX.Element => {
   const { theme } = useContext(ThemeContext);
+  const initialLocalStyles: React.CSSProperties = {
+    ...themeSetter(theme),
+    transition: 'all 0.3s ease-in-out',
+  };
+  const [localeStyles, setLocalStyles] = useState<React.CSSProperties>(initialLocalStyles);
+  const [zoom, setZoom] = useState<boolean>(false);
 
   const yTitle = (): string | undefined => {
     if (optionalYTitle) return `${mainYTitle} / ${optionalYTitle}`;
@@ -101,8 +107,28 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
     ],
   };
 
+  const zoomer = (): void => {
+    if (!zoom) {
+      setLocalStyles({
+        ...localeStyles,
+        zIndex: 3,
+        width: '80vw',
+        height: '80vh',
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      });
+      setZoom(true);
+    } else {
+      setLocalStyles(initialLocalStyles);
+      setZoom(false);
+    }
+  };
+
   return (
-    <div style={themeSetter(theme)} className={style.LineChart}>
+    <div onClick={zoomer} style={localeStyles} className={style.LineChart}>
       <Line options={options} data={data} />
     </div>
   );
