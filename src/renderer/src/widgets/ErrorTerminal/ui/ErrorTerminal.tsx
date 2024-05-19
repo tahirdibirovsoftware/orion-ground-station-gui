@@ -1,26 +1,41 @@
-import { useContext } from 'react'
+import { FC, useContext } from 'react'
 import style from './Errorterminal.module.scss'
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
 import { themeSetter } from '../../../shared/config/theme/themeSetter'
 import { Error } from '../../../entities/Error'
+import { IErrorTerminal } from '../model/types'
 
 
-const ErrorTerminal = ():JSX.Element => {
+const ErrorTerminal: FC<IErrorTerminal> = ({ errorCode }): JSX.Element => {
 
-    const {theme} = useContext(ThemeContext)
-    let localStyles:React.CSSProperties = {
+    const { theme } = useContext(ThemeContext)
+    const localStyles: React.CSSProperties = {
         ...themeSetter(theme)
     }
 
-    return(
+    const errorStatuses = [
+        'Container landing rate failure',
+        'Science Payload landing rate failure',
+        'Container pressure data failure',
+        'Science Payload position data failure',
+        'Release failure'
+    ]
+    console.log(errorCode)
+    const processedErrorCode = errorCode && errorCode.toString().split('').map(code => parseInt(code))
+
+    return (
         <div style={localStyles} className={style.ErrorTerminal}>
-            <Error content='Flight Error!'/>
-            <Error content='Flight Error!'/>
-            <Error content='Flight Error!'/>
-            <Error content='Flight Error!'/>
-            <Error content='Flight Error!'/>
+            {
+
+
+               processedErrorCode && processedErrorCode.map((code, idx) => (
+                   code===1 && <Error key={idx} content={errorStatuses[idx]} />
+                ))
+
+
+            }
         </div>
     )
 }
 
-export {ErrorTerminal}
+export { ErrorTerminal }

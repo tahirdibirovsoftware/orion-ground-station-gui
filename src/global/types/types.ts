@@ -14,7 +14,7 @@ export interface ITelemetry{
 
 packetNumber: number,
 satelliteStatus: SatStatus,
-errorCode: number,
+errorCode: string,
 missionTime: Date | string,
 pressure1: number,
 pressure2: number,

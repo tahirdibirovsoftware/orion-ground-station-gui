@@ -5,15 +5,15 @@ import { ITelemetry } from "src/global/types/types"
 import { FC } from "react"
 
 interface IRouter {
-  data: Array<ITelemetry>
+  flightData: Array<ITelemetry>
 }
 
-const Router:FC<IRouter> = ({data}):JSX.Element => {
+const Router:FC<IRouter> = ({flightData}):JSX.Element => {
  
   return(
     <Routes>
-        <Route path="/flight" element={<FlightMode data={data}/>}/>
-        <Route path="/terminal" element={<TerminalMode data={data}/>}/>
+        <Route path="/flight" element={<FlightMode flightData={flightData}/>}/>
+        <Route path="/terminal" element={<TerminalMode flightData={flightData}/>}/>
         <Route path="*" element={<Navigate to={'/flight'}/>}/>
     </Routes>
   )

@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { FC, useContext } from 'react'
 import { themeSetter } from '../../../shared/config/theme/themeSetter'
 import style from './Satcontroller.module.scss'
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
@@ -9,25 +9,30 @@ import { Mfm } from '../../../features/Mfm'
 import { IoTManager } from '../../IoTManager/ui/IoTManager'
 import { ParachuteCR } from '../../../features/ParachuteCR'
 import { SatStatus } from '../../../entities/SatStatus'
+import { ISatController } from '../model/types'
 
 
-const SatController = ():JSX.Element => {
+const SatController:FC<ISatController> = ({data}):JSX.Element => {
 
     const { theme } = useContext(ThemeContext)
 
-    let localStyles:React.CSSProperties = {
+    const localStyles:React.CSSProperties = {
         ...themeSetter(theme)
     }
 
+    const satStatus = data[data.length-1].satelliteStatus
+    const errorCode = data[data.length-1].errorCode
+    const altitudeDifference = data[data.length-1].altitudeDifference
+
     return(
         <div style={localStyles} className={style.SatController}>
-            <SatStatus/>
+            <SatStatus satStatus={satStatus}/>
             <Mfm/>
-            <AltDiff/>
+            <AltDiff altitudeDifference={altitudeDifference}/>
             <IoTManager/>
             <ParachuteCR/>
-            <Ias/>
-            <ErrorTerminal/>
+            <Ias errorCode={errorCode}/>
+            <ErrorTerminal errorCode={errorCode}/>
         </div>
     )
 }

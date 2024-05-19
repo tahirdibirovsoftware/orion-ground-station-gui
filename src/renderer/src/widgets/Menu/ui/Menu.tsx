@@ -5,7 +5,6 @@ import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider
 import { PageSwitcher } from '../../../features/PageSwitcher';
 import { MenuToggler } from '../../../features/MenuToggler';
 import { DataConfig } from '../../DataConfig';
-import { Connector } from '../../../features/Connector';
 import { FileManager } from '../../../features/FileManager';
 import { Footer } from '../../Footer';
 

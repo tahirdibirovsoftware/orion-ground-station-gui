@@ -4,12 +4,12 @@ import { Visualizer } from '../../../widgets/Visualizer';
 import style from './FlightMode.module.scss';
 import { IFlight } from '../model/types';
 
-const FlightMode:FC<IFlight> = ({data}):JSX.Element => {
+const FlightMode:FC<IFlight> = ({flightData}):JSX.Element => {
   
     return(
         <div className={style.FlightMode}>
-            <Visualizer data={data}/>
-            <Terminal data={data} mode='demo'/>
+            <Visualizer data={flightData}/>
+            <Terminal flightData={flightData} mode='demo'/>
         </div>
     )
 }

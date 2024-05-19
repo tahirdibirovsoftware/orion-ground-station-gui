@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { routeHandler } from '../lib/routeHandler';
 
 
-const Terminal: FC<ITerminal> = ({ mode = 'demo', data }): JSX.Element => {
+const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => {
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -58,7 +58,7 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', data }): JSX.Element => {
                     }
                 </tr>
                 {
-                    data.map(data=>(
+                  (flightData[flightData?.length-1].packetNumber>0) && flightData.map(data=>(
                         <tr key={data.packetNumber}>
                         <td>{data.packetNumber}</td>
                         <td>{data.satelliteStatus}</td>

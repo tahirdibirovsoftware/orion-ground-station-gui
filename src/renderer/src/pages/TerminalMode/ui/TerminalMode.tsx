@@ -5,10 +5,10 @@ import { ITerminal } from '../model/types';
 
 
 
-const TerminalMode:FC<ITerminal> = ({data}):JSX.Element => {
+const TerminalMode:FC<ITerminal> = ({flightData}):JSX.Element => {
     return(
         <div className={style.TerminalMode}>
-            <Terminal data={data} mode='full'/>
+            <Terminal flightData={flightData} mode='full'/>
         </div>
     )
 }

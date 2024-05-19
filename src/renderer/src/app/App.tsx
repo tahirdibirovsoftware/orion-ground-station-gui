@@ -20,7 +20,7 @@ const App = (): JSX.Element => {
     <div className='App'>
       {menuActive && <Menu />}
       <Header />
-      <Mode data={flightDataStore}/>
+      <Mode flightData={flightDataStore} iotData={iotDataStore}/>
     </div>
   )
 }

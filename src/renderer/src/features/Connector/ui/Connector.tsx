@@ -4,7 +4,7 @@ import { IConnector } from '../model/types';
 import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { connectToFlight, connectToIoT } from '../model/connectorSlice';
-import { addTelemetry } from '@renderer/widgets/DataController/model/flightDataStoreSlice';
+import { addTelemetry, resetTelemetry } from '@renderer/widgets/DataController/model/flightDataStoreSlice';
 import { IIoTTelemetry, ITelemetry } from 'src/global/types/types';
 import { addIotData } from '@renderer/widgets/DataController/model/iotDataStoreSlice';
 
@@ -49,6 +49,7 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
     if (type === 'flight') {
       window.api.disconnectFlight(flightPath);
       dispatch(connectToFlight('disconnected'));
+      dispatch(resetTelemetry());
     } else if (type === 'iot') {
       window.api.disconnectIot(iotPath);
       dispatch(connectToIoT('disconnected'));
