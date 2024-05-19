@@ -1,3 +1,5 @@
+import { ITelemetry } from "src/global/types/types";
+
 export interface IAltDiff {
-    altitudeDifference: number;
+    flightData: Array<ITelemetry>;
 }

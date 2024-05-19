@@ -5,8 +5,10 @@ import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider
 import { IAltDiff } from '../model/types';
 
 
-const AltDiff:FC<IAltDiff> = ({altitudeDifference}):JSX.Element => {
+const AltDiff:FC<IAltDiff> = ({flightData}):JSX.Element => {
 
+    const altitudeDifference = flightData[flightData.length-1].altitudeDifference
+    const isAvailable = flightData[flightData.length-1].packetNumber>0
     const { theme } = useContext(ThemeContext)
 
     const localStyles:React.CSSProperties = {
@@ -15,7 +17,10 @@ const AltDiff:FC<IAltDiff> = ({altitudeDifference}):JSX.Element => {
 
     return(
         <div style={localStyles} className={style.AltDiff}>
-            <span>Altidtude Difference: {altitudeDifference}</span>
+            {
+                 isAvailable &&
+                <span>{altitudeDifference}m</span>
+            }
         </div>
     )
 }

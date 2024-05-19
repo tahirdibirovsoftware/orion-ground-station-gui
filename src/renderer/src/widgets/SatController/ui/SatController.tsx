@@ -22,13 +22,12 @@ const SatController:FC<ISatController> = ({flightData, iotData}):JSX.Element => 
 
     
     const errorCode = flightData[flightData.length-1].errorCode
-    const altitudeDifference = flightData[flightData.length-1].altitudeDifference
 
     return(
         <div style={localStyles} className={style.SatController}>
             <SatStatus flightData={flightData}/>
             <Mfm/>
-            <AltDiff altitudeDifference={altitudeDifference}/>
+            <AltDiff flightData={flightData}/>
             <IoTManager iotData={iotData}/>
             <ParachuteCR/>
             <Ias errorCode={errorCode}/>
