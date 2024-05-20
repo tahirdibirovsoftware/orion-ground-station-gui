@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { ExpandAltOutlined } from '@ant-design/icons';
 
 interface MapProps {
   initialPosition: [number, number];
@@ -47,7 +48,9 @@ const Map: React.FC<MapProps> = ({ initialPosition, getGpsData }) => {
         <Marker position={currentPosition} />
         <MoveMapCenter position={currentPosition} />
       </MapContainer>
-      <div className={style.zoomButton}></div>
+      <div className={style.zoomButton}>
+      <ExpandAltOutlined />
+      </div>
     </div>
   );
 };
