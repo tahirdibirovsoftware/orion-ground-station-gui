@@ -14,6 +14,9 @@ const Visualizer: FC<IVisualizer> = ({ data }): JSX.Element => {
   const optionalAltitudeData = data.map((data) => data.altitude2);
   const descentRate = data.map((data) => data.descentRate);
   const temperature = data.map((data) => data.temp);
+  const pitch = data[data.length-1].pitch;
+  const yaw = data[data.length-1].YAW;
+  const roll = data[data.length-1].roll;
 
   const [currentPosition, setCurrentPosition] = useState<[number, number]>([40, 60]);
 
@@ -53,7 +56,7 @@ const Visualizer: FC<IVisualizer> = ({ data }): JSX.Element => {
         optionalYTitle='Descent Rate (m/s)'
       />
       <Map getGpsData={() => currentPosition} initialPosition={[33, 33]} />
-      <ObjectTracker/>
+      <ObjectTracker pitch={pitch} yaw={yaw} roll={roll}/>
       <Cam/>
     </div>
   );
