@@ -111,7 +111,7 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
     if (!zoom) {
       setLocalStyles({
         ...localeStyles,
-        zIndex: 3,
+        zIndex: 100,
         width: '60vw',
         height: '80vh',
         position: 'fixed',
@@ -128,9 +128,12 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
   };
 
   return (
+
     <div onClick={zoomer} style={localeStyles} className={style.LineChart}>
       <Line options={options} data={data} />
     </div>
+
+
   );
 };
 

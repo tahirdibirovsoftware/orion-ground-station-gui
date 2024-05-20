@@ -74,7 +74,7 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
                         <td style={thLocaleStyle}>{data.descentRate}</td>
                         <td style={thLocaleStyle}>{data.temp}</td>
                         <td style={thLocaleStyle}>{data.voltageLevel}</td>
-                        <td style={thLocaleStyle}>{data.gps1Altitude}</td>
+                        <td style={thLocaleStyle}>{data.gps1Latitude}</td>
                         <td style={thLocaleStyle}>{data.gps1Longitude}</td>
                         <td style={thLocaleStyle}>{data.gps1Altitude}</td>
                         <td style={thLocaleStyle}>{data.pitch}</td>

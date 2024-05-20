@@ -6,10 +6,11 @@ export const flightDataParser = (data: string, delimiter: string): ITelemetry | 
         if (splittedTelemetry.length < 21) {
             throw new Error('Insufficient data fields');
         }
+        console.log(splittedTelemetry)
         const jsonFlightTelemetry: ITelemetry = {
             packetNumber: parseFloat(splittedTelemetry[0]),
             satelliteStatus: parseFloat(splittedTelemetry[1]) as SatStatus,
-            errorCode: parseFloat(splittedTelemetry[2]),
+            errorCode: splittedTelemetry[2],
             missionTime: splittedTelemetry[3],
             pressure1: parseFloat(splittedTelemetry[4]),
             pressure2: parseFloat(splittedTelemetry[5]),
@@ -29,6 +30,7 @@ export const flightDataParser = (data: string, delimiter: string): ITelemetry | 
             iotData: parseFloat(splittedTelemetry[19]),
             teamId: parseFloat(splittedTelemetry[20])
         };
+        console.log(jsonFlightTelemetry)
         return jsonFlightTelemetry;
     } catch (error) {
         return `Error: ${(error as Error).message}`;
