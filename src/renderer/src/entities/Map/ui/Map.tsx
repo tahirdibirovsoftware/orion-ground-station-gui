@@ -47,6 +47,7 @@ const Map: React.FC<MapProps> = ({ initialPosition, getGpsData }) => {
         <Marker position={currentPosition} />
         <MoveMapCenter position={currentPosition} />
       </MapContainer>
+      <div className={style.zoomButton}></div>
     </div>
   );
 };
