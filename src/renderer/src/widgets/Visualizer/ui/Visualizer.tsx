@@ -4,6 +4,8 @@ import { ParentBarChart } from '@renderer/entities/BarChart';
 import { FC, useState, useEffect } from 'react';
 import { IVisualizer } from '../model/types';
 import { Map } from '@renderer/entities/Map';
+import { Cam } from '@renderer/entities/Cam/ui/Cam';
+import { ObjectTracker } from '@renderer/entities/ObjectTracker';
 
 const Visualizer: FC<IVisualizer> = ({ data }): JSX.Element => {
   const mainPressureData = data.map((data) => data?.pressure1);
@@ -51,6 +53,8 @@ const Visualizer: FC<IVisualizer> = ({ data }): JSX.Element => {
         optionalYTitle='Descent Rate (m/s)'
       />
       <Map getGpsData={() => currentPosition} initialPosition={[33, 33]} />
+      <ObjectTracker/>
+      <Cam/>
     </div>
   );
 };
