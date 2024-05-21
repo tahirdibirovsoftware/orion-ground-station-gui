@@ -8,9 +8,12 @@
     align-items: center;
     background-color: blue !important;
     border: unset !important;
+    overflow: hidden;
 }
 
 .AltDiff > span{
     color: white;
     font-weight: 600;
+    text-align: center;
+    font-size: 80%;
 }

@@ -33,7 +33,7 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
         optionalData={optionalPressureData}
         title='Pressure vs Time'
         mainXTitle='Time (s)'
-        mainYTitle='Pressure (Pa)'
+        mainYTitle='Pressure (hPa)'
       />
       <ParentLineChart
         mainLabelTitle='Altitude 1'
@@ -52,7 +52,7 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
         title='Temperature, IoT Temperature vs Time'
         mainXTitle='Time'
         mainYTitle='Temperature (&deg;C)'
-        optionalYTitle='IoT Temperature (&deg;C)'
+        optionalYTitle=''
       />
       <Map getGpsData={() => currentPosition} initialPosition={[33, 33]} />
       <ObjectTracker pitch={pitch} yaw={yaw} roll={roll}/>
