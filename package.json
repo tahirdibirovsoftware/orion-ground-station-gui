@@ -52,6 +52,7 @@
     "serialport": "^12.0.0",
     "three": "^0.164.1",
     "udev": "^1.0.1",
+    "usb": "^2.12.1",
     "victory": "^37.0.1"
   },
   "devDependencies": {
@@ -80,6 +81,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1",
+    "electron-rebuild": "^3.2.9",
     "electron-vite": "^2.0.0",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",

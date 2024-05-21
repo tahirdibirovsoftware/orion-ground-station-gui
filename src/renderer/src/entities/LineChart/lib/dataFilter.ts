@@ -12,8 +12,8 @@ function generateRange(start, end):Array<number> {
 }
 
 export const filteredData = (data: Array<number>): IFilteredData=>{
-    if(data.length>=10){
-      const startIndex = data.length - 11
+    if(data.length>=50){
+      const startIndex = data.length - 51
       const seconds = generateRange(startIndex, data.length-1)
       const filteredData = data.slice(startIndex)
       return {outputData: filteredData, time: seconds}
