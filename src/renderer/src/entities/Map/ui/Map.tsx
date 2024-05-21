@@ -6,15 +6,16 @@ import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvide
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ExpandAltOutlined } from '@ant-design/icons';
+import { useAppSelector } from '@renderer/app/redux/hooks';
 
 interface MapProps {
   initialPosition: [number, number];
   getGpsData: () => [number, number]; // Function to get GPS data
 }
 
-const Map: React.FC<MapProps> = ({ initialPosition, getGpsData }) => {
+const Map: React.FC<MapProps> = ({ getGpsData }) => {
   const { theme } = useContext(ThemeContext);
-  const [currentPosition, setCurrentPosition] = useState<[number, number]>(initialPosition);
+  const [currentPosition, setCurrentPosition] = useState<[number, number]>();
 
   const localStyles: React.CSSProperties = {
     ...themeSetter(theme),
@@ -41,9 +42,15 @@ const Map: React.FC<MapProps> = ({ initialPosition, getGpsData }) => {
     return () => clearInterval(intervalId); // Clean up on unmount
   }, [getGpsData]);
 
+  const flightData = useAppSelector(state=>state.flightDataStoreReducer)
+  const isActive = flightData[flightData.length -1].packetNumber > 0
+
   return (
     <div style={localStyles} className={style.MapWrapper}>
-      <MapContainer center={currentPosition} zoom={5} style={{ height: '100vh', width: '100%' }}>
+      {
+        (isActive && currentPosition) && 
+        <>
+        <MapContainer center={currentPosition} zoom={5} style={{ height: '100vh', width: '100%' }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Marker position={currentPosition} />
         <MoveMapCenter position={currentPosition} />
@@ -51,6 +58,8 @@ const Map: React.FC<MapProps> = ({ initialPosition, getGpsData }) => {
       <div className={style.zoomButton}>
       <ExpandAltOutlined />
       </div>
+        </>
+      }
     </div>
   );
 };

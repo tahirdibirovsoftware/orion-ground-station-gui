@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import style from './ObjectTracker.module.scss';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { useAppSelector } from '@renderer/app/redux/hooks';
 
 interface ObjectTrackerProps {
   pitch: number;
@@ -30,10 +31,15 @@ const ObjectTracker = ({ pitch, yaw, roll }: ObjectTrackerProps): JSX.Element =>
   const localStyles: React.CSSProperties = {
     ...themeSetter(theme),
   };
+  
+  const flightData = useAppSelector(state=>state.flightDataStoreReducer)
+  const isActive = flightData[flightData.length -1].packetNumber > 0
 
   return (
     <div style={localStyles} className={style.ObjectTracker}>
-      <Canvas>
+      {
+        isActive && 
+        <Canvas>
         <ambientLight color={0x404040} intensity={0.5} />
         <pointLight color={0xff0000} position={[10, 10, 10]} intensity={1} />
         <directionalLight color={0x0000ff} position={[-10, -10, -10]} intensity={0.5} />
@@ -44,6 +50,7 @@ const ObjectTracker = ({ pitch, yaw, roll }: ObjectTrackerProps): JSX.Element =>
         </Suspense>
         <OrbitControls />
       </Canvas>
+      }
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { IoTManager } from '../../IoTManager/ui/IoTManager'
 import { ParachuteCR } from '../../../features/ParachuteCR'
 import { SatStatus } from '../../../entities/SatStatus'
 import { ISatController } from '../model/types'
+import { DescentRate } from '@renderer/entities/DescentRate'
 
 
 const SatController:FC<ISatController> = ({flightData, iotData}):JSX.Element => {
@@ -28,6 +29,7 @@ const SatController:FC<ISatController> = ({flightData, iotData}):JSX.Element => 
             <SatStatus flightData={flightData}/>
             <Mfm/>
             <AltDiff flightData={flightData}/>
+            <DescentRate flightData={flightData}/> 
             <IoTManager iotData={iotData}/>
             <ParachuteCR/>
             <Ias errorCode={errorCode}/>

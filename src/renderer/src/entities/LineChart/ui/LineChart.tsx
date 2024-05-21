@@ -6,6 +6,7 @@ import React, { FC, useContext, useState } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { ILineChart } from '../model/types';
 import { filteredData } from '../lib/dataFilter';
+import { useAppSelector } from '@renderer/app/redux/hooks';
 
 ChartJS.register(
   CategoryScale,
@@ -30,6 +31,9 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
     if (optionalYTitle) return `${mainYTitle} / ${optionalYTitle}`;
     else return mainYTitle;
   };
+
+  const flightData = useAppSelector(state=>state.flightDataStoreReducer)
+  const isActive = flightData[flightData.length -1].packetNumber > 0
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const options: any = {
@@ -130,7 +134,7 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
   return (
 
     <div onClick={zoomer} style={localeStyles} className={style.LineChart}>
-      <Line options={options} data={data} />
+     {isActive && <Line options={options} data={data} />}
     </div>
 
 

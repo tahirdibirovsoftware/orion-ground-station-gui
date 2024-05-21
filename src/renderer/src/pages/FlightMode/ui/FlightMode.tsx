@@ -8,7 +8,7 @@ const FlightMode:FC<IFlight> = ({flightData}):JSX.Element => {
   
     return(
         <div className={style.FlightMode}>
-            <Visualizer data={flightData}/>
+            <Visualizer flightData={flightData}/>
             <Terminal flightData={flightData} mode='demo'/>
         </div>
     )

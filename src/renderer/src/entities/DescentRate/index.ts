@@ -1,0 +1,1 @@
+export { DescentRate } from './ui/DescentRate';

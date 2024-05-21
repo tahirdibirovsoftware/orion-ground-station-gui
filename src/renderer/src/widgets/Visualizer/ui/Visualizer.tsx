@@ -1,29 +1,28 @@
 import { ParentLineChart } from '@renderer/entities/LineChart';
 import style from './Visualizer.module.scss';
-import { ParentBarChart } from '@renderer/entities/BarChart';
 import { FC, useState, useEffect } from 'react';
 import { IVisualizer } from '../model/types';
 import { Map } from '@renderer/entities/Map';
 import { Cam } from '@renderer/entities/Cam/ui/Cam';
 import { ObjectTracker } from '@renderer/entities/ObjectTracker';
 
-const Visualizer: FC<IVisualizer> = ({ data }): JSX.Element => {
-  const mainPressureData = data.map((data) => data?.pressure1);
-  const optionalPressureData = data.map((data) => data?.pressure2);
-  const mainAltitudeData = data.map((data) => data.altitude1);
-  const optionalAltitudeData = data.map((data) => data.altitude2);
-  const descentRate = data.map((data) => data.descentRate);
-  const temperature = data.map((data) => data.temp);
-  const pitch = data[data.length-1].pitch;
-  const yaw = data[data.length-1].YAW;
-  const roll = data[data.length-1].roll;
+const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
+  const mainPressureData = flightData.map((data) => data?.pressure1);
+  const optionalPressureData = flightData.map((data) => data?.pressure2);
+  const mainAltitudeData = flightData.map((data) => data.altitude1);
+  const optionalAltitudeData = flightData.map((data) => data.altitude2);
+  const iotTemp = flightData.map((data) => data.iotData) as Array<number>;
+  const temperature = flightData.map((data) => data.temp);
+  const pitch = flightData[flightData.length-1].pitch;
+  const yaw = flightData[flightData.length-1].YAW;
+  const roll = flightData[flightData.length-1].roll;
 
   const [currentPosition, setCurrentPosition] = useState<[number, number]>([40, 60]);
 
   useEffect(() => {
-    const latestData = data[data.length - 1];
-    setCurrentPosition([+latestData.gps1Latitude || 0, +latestData.gps1Longitude || 0]);
-  }, [data]);
+    const latestFlightData = flightData[flightData.length - 1];
+    setCurrentPosition([+latestFlightData.gps1Latitude || 0, +latestFlightData.gps1Longitude || 0]);
+  }, [flightData]);
 
   return (
     <div className={style.Visualizer}>
@@ -36,7 +35,7 @@ const Visualizer: FC<IVisualizer> = ({ data }): JSX.Element => {
         mainXTitle='Time (s)'
         mainYTitle='Pressure (Pa)'
       />
-      <ParentBarChart
+      <ParentLineChart
         mainLabelTitle='Altitude 1'
         optionalLabelTitle='Altitude 2'
         mainData={mainAltitudeData}
@@ -47,13 +46,13 @@ const Visualizer: FC<IVisualizer> = ({ data }): JSX.Element => {
       />
       <ParentLineChart
         mainLabelTitle='Temperature'
-        optionalLabelTitle='Descent Rate'
+        optionalLabelTitle='IoT Temperature'
         mainData={temperature}
-        optionalData={descentRate}
-        title='Temperature/Descent Rate vs Time'
+        optionalData={iotTemp}
+        title='Temperature, IoT Temperature vs Time'
         mainXTitle='Time'
         mainYTitle='Temperature (&deg;C)'
-        optionalYTitle='Descent Rate (m/s)'
+        optionalYTitle='IoT Temperature (&deg;C)'
       />
       <Map getGpsData={() => currentPosition} initialPosition={[33, 33]} />
       <ObjectTracker pitch={pitch} yaw={yaw} roll={roll}/>
