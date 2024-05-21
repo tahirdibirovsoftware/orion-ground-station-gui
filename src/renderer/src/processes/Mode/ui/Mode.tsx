@@ -21,7 +21,7 @@ const Mode:FC<IMode> = ({flightData, iotData}):JSX.Element => {
 
     return(
         <div className={style.Mode} style={localStyles}>
-            <Router flightData={flightData}/>
+            <Router iotData={iotData} flightData={flightData}/>
             <SatController flightData={flightData} iotData={iotData}/>
         </div>
     )
