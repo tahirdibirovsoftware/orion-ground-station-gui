@@ -13,12 +13,12 @@ const ParachuteCR = ():JSX.Element => {
 
     const parachuteHandler = ():void =>{
         if(isParachuteOpened){
-            const sentData = JSON.stringify({...initiaControllingState, parachuteHandler: 0})
+            const sentData = JSON.stringify({...initiaControllingState, parachuteState: 0})
             dispatch(commandTheParachute({parachuteState: 0}))
             window.api.controlTheParachute(sentData, flightPath)
         }
         else{
-            const sentData = JSON.stringify({...initiaControllingState, parachuteHandler: 1})
+            const sentData = JSON.stringify({...initiaControllingState, parachuteState: 1})
             dispatch(commandTheParachute({parachuteState: 1}))
             window.api.controlTheParachute(sentData, flightPath)
     }
