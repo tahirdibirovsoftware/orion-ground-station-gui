@@ -1,15 +1,33 @@
-.Terminal{
+.Terminal {
     width: 100%;
     overflow-y: scroll;
     border-radius: .3rem;
     font-size: 80%;
     cursor: pointer;
-}
+    position: relative;
 
-th{
-    padding: .5rem;
-}
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-td{
-    text-align: center;
+    .TableHeader {
+        position: sticky;
+        top: 0;
+        background: inherit;
+        z-index: 1;
+
+        th {
+            padding: .5rem;
+            background: #fff; // Or use your theme background color
+            text-align: center;
+        }
+    }
+
+    .TableBody {
+        td {
+            text-align: center;
+            padding: .5rem;
+        }
+    }
 }
