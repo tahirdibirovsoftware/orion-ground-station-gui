@@ -8,17 +8,19 @@ const ParachuteCR = ():JSX.Element => {
 
     const isParachuteOpened = useAppSelector(state=>state.controllingDataReducer.parachuteState)
     const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath)
+    const iotData = useAppSelector(state=>state.iotDataStoreReducer)
     const dispatch = useAppDispatch()
 
 
     const parachuteHandler = ():void =>{
+        const latestIotData = iotData[iotData.length-1].temperature
         if(isParachuteOpened){
-            const sentData = JSON.stringify({...initiaControllingState, parachuteState: 0})
+            const sentData = JSON.stringify({...initiaControllingState, parachuteState: 0, iot: latestIotData})
             dispatch(commandTheParachute({parachuteState: 0}))
             window.api.controlTheParachute(sentData, flightPath)
         }
         else{
-            const sentData = JSON.stringify({...initiaControllingState, parachuteState: 1})
+            const sentData = JSON.stringify({...initiaControllingState, parachuteState: 1, iot: latestIotData})
             dispatch(commandTheParachute({parachuteState: 1}))
             window.api.controlTheParachute(sentData, flightPath)
     }

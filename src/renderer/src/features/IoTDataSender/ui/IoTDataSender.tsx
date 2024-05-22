@@ -9,7 +9,7 @@ const IoTDataSender = ():JSX.Element => {
 
 
     const iotData = useAppSelector(state=>state.iotDataStoreReducer)
-    const iotPath = useAppSelector(state=>state.portConfigReducer.iotPath)
+    const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath)
     const dispatch = useAppDispatch()
     const latestIotData = iotData[iotData.length -1]
 
@@ -17,7 +17,7 @@ const IoTDataSender = ():JSX.Element => {
 
         const sentData = JSON.stringify({...initiaControllingState, iot: latestIotData.temperature})
         dispatch(setIot({iot: latestIotData.temperature}))
-        window.api.sendIotData(sentData, iotPath)
+        window.api.sendIotData(sentData, flightPath)
     }
 
     return(

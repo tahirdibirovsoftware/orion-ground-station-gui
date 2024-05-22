@@ -39,3 +39,9 @@ export interface IIoTTelemetry {
     temperature: number,
     humidity: number
 }
+
+export interface IRecievingData {
+    parachuteState: 0 | 1;
+    iot: number;
+    mfm: string;
+}

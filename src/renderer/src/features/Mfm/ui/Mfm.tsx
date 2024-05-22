@@ -15,15 +15,16 @@ const Mfm = ():JSX.Element => {
     const [thirdCommand, setThirdCommand]= useState<number>(0)
     const [fourthCommand, setFourthCommand]= useState<string>('N')
     const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath)
+    const iotData = useAppSelector(state=>state.iotDataStoreReducer)
     const dispatch = useAppDispatch()
 
     
 
 
     const mfmHandler = ():void =>{
-
+        const latestIotData  = iotData[iotData.length-1].temperature
         const mfmData = `${firstCommand}${secondCommand}${thirdCommand}${fourthCommand}`
-        const mfmSendData = JSON.stringify({...initiaControllingState, mfm: mfmData})
+        const mfmSendData = JSON.stringify({...initiaControllingState, mfm: mfmData, iot: latestIotData})
         dispatch(setMfm({mfm: mfmData}))
 
         window.api.controlTheMfm(mfmSendData, flightPath)

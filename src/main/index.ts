@@ -7,6 +7,7 @@ import udev from 'udev';
 import { flightPortStarter } from './PortConfig/lib/flightPortManagement';
 import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
+import { serialize } from './PortConfig/lib/serializers';
 
 function createWindow():void {
   const mainWindow = new BrowserWindow({
@@ -119,14 +120,23 @@ app.whenReady().then(() => {
   });
 
 
+
   ipcMain.on('sent-parachute-data', (_, {data, path})=>{
-    console.log('Parachute: ',data, path)
+    const port = flightPorts.get(path)
+    port.write(serialize(data))
   })
+
+
+
   ipcMain.on('sent-iot-data', (_, {data, path})=>{
-    console.log('IoT: ', data, path)
+      const port = flightPorts.get(path)
+      port.write(serialize(data))
   })
+
+
   ipcMain.on('sent-mfm-data', (_, {data, path})=>{
-    console.log('MFM: ', data, path)
+    const port = flightPorts.get(path)
+    port.write(serialize(data))
   })
 
 
