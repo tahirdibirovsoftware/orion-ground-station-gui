@@ -1,13 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import style from './Mfm.module.scss';
 import { themeSetter } from '../../../shared/config/theme/themeSetter';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { Button } from 'antd';
+import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
+import { initiaControllingState, setMfm } from '@renderer/widgets/SatController/model/controllingData';
 
 const Mfm = ():JSX.Element => {
 
     const commands = ['N','R', 'G', 'B',0,1,2,3,4,5,6,7,8,9]
     const {theme} = useContext(ThemeContext)
+    const [firstCommand, setFirstCommand]= useState<number>(0)
+    const [secondCommand, setSecondCommand]= useState<string>('N')
+    const [thirdCommand, setThirdCommand]= useState<number>(0)
+    const [fourthCommand, setFourthCommand]= useState<string>('N')
+    const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath)
+    const dispatch = useAppDispatch()
+
+    
+
+
+    const mfmHandler = ():void =>{
+
+        const mfmData = `${firstCommand}${secondCommand}${thirdCommand}${fourthCommand}`
+        const mfmSendData = JSON.stringify({...initiaControllingState, mfm: mfmData})
+        dispatch(setMfm({mfm: mfmData}))
+
+        window.api.controlTheMfm(mfmSendData, flightPath)
+
+    }
+
 
     const localStyles:React.CSSProperties = {
         ...themeSetter(theme)        
@@ -15,27 +37,27 @@ const Mfm = ():JSX.Element => {
 
     return(
         <div style={localStyles} className={style.Mfm}>
-            <select style={localStyles}>
+            <select style={localStyles} onChange={(event)=>setFirstCommand(parseInt(event.target.value))}>
                 {
                     commands.slice(4).map(command=><option key={command} value={command}>{command}</option>)
                 }
             </select>
-            <select style={localStyles}>
+            <select style={localStyles} onChange={(event)=>setSecondCommand(event.target.value)}>
                 {
                     commands.slice(0,4).map(command=><option key={command} value={command}>{command}</option>)
                 }
             </select>
-            <select style={localStyles}>
+            <select style={localStyles} onChange={(event)=>setThirdCommand(parseInt(event.target.value))}>
                 {
                     commands.slice(4).map(command=><option key={command} value={command}>{command}</option>)
                 }
             </select>
-            <select style={localStyles}>
+            <select style={localStyles} onChange={(event)=>setFourthCommand(event.target.value)}>
                 {
                     commands.slice(0,4).map(command=><option key={command} value={command}>{command}</option>)
                 }
             </select>
-            <Button type='primary'>Send</Button>
+            <Button onClick={mfmHandler} type='primary'>Send</Button>
         </div>
     )
 }
