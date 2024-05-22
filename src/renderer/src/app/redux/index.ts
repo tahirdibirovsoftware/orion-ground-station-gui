@@ -9,6 +9,7 @@ import {persistedFlightDataStoreReducer as pfdsr} from '@renderer/widgets/DataCo
 import persistStore from 'redux-persist/es/persistStore';
 import persistReducer from 'redux-persist/es/persistReducer';
 import { persistedFlightDataStoreSliceConfig } from '@renderer/widgets/DataController/model/persistedFlightDataStoreSlice';
+import { controllingDataReducer } from '@renderer/widgets/SatController';
 
 const persistedFlightDataStoreReducer = persistReducer(persistedFlightDataStoreSliceConfig, pfdsr.default)
 
@@ -21,7 +22,8 @@ const store = configureStore({
     dataControllerReducer: dataControllerReducer.default,
     flightDataStoreReducer: flightDataStoreReducer.default,
     iotDataStoreReducer: iotDataStoreReducer.default,
-    persistedFlightDataStoreReducer
+    controllingDataReducer: controllingDataReducer.default,
+    persistedFlightDataStoreReducer,
   },
 });
 

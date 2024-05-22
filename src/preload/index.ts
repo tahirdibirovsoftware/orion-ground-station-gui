@@ -29,6 +29,9 @@ const api = {
     ipcRenderer.on('iot-data', (_, data) => callback(data));
   },
   disconnectIot: (path: string): void => ipcRenderer.send('disconnect-iot', { path }),
+  controlTheParachute: (data: string, path: string): void => { ipcRenderer.send('sent-parachute-data', {data, path}) },
+  sendIotData: (data: string, path: string): void => { ipcRenderer.send('sent-iot-data', {data, path}) },
+  controlTheMfm: (data: string, path: string): void => { ipcRenderer.send('sent-mfm-data', {data, path}) }
 };
 
 if (process.contextIsolated) {

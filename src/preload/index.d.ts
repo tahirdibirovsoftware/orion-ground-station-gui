@@ -11,6 +11,9 @@ declare global {
       connectToIot: (path: string, baudRate: number) => void;
       getIotData: (callback: (data: IIoTTelemetry) => void) => void;
       disconnectIot: (path: string) => void;
+      controlTheParachute: (data: string, path: string) => void;
+      sendIotData: (data: string, path: string) => void;
+      controlTheMfm: (data: string, path: string) => void;
     };
   }
 }

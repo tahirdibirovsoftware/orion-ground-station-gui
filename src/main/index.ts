@@ -118,6 +118,18 @@ app.whenReady().then(() => {
     }
   });
 
+
+  ipcMain.on('sent-parachute-data', (_, {data, path})=>{
+    console.log('Parachute: ',data, path)
+  })
+  ipcMain.on('sent-iot-data', (_, {data, path})=>{
+    console.log('IoT: ', data, path)
+  })
+  ipcMain.on('sent-mfm-data', (_, {data, path})=>{
+    console.log('MFM: ', data, path)
+  })
+
+
   const monitor = udev.monitor();
   monitor.on('add', async () => {
     const ports = await portlist();
