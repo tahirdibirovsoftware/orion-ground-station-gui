@@ -49,7 +49,7 @@ const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
 
     return (
         <div className={style.Port}>
-            <span>PORT: </span>
+            <span>Source: </span>
             <select ref={selectRef} onChange={setDevice}>
                 {!isPortAvailable() ? (
                     <option key="not-connected">Not Connected</option>
