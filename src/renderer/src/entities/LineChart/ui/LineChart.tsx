@@ -112,7 +112,7 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
   };
 
   const zoomer = (): void => {
-    if (!zoom) {
+    if (!zoom && isActive) {
       setLocalStyles({
         ...localeStyles,
         zIndex: 100,
