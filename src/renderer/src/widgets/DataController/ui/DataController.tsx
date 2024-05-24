@@ -1,32 +1,35 @@
 import style from './DataController.module.scss';
 import { Button } from 'antd';
 import { PlayCircleOutlined, StopOutlined } from '@ant-design/icons';
-import { useAppSelector } from '@renderer/app/redux/hooks';
+import { DataFlow } from '../model/types';
+import { useState } from 'react';
+
 
 const DataController = (): JSX.Element => {
 
-    const flowState = useAppSelector(state => state.dataControllerReducer.dataFlow);
+ 
+    const [flowState, setFlowState] = useState<DataFlow>('started')
   
 
-    const startFlow = (): void => {
-       
+    const startWriting = (): void => {
+       setFlowState('started')
     };
 
-    const stopFlow = (): void => {
+    const stopWriting = (): void => {
       
     };
 
-    const continueFlow = (): void => {
+    const continueWriting = (): void => {
        
     };
 
     switch (flowState) {
         case 'started':
-            return <Button onClick={stopFlow} className={style.stopButton} icon={<StopOutlined />}>Terminate</Button>;
+            return <Button onClick={stopWriting} className={style.stopButton} icon={<StopOutlined />}>Terminate</Button>;
         case 'stopped':
-            return <Button onClick={startFlow} className={style.startButton} icon={<PlayCircleOutlined />}>Run</Button>;
+            return <Button onClick={startWriting} className={style.startButton} icon={<PlayCircleOutlined />}>Run</Button>;
         case 'waited':
-            return <Button onClick={continueFlow} className={style.stopButton} icon={<StopOutlined />}>Continue</Button>;
+            return <Button onClick={continueWriting} className={style.stopButton} icon={<StopOutlined />}>Continue</Button>;
         default:
             return <></>;
     }
