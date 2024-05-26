@@ -123,20 +123,29 @@ app.whenReady().then(() => {
 
   ipcMain.on('sent-parachute-data', (_, {data, path})=>{
     const port = flightPorts.get(path)
+    if(port){
     port.write(serialize(data))
+    }
+    return;
   })
 
 
 
   ipcMain.on('sent-iot-data', (_, {data, path})=>{
       const port = flightPorts.get(path)
+      if(port){
       port.write(serialize(data))
+      }
+      return;
   })
 
 
   ipcMain.on('sent-mfm-data', (_, {data, path})=>{
     const port = flightPorts.get(path)
-    port.write(serialize(data))
+    if(port){
+      port.write(serialize(data))
+    }
+    return;
   })
 
 
