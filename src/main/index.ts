@@ -12,6 +12,7 @@ import { serialize } from './PortConfig/lib/serializers';
 function createWindow():void {
   const mainWindow = new BrowserWindow({
     show: false,
+    frame: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
