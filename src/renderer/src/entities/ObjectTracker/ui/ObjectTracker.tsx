@@ -25,7 +25,7 @@ interface ObjectTrackerProps {
 const ObjectTracker = ({ pitch, yaw, roll }: ObjectTrackerProps): JSX.Element => {
   const { theme } = useContext(ThemeContext);
   const ref = useRef<THREE.Group>(null);
-  const object = useLoader(OBJLoader, rocketPath) as THREE.Group;
+  const object = useLoader(OBJLoader, rocketPathFromModule) as THREE.Group;
 
   useEffect(() => {
     if (ref.current) {
