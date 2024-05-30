@@ -8,8 +8,12 @@ import style from './ObjectTracker.module.scss';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
 import { useAppSelector } from '@renderer/app/redux/hooks';
-import rocketPath from './STL/rocket.obj';
 
+// Conditionally set rocketPath based on the mode
+const rocketPath = import.meta.env.MODE === 'production' ? rocketPathFromModule : './STL/rocket.obj';
+
+// Import rocketPath for production mode
+import rocketPathFromModule from './STL/rocket.obj';
 
 
 interface ObjectTrackerProps {
