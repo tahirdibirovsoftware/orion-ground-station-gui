@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: orion-ground-station-gui
+productName: Orion Ground Station
 directories:
   buildResources: build
 files:

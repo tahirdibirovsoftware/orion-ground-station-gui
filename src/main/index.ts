@@ -72,7 +72,7 @@ app.whenReady().then(() => {
     flightPorts.set(path, port);
   });
 
-  ipcMain.on('disconnect-flight', (event, data) => {
+  ipcMain.on('disconnect-flight', (_, data) => {
     if (!data || !data.path) {
       console.error('Invalid disconnect-flight data:', data);
       return;
@@ -105,7 +105,7 @@ app.whenReady().then(() => {
     iotPorts.set(path, port);
   });
 
-  ipcMain.on('disconnect-iot', (event, data) => {
+  ipcMain.on('disconnect-iot', (_, data) => {
     if (!data || !data.path) {
       console.error('Invalid disconnect-iot data:', data);
       return;

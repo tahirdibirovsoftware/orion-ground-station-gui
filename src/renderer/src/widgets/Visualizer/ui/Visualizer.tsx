@@ -54,7 +54,7 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
         mainYTitle='Temperature (&deg;C)'
         optionalYTitle=''
       />
-      <Map getGpsData={() => currentPosition} initialPosition={[33, 33]} />
+      <Map getGpsData={() => currentPosition}  />
       <ObjectTracker pitch={pitch} yaw={yaw} roll={roll}/>
       <Cam/>
     </div>

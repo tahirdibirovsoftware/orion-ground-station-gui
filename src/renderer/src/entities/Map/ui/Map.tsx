@@ -7,6 +7,16 @@ import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet
 import 'leaflet/dist/leaflet.css';
 import { ExpandAltOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@renderer/app/redux/hooks';
+import icon from "leaflet/dist/images/marker-icon.png";
+import L from "leaflet";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+const DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 interface MapProps {
   getGpsData: () => [number, number]; // Function to get GPS data
