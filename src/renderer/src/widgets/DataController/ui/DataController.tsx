@@ -1,38 +1,59 @@
 import style from './DataController.module.scss';
-import { Button } from 'antd';
-import { PlayCircleOutlined, StopOutlined } from '@ant-design/icons';
+
 import { DataFlow } from '../model/types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 
 
 const DataController = (): JSX.Element => {
 
  
-    const [flowState, setFlowState] = useState<DataFlow>('started')
-  
+    const [flowState, setFlowState] = useState<DataFlow>('waited')
+    const {theme} = useContext(ThemeContext)
 
     const startWriting = (): void => {
        setFlowState('started')
     };
 
     const stopWriting = (): void => {
-      
+        setFlowState('stopped')
     };
 
     const continueWriting = (): void => {
-       
+       setFlowState('started')
     };
 
-    switch (flowState) {
-        case 'started':
-            return <Button onClick={stopWriting} className={style.stopButton} icon={<StopOutlined />}>Terminate</Button>;
-        case 'stopped':
-            return <Button onClick={startWriting} className={style.startButton} icon={<PlayCircleOutlined />}>Run</Button>;
-        case 'waited':
-            return <Button onClick={continueWriting} className={style.stopButton} icon={<StopOutlined />}>Continue</Button>;
-        default:
-            return <></>;
+    const localeStyles:React.CSSProperties = {
+        ...themeSetter(theme)
     }
+
+    const recordState = (): string =>{
+        if(flowState==='started') return 'Recording...';
+        else if(flowState==='stopped') return 'Not Recording';
+        else if(flowState==='waited') return 'Continue Recording'
+        return ''
+    }
+
+    const ButtonType = ():JSX.Element =>{
+        switch (flowState) {
+            case 'started':
+                return <button onClick={stopWriting} className={style.stopButton}></button>;
+            case 'stopped':
+                return <button onClick={startWriting} className={style.recordButton}></button>;
+            case 'waited':
+                return <button onClick={continueWriting} className={style.resumeButton}></button>;
+            default:
+                return <></>;
+        }
+    }
+
+    return (
+        <div className={style.DataController} style={localeStyles}>
+            <ButtonType/>
+            <span className="recordState">{recordState()}</span>
+        </div>
+    )
 };
 
 export {DataController}

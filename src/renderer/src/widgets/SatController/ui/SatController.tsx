@@ -11,6 +11,7 @@ import { ParachuteCR } from '../../../features/ParachuteCR'
 import { SatStatus } from '../../../entities/SatStatus'
 import { ISatController } from '../model/types'
 import { DescentRate } from '@renderer/entities/DescentRate'
+import { DataController } from '@renderer/widgets/DataController'
 
 
 const SatController:FC<ISatController> = ({flightData, iotData}):JSX.Element => {
@@ -34,6 +35,7 @@ const SatController:FC<ISatController> = ({flightData, iotData}):JSX.Element => 
             <ParachuteCR/>
             <Ias errorCode={errorCode}/>
             <ErrorTerminal errorCode={errorCode}/>
+            <DataController/>
         </div>
     )
 }

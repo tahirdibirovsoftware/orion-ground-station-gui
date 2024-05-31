@@ -18,7 +18,7 @@ const Header:FC<IHeader> = ({flightData}):JSX.Element => {
         <div style={localStyles} className={style.Header}>
             <MenuToggler/>
             <Logo size={2} title='Orion'/>
-            <StatusBar flightData={flightData}/>
+            <StatusBar flightData={flightData}/>   
         </div>
     )
 }

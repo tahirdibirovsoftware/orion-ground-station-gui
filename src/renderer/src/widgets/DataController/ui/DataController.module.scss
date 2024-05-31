@@ -2,11 +2,12 @@
     display: flex;
     padding: .3%;
     overflow: hidden;
-    border-radius: .3rem;
-    width: 25%;
-    justify-content: center;
+    border-radius: 3%;
+    justify-content: flex-start;
     align-items: center;
     gap: 5%;
+    padding: 5%;
+    width: 95%;
 }
 
 .baseButton{
@@ -17,15 +18,35 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    font-size: 12px;
     padding: .5rem;
+    cursor: pointer;
 }
 
-.startButton{
-    background-color: green;
+.baseButton:focus{
+    opacity: .2;
+}
+.baseButton:hover{
+    opacity: .4;
+}
+
+.recordButton{
+    background-color: red;
     @extend .baseButton;
+    border-radius: 50%;
     
 }
 .stopButton{
-    background-color: red;
+    background-color: #333333;
     @extend .baseButton;
+    border-radius: 10%;
+}
+
+.resumeButton{
+    background-color: gold;
+    @extend .baseButton;
+    border-radius: 50%;
 }
