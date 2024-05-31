@@ -31,7 +31,7 @@ const DataController = (): JSX.Element => {
     const recordState = (): string =>{
         if(flowState==='started') return 'Recording...';
         else if(flowState==='stopped') return 'Not Recording';
-        else if(flowState==='waited') return 'Continue Recording'
+        else if(flowState==='waited') return 'Resume Recording'
         return ''
     }
 
