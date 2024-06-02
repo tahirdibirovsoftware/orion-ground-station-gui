@@ -10,7 +10,7 @@ import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
 import { useAppSelector } from '@renderer/app/redux/hooks';
 
 // Conditionally set rocketPath based on the mode
-const rocketPath = import.meta.env.MODE === 'production' ? rocketPathFromModule : './STL/rocket.obj';
+// const rocketPath = import.meta.env.MODE === 'production' ? rocketPathFromModule : './STL/rocket.obj';
 
 // Import rocketPath for production mode
 import rocketPathFromModule from './STL/rocket.obj';
