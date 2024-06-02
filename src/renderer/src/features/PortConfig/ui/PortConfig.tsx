@@ -12,6 +12,10 @@ const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
     const paths = useAppSelector(state => state.portConfigReducer.flightPath);
     const selectRef = useRef<HTMLSelectElement>(null);
     const devices = useAppSelector(state => state.portConfigReducer.devices);
+    const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath);
+    const iotPath = useAppSelector(state=>state.portConfigReducer.iotPath);
+    const isFlightConnected = useAppSelector(state=>state.connectorReducer.flightConnect)==='connected';
+    const isIotConnected = useAppSelector(state=>state.connectorReducer.iotConnect)==='connected';
     
     const deviceHandler = (devices: SerialPortListType): void => {
         dispatch(setDevices(devices));
@@ -47,16 +51,28 @@ const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
 
     const isPortAvailable = (): number | undefined => devices.filter(device => device.manufacturer).length;
 
+    const getPathName = ():string =>{
+        if(type==='flight') return flightPath
+        if(type==='iot') return iotPath
+        return ''
+    }
+
+    const isConnected = ():boolean => {
+        if(type==='flight') return isFlightConnected;
+        if(type==='iot') return isIotConnected;
+        return false;
+    }
+
     return (
         <div className={style.Port}>
             <span>Source: </span>
-            <select ref={selectRef} onChange={setDevice}>
+            <select disabled={isConnected()} ref={selectRef} onChange={setDevice}>
                 {!isPortAvailable() ? (
                     <option key="not-connected">Not Connected</option>
                 ) : (
                     <>
                         <option key="not-selected" value="">
-                            Not Selected
+                            {getPathName() || 'Not Selected'}
                         </option>
                         {devices.map(device =>
                             device.manufacturer ? (
