@@ -9,7 +9,7 @@ import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvide
 const DataController = (): JSX.Element => {
 
  
-    const [flowState, setFlowState] = useState<DataFlow>('waited')
+    const [flowState, setFlowState] = useState<DataFlow>()
     const {theme} = useContext(ThemeContext)
 
     const startWriting = (): void => {
