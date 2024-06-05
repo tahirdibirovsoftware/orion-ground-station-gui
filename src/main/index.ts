@@ -167,6 +167,7 @@ app.whenReady().then(() => {
   });
 
   // Stop Writing to DB
+
   ipcMain.on('stop-db-writing', async (_, { path }) => {
     if (!flightPorts.has(path)) {
       console.error('Port not connected:', path);
@@ -176,43 +177,54 @@ app.whenReady().then(() => {
     try {
       await convertSQLiteToExcel(sqlitePath, excelPath);
       const database = await db;
-
-      // Start a transaction
-      await new Promise<void>((resolve, reject) => {
-        database.run('BEGIN TRANSACTION', (err) => {
-          if (err) {
-            console.error('Error starting transaction:', (err as Error).message);
-            reject(err);
-          } else {
-            resolve();
-          }
+  
+      // Ensure no overlapping transactions
+      const beginTransaction = ():Promise<void> => {
+        return new Promise<void>((resolve, reject) => {
+          database.run('BEGIN TRANSACTION', (err) => {
+            if (err) {
+              console.error('Error starting transaction:', (err as Error).message);
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
         });
-      });
-
-      // Delete data from the table
-      await new Promise<void>((resolve, reject) => {
-        database.run('DELETE FROM FLIGHT_DATA', (err) => {
-          if (err) {
-            console.error('Error deleting data:', (err as Error).message);
-            reject(err);
-          } else {
-            resolve();
-          }
+      };
+  
+      const deleteData = ():Promise<void> => {
+        return new Promise<void>((resolve, reject) => {
+          database.run('DELETE FROM FLIGHT_DATA', (err) => {
+            if (err) {
+              console.error('Error deleting data:', (err as Error).message);
+              reject(err);
+            } else {
+              console.log('Data deletion query executed successfully.');
+              resolve();
+            }
+          });
         });
-      });
-
-      // Commit the transaction
-      await new Promise<void>((resolve, reject) => {
-        database.run('COMMIT', (err) => {
-          if (err) {
-            console.error('Error committing transaction:', (err as Error).message);
-            reject(err);
-          } else {
-            resolve();
-          }
+      };
+  
+      const commitTransaction = ():Promise<void> => {
+        return new Promise<void>((resolve, reject) => {
+          database.run('COMMIT', (err) => {
+            if (err) {
+              console.error('Error committing transaction:', (err as Error).message);
+              reject(err);
+            } else {
+              console.log('Transaction committed successfully.');
+              resolve();
+            }
+          });
         });
-      });
-
+      };
+  
+      // Execute transaction sequentially
+      await beginTransaction();
+      await deleteData();
+      await commitTransaction();
+  
       console.log('Database cleared successfully.');
     } catch (error) {
       console.error('Error during stop-db-writing:', (error as Error).message);
@@ -220,6 +232,9 @@ app.whenReady().then(() => {
       detachDbWriter(port);
     }
   });
+  
+
+
 
   const monitor = udev.monitor();
   monitor.on('add', async () => {
