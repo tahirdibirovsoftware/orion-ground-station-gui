@@ -9,56 +9,54 @@ import { Workbook } from 'exceljs';
  * @returns A promise that resolves when the Excel file is created.
  */
 export async function convertSQLiteToExcel(sqliteFilePath: string, excelFilePath: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        const db = new sqlite3.Database(sqliteFilePath, (err) => {
-            if (err) {
-                reject(new Error(`Error connecting to the database: ${err.message}`));
-                return;
-            }
-        });
-
-        db.serialize(() => {
-          
-            db.all('SELECT * FROM FLIGHT_DATA', async (err, rows: any[]) => {
-                if (err) {
-                    reject(new Error(`Error querying the database: ${err.message}`));
-                    return;
-                }
-
-                if (rows.length === 0) {
-                    reject(new Error('No data found in the table.'));
-                    return;
-                }
-
-                try {
-                    const workbook = new Workbook();
-                    const worksheet = workbook.addWorksheet('Sheet1');
-
-                    // Add column headers
-                    worksheet.columns = Object.keys(rows[0]).map((key) => ({
-                        header: key,
-                        key,
-                    }));
-
-                    // Add rows
-                    rows.forEach((row) => {
-                        worksheet.addRow(row);
-                    });
-
-                    // Save the workbook to a file
-                    await workbook.xlsx.writeFile(excelFilePath);
-                    resolve();
-                } catch (writeErr: any) {
-                    reject(new Error(`Error writing Excel file: ${writeErr.message}`));
-                } finally {
-                    db.close((closeErr) => {
-                        if (closeErr) {
-                            console.error(`Error closing the database: ${closeErr.message}`);
-                        }
-                    });
-                }
-            });
-        });
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(sqliteFilePath, (err) => {
+      if (err) {
+        reject(new Error(`Error connecting to the database: ${err.message}`));
+        return;
+      }
     });
-}
 
+    db.serialize(() => {
+      db.all('SELECT * FROM FLIGHT_DATA', async (err, rows: any[]) => {
+        if (err) {
+          reject(new Error(`Error querying the database: ${err.message}`));
+          return;
+        }
+
+        if (rows.length === 0) {
+          reject(new Error('No data found in the table.'));
+          return;
+        }
+
+        try {
+          const workbook = new Workbook();
+          const worksheet = workbook.addWorksheet('Sheet1');
+
+          // Add column headers
+          worksheet.columns = Object.keys(rows[0]).map((key) => ({
+            header: key,
+            key,
+          }));
+
+          // Add rows
+          rows.forEach((row) => {
+            worksheet.addRow(row);
+          });
+
+          // Save the workbook to a file
+          await workbook.xlsx.writeFile(excelFilePath);
+          resolve();
+        } catch (writeErr: any) {
+          reject(new Error(`Error writing Excel file: ${writeErr.message}`));
+        } finally {
+          db.close((closeErr) => {
+            if (closeErr) {
+              console.error(`Error closing the database: ${closeErr.message}`);
+            }
+          });
+        }
+      });
+    });
+  });
+}
