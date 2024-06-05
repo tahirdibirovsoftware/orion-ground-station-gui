@@ -1,21 +1,23 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron';
+import { app, shell, BrowserWindow, ipcMain} from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import { portlist } from './PortConfig/lib/portList';
 import udev from 'udev';
-import { flightPortStarter } from './PortConfig/lib/flightPortManagement';
+import { flightPortStarter, writeDataInDb } from './PortConfig/lib/flightPortManagement';
 import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
 import { serialize } from './PortConfig/lib/serializers';
 import { initBaseDir } from './common/dirConfig';
+import { initializeDb } from './DbConfig';
+import { SerialPort } from 'serialport';
 
 initBaseDir();
+const db = initializeDb();
 
-function createWindow():void {
+function createWindow(): void {
   const mainWindow = new BrowserWindow({
     show: false,
-    // frame: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -73,6 +75,7 @@ app.whenReady().then(() => {
       event.sender.send('flight-data', data);
     });
     flightPorts.set(path, port);
+    flightPorts.set('baudRate', baudRate);
   });
 
   ipcMain.on('disconnect-flight', (_, data) => {
@@ -106,6 +109,7 @@ app.whenReady().then(() => {
       event.sender.send('iot-data', data);
     });
     iotPorts.set(path, port);
+    iotPorts.set('baudRate', baudRate)
   });
 
   ipcMain.on('disconnect-iot', (_, data) => {
@@ -123,35 +127,53 @@ app.whenReady().then(() => {
     }
   });
 
-
-
-  ipcMain.on('sent-parachute-data', (_, {data, path})=>{
-    const port = flightPorts.get(path)
-    if(port){
-    port.write(serialize(data))
+  ipcMain.on('sent-parachute-data', (_, {data, path}) => {
+    const port = flightPorts.get(path);
+    if (port) {
+      port.write(serialize(data));
     }
     return;
-  })
+  });
 
-
-
-  ipcMain.on('sent-iot-data', (_, {data, path})=>{
-      const port = flightPorts.get(path)
-      if(port){
-      port.write(serialize(data))
-      }
-      return;
-  })
-
-
-  ipcMain.on('sent-mfm-data', (_, {data, path})=>{
-    const port = flightPorts.get(path)
-    if(port){
-      port.write(serialize(data))
+  ipcMain.on('sent-iot-data', (_, {data, path}) => {
+    const port = flightPorts.get(path);
+    if (port) {
+      port.write(serialize(data));
     }
     return;
-  })
+  });
 
+  ipcMain.on('sent-mfm-data', (_, {data, path}) => {
+    const port = flightPorts.get(path);
+    if (port) {
+      port.write(serialize(data));
+    }
+    return;
+  });
+
+  // Database Configuration
+  const writingPorts = new Map();
+
+  ipcMain.on('start-db-writing', async (_, data: {baudRate: number, path: string}) => {
+    if (!data || !data.baudRate || !data.path) return;
+    const {baudRate, path} = data;
+    
+    const port = writeDataInDb(await db, path, baudRate)
+
+    writingPorts.set(path, port);
+  });
+
+
+  ipcMain.on('stop-db-writing', async (_, { path }) => {
+    const writingPort = writingPorts.get(path) as SerialPort;
+  
+    if (writingPort) {
+      // Remove the specific listener for database writing
+      writingPort.removeAllListeners('db-writing')
+      writingPorts.delete(path);
+    }
+    (await db).run(`DELETE FROM FLIGHT_DATA`);
+  });
 
   const monitor = udev.monitor();
   monitor.on('add', async () => {

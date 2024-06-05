@@ -4,7 +4,7 @@ import { dirname, resolve } from "path";
 import { open, Database } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
-const dbPath = resolve(homedir(), 'orion', 'telemetry.sqlite');
+const dbPath = resolve(homedir(), 'orion', 'telemetry', 'cache');
 
 export const initializeDb = async (): Promise<Database> => {
     // Ensure the directory exists
@@ -13,9 +13,9 @@ export const initializeDb = async (): Promise<Database> => {
         mkdirSync(dir, { recursive: true });
     }
 
-    const dbExists = existsSync(dbPath);
+    const dbExists = existsSync(resolve(dbPath, 'telemetry.sqlite'));
     const db = await open({
-        filename: dbPath,
+        filename: resolve(dbPath, 'telemetry.sqlite'),
         driver: sqlite3.Database
     });
 
