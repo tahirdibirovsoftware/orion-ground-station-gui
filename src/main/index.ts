@@ -10,6 +10,8 @@ import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
 import { serialize } from './PortConfig/lib/serializers';
 import { initBaseDir } from './common/dirConfig';
 import { initializeDb } from './DbConfig';
+import { convertSQLiteToExcel } from './common/excelGen';
+import { excelPath, sqlitePath } from './common/paths';
 
 initBaseDir();
 const db = initializeDb();
@@ -151,6 +153,8 @@ app.whenReady().then(() => {
   });
 
   // Database Configuration
+
+  //Start Writing to DB
   ipcMain.on('start-db-writing', async (_, data: { baudRate: number, path: string }) => {
     if (!data || !data.baudRate || !data.path) return;
     const { path } = data;
@@ -162,15 +166,64 @@ app.whenReady().then(() => {
     attachDbWriter(port, await db);
   });
 
+
+  //Stop Writing to DB
+
   ipcMain.on('stop-db-writing', async (_, { path }) => {
     if (!flightPorts.has(path)) {
-      console.error('Port not connected:', path);
-      return;
+        console.error('Port not connected:', path);
+        return;
     }
     const port = flightPorts.get(path);
-    detachDbWriter(port);
-    (await db).run(`DELETE FROM FLIGHT_DATA`);
-  });
+    try {
+        await convertSQLiteToExcel(sqlitePath, excelPath);
+        const database = await db;
+
+        // Start a transaction
+        await new Promise<void>((resolve, reject) => {
+            database.run('BEGIN TRANSACTION', (err) => {
+                if (err) {
+                    console.error('Error starting transaction:', (err as Error).message);
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+
+        // Delete data from the table
+        await new Promise<void>((resolve, reject) => {
+            database.run('DELETE FROM FLIGHT_DATA', (err) => {
+                if (err) {
+                    console.error('Error deleting data:', (err as Error).message);
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+
+        // Commit the transaction
+        await new Promise<void>((resolve, reject) => {
+            database.run('COMMIT', (err) => {
+                if (err) {
+                    console.error('Error committing transaction:', (err as Error).message);
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+
+        console.log('Database cleared successfully.');
+    } catch (error) {
+        console.error('Error during stop-db-writing:', (error as Error).message);
+    } finally {
+        detachDbWriter(port);
+    }
+});
+
+
 
   const monitor = udev.monitor();
   monitor.on('add', async () => {
