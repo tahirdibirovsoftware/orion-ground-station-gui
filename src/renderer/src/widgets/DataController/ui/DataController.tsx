@@ -4,6 +4,7 @@ import { DataFlow } from '../model/types';
 import { useContext, useState } from 'react';
 import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
+import { useAppSelector } from '@renderer/app/redux/hooks';
 
 
 const DataController = (): JSX.Element => {
@@ -11,12 +12,16 @@ const DataController = (): JSX.Element => {
  
     const [flowState, setFlowState] = useState<DataFlow>('stopped')
     const {theme} = useContext(ThemeContext)
+    const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath)
+    const flightBaudRate = useAppSelector(state=>state.baudRateReducer.flightBaudRate)
 
     const startWriting = (): void => {
+        window.api.startDbWriting(flightPath, flightBaudRate)
        setFlowState('started')
     };
 
     const stopWriting = (): void => {
+        window.api.stopDbWriting(flightPath)
         setFlowState('stopped')
     };
 

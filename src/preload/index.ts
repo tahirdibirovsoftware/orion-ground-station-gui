@@ -31,7 +31,9 @@ const api = {
   disconnectIot: (path: string): void => ipcRenderer.send('disconnect-iot', { path }),
   controlTheParachute: (data: string, path: string): void => { ipcRenderer.send('sent-parachute-data', {data, path}) },
   sendIotData: (data: string, path: string): void => { ipcRenderer.send('sent-iot-data', {data, path}) },
-  controlTheMfm: (data: string, path: string): void => { ipcRenderer.send('sent-mfm-data', {data, path}) }
+  controlTheMfm: (data: string, path: string): void => { ipcRenderer.send('sent-mfm-data', {data, path}) },
+  startDbWriting: (path:string, baudRate: number):void =>ipcRenderer.send('start-db-writing', {path, baudRate}),
+  stopDbWriting: (path: string):void => ipcRenderer.send('stop-db-writing', {path})
 };
 
 if (process.contextIsolated) {

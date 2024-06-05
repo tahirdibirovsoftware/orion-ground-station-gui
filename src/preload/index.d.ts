@@ -14,6 +14,8 @@ declare global {
       controlTheParachute: (data: string, path: string) => void;
       sendIotData: (data: string, path: string) => void;
       controlTheMfm: (data: string, path: string) => void;
+      startDbWriting: (path:string, baudRate: number) => void,
+      stopDbWriting: (path: string)=>void
     };
   }
 }
