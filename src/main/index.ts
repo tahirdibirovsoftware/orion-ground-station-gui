@@ -1,16 +1,15 @@
-import { app, shell, BrowserWindow, ipcMain} from 'electron';
+import { app, shell, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import { portlist } from './PortConfig/lib/portList';
 import udev from 'udev';
-import { flightPortStarter, writeDataInDb } from './PortConfig/lib/flightPortManagement';
+import { flightPortStarter, attachDbWriter, detachDbWriter } from './PortConfig/lib/flightPortManagement';
 import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
 import { serialize } from './PortConfig/lib/serializers';
 import { initBaseDir } from './common/dirConfig';
 import { initializeDb } from './DbConfig';
-import { SerialPort } from 'serialport';
 
 initBaseDir();
 const db = initializeDb();
@@ -65,17 +64,17 @@ app.whenReady().then(() => {
       return;
     }
     const { path, baudRate } = data;
+    let port;
     if (flightPorts.has(path)) {
-      const existingPort = flightPorts.get(path);
-      if (existingPort.isOpen) {
-        existingPort.close();
+      port = flightPorts.get(path);
+      if (port.isOpen) {
+        port.close();
       }
     }
-    const port = flightPortStarter(baudRate, path, (data: ITelemetry) => {
+    port = flightPortStarter(baudRate, path, (data: ITelemetry) => {
       event.sender.send('flight-data', data);
     });
     flightPorts.set(path, port);
-    flightPorts.set('baudRate', baudRate);
   });
 
   ipcMain.on('disconnect-flight', (_, data) => {
@@ -99,17 +98,17 @@ app.whenReady().then(() => {
       return;
     }
     const { path, baudRate } = data;
+    let port;
     if (iotPorts.has(path)) {
-      const existingPort = iotPorts.get(path);
-      if (existingPort.isOpen) {
-        existingPort.close();
+      port = iotPorts.get(path);
+      if (port.isOpen) {
+        port.close();
       }
     }
-    const port = iotPortStarter(baudRate, path, (data: IIoTTelemetry) => {
+    port = iotPortStarter(baudRate, path, (data: IIoTTelemetry) => {
       event.sender.send('iot-data', data);
     });
     iotPorts.set(path, port);
-    iotPorts.set('baudRate', baudRate)
   });
 
   ipcMain.on('disconnect-iot', (_, data) => {
@@ -127,7 +126,7 @@ app.whenReady().then(() => {
     }
   });
 
-  ipcMain.on('sent-parachute-data', (_, {data, path}) => {
+  ipcMain.on('sent-parachute-data', (_, { data, path }) => {
     const port = flightPorts.get(path);
     if (port) {
       port.write(serialize(data));
@@ -135,7 +134,7 @@ app.whenReady().then(() => {
     return;
   });
 
-  ipcMain.on('sent-iot-data', (_, {data, path}) => {
+  ipcMain.on('sent-iot-data', (_, { data, path }) => {
     const port = flightPorts.get(path);
     if (port) {
       port.write(serialize(data));
@@ -143,7 +142,7 @@ app.whenReady().then(() => {
     return;
   });
 
-  ipcMain.on('sent-mfm-data', (_, {data, path}) => {
+  ipcMain.on('sent-mfm-data', (_, { data, path }) => {
     const port = flightPorts.get(path);
     if (port) {
       port.write(serialize(data));
@@ -152,26 +151,24 @@ app.whenReady().then(() => {
   });
 
   // Database Configuration
-  const writingPorts = new Map();
-
-  ipcMain.on('start-db-writing', async (_, data: {baudRate: number, path: string}) => {
+  ipcMain.on('start-db-writing', async (_, data: { baudRate: number, path: string }) => {
     if (!data || !data.baudRate || !data.path) return;
-    const {baudRate, path} = data;
-    
-    const port = writeDataInDb(await db, path, baudRate)
-
-    writingPorts.set(path, port);
+    const { path } = data;
+    if (!flightPorts.has(path)) {
+      console.error('Port not connected:', path);
+      return;
+    }
+    const port = flightPorts.get(path);
+    attachDbWriter(port, await db);
   });
 
-
   ipcMain.on('stop-db-writing', async (_, { path }) => {
-    const writingPort = writingPorts.get(path) as SerialPort;
-  
-    if (writingPort) {
-      // Remove the specific listener for database writing
-      writingPort.removeAllListeners('db-writing')
-      writingPorts.delete(path);
+    if (!flightPorts.has(path)) {
+      console.error('Port not connected:', path);
+      return;
     }
+    const port = flightPorts.get(path);
+    detachDbWriter(port);
     (await db).run(`DELETE FROM FLIGHT_DATA`);
   });
 

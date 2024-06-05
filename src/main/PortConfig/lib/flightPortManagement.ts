@@ -1,42 +1,35 @@
 import { ReadlineParser, SerialPort } from "serialport";
 import { flightDataParser } from "./parsers";
 import { Database } from "sqlite";
-import { ITelemetry } from "../../../global/types/types";
 import { flightQuery, flightQueryData } from "../../DbConfig/queries";
-
-// const mockTelemetry = '154*0*11111*0:0:2000:0:0:0*1008.78*0.00*10.13*0.00*10.13*9.93*22.41*8.40*0.000000*0.000000*0.00*59.77*101.63*181.80*0N0N*0.00*488776'
-
-
+import { ITelemetry } from "../../../global/types/types";
 
 export const flightPortStarter = (baudRate: number, path: string, callback): SerialPort => {
-  console.log('Main', baudRate)
-    const flightPort = new SerialPort({ baudRate, path })
-    const parser = flightPort.pipe(new ReadlineParser())
-   parser.on('data', (data: string) => {
-        callback(flightDataParser(data, '*'))
-    })
-    return flightPort
-}
+  console.log('Main', baudRate);
+  const flightPort = new SerialPort({ baudRate, path });
+  const parser = flightPort.pipe(new ReadlineParser());
+  parser.on('data', (data: string) => {
+    callback(flightDataParser(data, '*'));
+  });
+  return flightPort;
+};
 
-
-
-export const writeDataInDb = (db: Database, path: string, baudRate: number): SerialPort => {
-
-  const port = new SerialPort({
-    path,
-    baudRate
-  })
-
-  
+export const attachDbWriter = (port: SerialPort, db: Database): void => {
   const parser = port.pipe(new ReadlineParser());
-  parser.on('db-writing', async (data:ITelemetry)=>{
-      db.run(
-        flightQuery, flightQueryData(data)
-      )
-  })
-  
-  return port
 
-}
+  const dbWriter = async (data: string):Promise<void> => {
+    const telemetryData = flightDataParser(data, '*') as ITelemetry;
+    await db.run(flightQuery, flightQueryData(telemetryData));
+  };
 
-//  flightPortStarter(57600, '/dev/ttyACM0', console.log)
+  parser.on('data', dbWriter);
+
+  port.on('close', () => {
+    parser.removeListener('data', dbWriter);
+  });
+};
+
+export const detachDbWriter = (port: SerialPort): void => {
+  const parser = port.pipe(new ReadlineParser());
+  parser.removeAllListeners('data');
+};
