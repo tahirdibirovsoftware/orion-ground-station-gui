@@ -8,6 +8,9 @@ import { flightPortStarter } from './PortConfig/lib/flightPortManagement';
 import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
 import { serialize } from './PortConfig/lib/serializers';
+import { initBaseDir } from './common/dirConfig';
+
+initBaseDir();
 
 function createWindow():void {
   const mainWindow = new BrowserWindow({

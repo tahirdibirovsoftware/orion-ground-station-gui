@@ -50,6 +50,8 @@
     "react-router-dom": "^6.22.3",
     "redux-persist": "^6.0.0",
     "serialport": "^12.0.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "three": "^0.164.1",
     "udev": "^1.0.1",
     "usb": "^2.12.1",
