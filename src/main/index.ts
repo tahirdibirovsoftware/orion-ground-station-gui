@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron';
+import { app, shell, BrowserWindow, ipcMain} from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
@@ -11,7 +11,7 @@ import { serialize } from './PortConfig/lib/serializers';
 import { initBaseDir } from './common/dirConfig';
 import { initializeDb } from './DbConfig';
 import { convertSQLiteToExcel } from './common/excelGen';
-import { excelPath, sqlitePath } from './common/paths';
+import { excelPath, outputPath, sqlitePath } from './common/paths';
 
 initBaseDir();
 const db = initializeDb();
@@ -234,6 +234,12 @@ app.whenReady().then(() => {
   });
   
 
+
+  //Handle Dialog
+
+  ipcMain.on('open-output-dir-dialog', async () => {
+   shell.openPath(outputPath)
+  });
 
 
   const monitor = udev.monitor();

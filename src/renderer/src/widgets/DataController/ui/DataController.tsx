@@ -14,6 +14,7 @@ const DataController = (): JSX.Element => {
     const {theme} = useContext(ThemeContext)
     const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath)
     const flightBaudRate = useAppSelector(state=>state.baudRateReducer.flightBaudRate)
+    const isFlightAvailable = useAppSelector(state => state.connectorReducer.flightConnect) === 'connected';
 
     const startWriting = (): void => {
         window.api.startDbWriting(flightPath, flightBaudRate)
@@ -54,10 +55,14 @@ const DataController = (): JSX.Element => {
     }
 
     return (
-        <div className={style.DataController} style={localeStyles}>
-            <ButtonType/>
-            <span className="recordState">{recordState()}</span>
-        </div>
+       <>
+       {isFlightAvailable &&
+         <div className={style.DataController} style={localeStyles}>
+         <ButtonType/>
+         <span className="recordState">{recordState()}</span>
+     </div>
+       }
+       </>
     )
 };
 
