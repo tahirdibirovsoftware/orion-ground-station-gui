@@ -27,9 +27,11 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   useEffect(() => {
     if (type === 'flight' && !flightPath) {
       dispatch(connectToFlight('disconnected'));
+      dispatch(resetTelemetry());
     }
     if (type === 'iot' && !iotPath) {
       dispatch(connectToIoT('disconnected'));
+      dispatch(resetIotTelemetryData());
     }
   }, [dispatch, type, flightPath, iotPath]);
 

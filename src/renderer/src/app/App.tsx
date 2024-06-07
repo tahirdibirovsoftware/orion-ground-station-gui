@@ -9,11 +9,6 @@ const App = (): JSX.Element => {
   const menuActive = useAppSelector(state => state.menuReducer.isActive)
   const flightDataStore = useAppSelector(state=> state.flightDataStoreReducer)
   const iotDataStore = useAppSelector(state=>state.iotDataStoreReducer)
-  const persistedData= useAppSelector(state=>state.persistedFlightDataStoreReducer.flightData)
-
-  console.log('persistedData:', persistedData)
-  console.log('flightDatastore:', flightDataStore)
-  console.log('iotDatastore:', iotDataStore)
 
 
   return (

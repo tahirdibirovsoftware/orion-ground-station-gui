@@ -4,7 +4,8 @@ import { FC, useState, useEffect } from 'react';
 import { IVisualizer } from '../model/types';
 import { Map } from '@renderer/entities/Map';
 import { Cam } from '@renderer/entities/Cam/ui/Cam';
-import { ObjectTracker } from '@renderer/entities/ObjectTracker';
+// import { ObjectTracker } from '@renderer/entities/ObjectTracker';
+import { OtWithCallib } from '@renderer/entities/OtWithCallib';
 
 const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
   const mainPressureData = flightData.map((data) => data?.pressure1);
@@ -55,7 +56,8 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
         optionalYTitle=''
       />
       <Map getGpsData={() => currentPosition}  />
-      <ObjectTracker pitch={pitch} yaw={yaw} roll={roll}/>
+      {/* <ObjectTracker pitch={pitch} yaw={yaw} roll={roll}/> */}
+      <OtWithCallib pitch={pitch} yaw={yaw} roll={roll}/>
       <Cam/>
     </div>
   );
