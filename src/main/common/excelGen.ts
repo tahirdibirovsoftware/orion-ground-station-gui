@@ -33,15 +33,17 @@ export async function convertSQLiteToExcel(sqliteFilePath: string, excelFilePath
           const workbook = new Workbook();
           const worksheet = workbook.addWorksheet('Sheet1');
 
-          // Add column headers
-          worksheet.columns = Object.keys(rows[0]).map((key) => ({
+          // Add column headers excluding the first column
+          const headers = Object.keys(rows[0]).slice(1);
+          worksheet.columns = headers.map((key) => ({
             header: key,
             key,
           }));
 
-          // Add rows
+          // Add rows excluding the first column
           rows.forEach((row) => {
-            worksheet.addRow(row);
+            const rowData = headers.map((key) => row[key]);
+            worksheet.addRow(rowData);
           });
 
           // Save the workbook to a file
