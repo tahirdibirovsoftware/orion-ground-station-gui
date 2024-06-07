@@ -5,7 +5,7 @@ import { SerialPort } from 'serialport';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { setDevices, setFlightConfig, setIoTConfig } from '../model/PortConfigSlice';
 
-type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
+export type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
 
 const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
     const dispatch = useAppDispatch();
