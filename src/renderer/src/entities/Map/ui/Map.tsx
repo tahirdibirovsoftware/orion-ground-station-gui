@@ -5,7 +5,7 @@ import { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { ExpandAltOutlined } from '@ant-design/icons';
+// import { ExpandAltOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@renderer/app/redux/hooks';
 import icon from "leaflet/dist/images/marker-icon.png";
 import L from "leaflet";
@@ -68,11 +68,11 @@ const Map: React.FC<MapProps> = ({ getGpsData }) => {
             <Polyline positions={positionHistory} color="blue" />
             <MoveMapCenter position={currentPosition} />
           </MapContainer>
-          <div className={style.zoomButton}>
-            <ExpandAltOutlined />
-          </div>
         </>
       )}
+       {/* <div className={style.zoomButton}>
+            <ExpandAltOutlined />
+          </div> */}
     </div>
   );
 };
