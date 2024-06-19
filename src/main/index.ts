@@ -12,6 +12,7 @@ import { initBaseDir } from './common/dirConfig';
 import { initializeDb } from './DbConfig';
 import { convertSQLiteToExcel } from './common/excelGen';
 import { excelPath, outputPath, sqlitePath } from './common/paths';
+import httpService from './httpConfig/httpService';
 
 initBaseDir();
 const db = initializeDb();
@@ -45,6 +46,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
+  httpService.clearSession()
   electronApp.setAppUserModelId('com.electron');
 
   app.on('browser-window-created', (_, window) => {

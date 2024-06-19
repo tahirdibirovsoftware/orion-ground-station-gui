@@ -3,12 +3,16 @@ import { flightDataParser } from "./parsers";
 import { Database } from "sqlite";
 import { flightQuery, flightQueryData } from "../../DbConfig/queries";
 import { ITelemetry } from "../../../global/types/types";
+import httpService from "../../httpConfig/httpService";
+
+
 
 export const flightPortStarter = (baudRate: number, path: string, callback): SerialPort => {
   console.log('Main', baudRate);
   const flightPort = new SerialPort({ baudRate, path });
   const parser = flightPort.pipe(new ReadlineParser());
   parser.on('data', (data: string) => {
+    httpService.transmitData(flightDataParser(data, '*') as ITelemetry)
     callback(flightDataParser(data, '*'));
   });
   return flightPort;
