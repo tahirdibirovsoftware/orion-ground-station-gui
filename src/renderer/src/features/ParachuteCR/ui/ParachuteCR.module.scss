@@ -1,3 +1,20 @@
 .ParachuteCR{
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    width: 100%;
+}
+
+.switchBtn{
+    padding: 5%;
+    position: relative;
+    width: 90%;
+    border-radius: 5%;
+    font-size: 1rem;
+    border: unset;
+    cursor: pointer;
+    background-color: darkblue;
+    color: white;
+    outline: unset;
 }

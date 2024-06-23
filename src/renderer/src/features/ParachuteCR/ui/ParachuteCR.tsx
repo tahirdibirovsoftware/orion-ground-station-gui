@@ -1,4 +1,3 @@
-import { Button } from 'antd';
 import style from './ParachuteCR.module.scss';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { commandTheParachute, initiaControllingState } from '@renderer/widgets/SatController/model/controllingData';
@@ -29,7 +28,7 @@ const ParachuteCR = ():JSX.Element => {
 
     return(
         <div className={style.ParachuteCR}>
-            <Button onClick={parachuteHandler}>{isParachuteOpened ? 'Close' : 'Open'}</Button>
+            <button className={style.switchBtn} onClick={parachuteHandler}>{isParachuteOpened ? 'Close' : 'Open'}</button>
         </div>
     )
 }
