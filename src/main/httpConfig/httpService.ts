@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import { ITelemetry } from '../../global/types/types';
 
 class HTTPService {
-    private readonly apiBase: string = 'http://localhost:3000/api/telemetry';
+    private readonly apiBase: string = 'https://orion-server-oek4.onrender.com/api/telemetry';
     private readonly http: AxiosInstance;
 
     constructor() {
