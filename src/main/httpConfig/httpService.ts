@@ -34,8 +34,10 @@ class HTTPService {
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error('Error clearing session:', error.response?.data || error.message);
+               await this.clearSession()
             } else {
                 console.error('Unexpected error:', error);
+                await this.clearSession()
             }
         }
     }

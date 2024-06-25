@@ -11,8 +11,8 @@ const StatusBar:FC<IStatusBar> = ({flightData}):JSX.Element =>{
 
     return(
         <div className={style.StatusBar}>
-            <Timer flightData={flightData} size={3.3}/>
-            <BatteryGauge customization={{batteryBody:{strokeColor: 'gray', strokeWidth:1}, batteryCap: {fill: 'gray', strokeWidth:1}}} size={55} value={getBatteryLevel(voltageLevel)}/>
+            <Timer flightData={flightData} size={100}/>
+            <BatteryGauge customization={{batteryBody:{strokeColor: 'gray', strokeWidth:1}, batteryCap: {fill: 'gray', strokeWidth:1}}} size={50} value={getBatteryLevel(voltageLevel)}/>
         </div>
     )
 }

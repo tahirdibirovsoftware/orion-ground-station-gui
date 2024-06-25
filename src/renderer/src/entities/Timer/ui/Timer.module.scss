@@ -4,12 +4,14 @@
 }
 
 .Timer{
-    background-color: black;
+    background-color: rgb(50,50,50);
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: .2rem;
     overflow: hidden;
+    font-size: 160%;
+    width: 30% !important;
 }
 
 .Timer > span{

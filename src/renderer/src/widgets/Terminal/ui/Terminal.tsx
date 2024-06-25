@@ -1,4 +1,5 @@
 import { FC, useContext, useEffect, useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import style from './Terminal.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { themeSetter } from '../../../shared/config/theme/themeSetter';
@@ -9,6 +10,7 @@ import { filterToLastData } from '../lib/filterData';
 import { ITelemetry } from 'src/global/types/types';
 
 const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => {
+    useTranslation()
     const navigate = useNavigate();
     const location = useLocation();
     const { theme } = useContext(ThemeContext);
@@ -27,27 +29,27 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
     };
 
     const dataTypes = [
-        'PACKET NUMBER',
-        'SATELLITE STATUS',
-        'ERROR CODE',
-        'MISSION TIME',
-        'PRESSURE1 (hPa)',
-        'PRESSURE2 (hPa)',
-        'ALTITUDE1 (m)',
-        'ALTITUDE2 (m)',
-        'ALTITUDE DIFFERENCE (m)',
-        'DESCENT RATE (m/s)',
-        'TEMP (°C)',
-        'BATTERY (V)',
-        'GPS1 LATITUDE',
-        'GPS1 LONGITUDE',
-        'GPS1 ALTITUDE',
-        'PITCH°',
-        'ROLL°',
-        'YAW°',
+        'PACKET_NUMBER',
+        'SATELLITE_STATUS',
+        'ERROR_CODE',
+        'MISSION_TIME',
+        'PRESSURE1',
+        'PRESSURE2',
+        'ALTITUDE1',
+        'ALTITUDE2',
+        'ALTITUDE_DIFFERENCE',
+        'DESCENT_RATE',
+        'TEMP',
+        'BATTERY_VOLTAGE',
+        'GPS1_LATITUDE',
+        'GPS1_LONGITUDE',
+        'GPS1_ALTITUDE',
+        'PITCH',
+        'ROLL',
+        'YAW',
         'LNLN',
-        'IoT DATA (°C)',
-        'TEAM NUMBER'
+        'IoT_DATA',
+        'TEAM_NUMBER'
     ];
 
     useEffect(() => {
@@ -68,7 +70,7 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
                     <tr>
                         {dataTypes.map(dataType => (
                             <th key={dataType} style={thLocaleStyle}>
-                                {dataType}
+                                <Trans>{dataType}</Trans>
                             </th>
                         ))}
                     </tr>

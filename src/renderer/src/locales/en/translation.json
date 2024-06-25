@@ -1,0 +1,24 @@
+{
+    "PACKET_NUMBER": "Packet Number",
+    "SATELLITE_STATUS": "Satellite Status",
+    "ERROR_CODE": "Error Code",
+    "MISSION_TIME": "Mission Time",
+    "PRESSURE1": "Pressure1 (hPa)",
+    "PRESSURE2": "Pressure2 (hPa)",
+    "ALTITUDE1": "Altitude1 (m)",
+    "ALTITUDE2": "Altitude2 (m)",
+    "ALTITUDE_DIFFERENCE": "Altitude Difference (m)",
+    "DESCENT_RATE": "Descent Rate (m/s)",
+    "TEMP": "Temp (°C)",
+    "BATTERY_VOLTAGE": "Battery Voltage (V)",
+    "GPS1_LATITUDE": "GPS1 Latitude",
+    "GPS1_LONGITUDE": "GPS1 Longitude",
+    "GPS1_ALTITUDE": "GPS1 Altitude",
+    "PITCH": "Pitch°",
+    "ROLL": "Roll°",
+    "YAW": "Yaw°",
+    "LNLN": "LNLN",
+    "IoT_DATA": "IoT Data",
+    "TEAM_NUMBER": "Team Number"
+  }
+  

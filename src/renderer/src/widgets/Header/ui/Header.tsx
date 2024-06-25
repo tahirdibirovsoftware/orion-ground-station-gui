@@ -5,6 +5,7 @@ import { themeSetter } from '../../../shared/config/theme/themeSetter';
 import style from './Header.module.scss';
 import { FC } from 'react';
 import { IHeader } from '../model/types';
+import { LangToggler } from '@renderer/features/LangToggler';
 
 const localStyles: React.CSSProperties = {
     ...themeSetter('dark'),
@@ -18,7 +19,10 @@ const Header:FC<IHeader> = ({flightData}):JSX.Element => {
         <div style={localStyles} className={style.Header}>
             <MenuToggler/>
             <Logo size={2} title='Orion'/>
-            <StatusBar flightData={flightData}/>   
+            <div className={style.HeaderWrapper}>
+                <LangToggler></LangToggler>
+            <StatusBar flightData={flightData}/>
+            </div>
         </div>
     )
 }

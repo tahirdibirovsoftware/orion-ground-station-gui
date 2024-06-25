@@ -2,7 +2,7 @@ import { FC } from 'react';
 import style from './Timer.module.scss';
 import { ITimer } from '../model/types';
 
-const Timer:FC<ITimer> = ({size, flightData}):JSX.Element => {
+const Timer:FC<ITimer> = ({flightData}):JSX.Element => {
 
     const gpsDate = flightData[flightData.length-1].missionTime
      const gpsArrayDate = typeof gpsDate ==='string' && gpsDate.split('/')
@@ -10,10 +10,6 @@ const Timer:FC<ITimer> = ({size, flightData}):JSX.Element => {
 
     const localStyles:React.CSSProperties = {
         color: 'rgba(200,200,200,1)',
-        backgroundColor: 'rgba(30,30,30)',
-        width: `${size}em`,
-        height: `${size/3}em`,
-        fontSize: `${size/2}em`
     }
 
 
