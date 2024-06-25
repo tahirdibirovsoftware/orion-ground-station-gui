@@ -9,7 +9,7 @@ import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
 import { serialize } from './PortConfig/lib/serializers';
 import { initBaseDir } from './common/dirConfig';
-import { initializeDb } from './DbConfig';
+import { clearSQLite, initializeDb } from './DbConfig';
 import { convertSQLiteToExcel } from './common/excelGen';
 import { excelPath, outputPath, sqlitePath } from './common/paths';
 import httpService from './httpConfig/httpService';
@@ -45,8 +45,9 @@ function createWindow(): void {
   }
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   httpService.clearSession()
+  clearSQLite(await db)
   electronApp.setAppUserModelId('com.electron');
 
   app.on('browser-window-created', (_, window) => {
@@ -75,13 +76,14 @@ app.whenReady().then(() => {
         port.close();
       }
     }
-    port = flightPortStarter(baudRate, path, (data: ITelemetry) => {
+    port = flightPortStarter(baudRate, path, async (data: ITelemetry) => {
       event.sender.send('flight-data', data);
+      attachDbWriter(port, await db)
     });
     flightPorts.set(path, port);
   });
 
-  ipcMain.on('disconnect-flight', (_, data) => {
+  ipcMain.on('disconnect-flight', async (_, data) => {
     if (!data || !data.path) {
       console.error('Invalid disconnect-flight data:', data);
       return;
@@ -91,9 +93,15 @@ app.whenReady().then(() => {
       const port = flightPorts.get(path);
       if (port.isOpen) {
         port.close();
+        await convertSQLiteToExcel(sqlitePath, excelPath);
+        detachDbWriter(port)
+        clearSQLite(await db)
       }
       flightPorts.delete(path);
+      
     }
+    
+    
   });
 
   ipcMain.on('connect-to-iot', (event, data) => {
