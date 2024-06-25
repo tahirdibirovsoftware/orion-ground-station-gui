@@ -19,6 +19,12 @@
     "YAW": "Yaw°",
     "LNLN": "LNLN",
     "IoT_DATA": "IoT Data",
-    "TEAM_NUMBER": "Team Number"
+    "TEAM_NUMBER": "Team Number",
+    "READY_TO_FLIGHT": "Ready to Flight",
+    "ASCENT": "Ascent",
+    "MODEL_SATELLITE_DESCENT": "Model Satellite Descent",
+    "RELEASE": "Release",
+    "SCIENCE_PAYLOAD_DESCENT": "Science Payload Descent",
+    "RECOVERY": "Recovery" 
   }
   

@@ -19,6 +19,12 @@
     "YAW": "Yaw°",
     "LNLN": "RHRH",
     "IoT_DATA": "IoT Data",
-    "TEAM_NUMBER": "Takım No"
+    "TEAM_NUMBER": "Takım No",
+    "READY_TO_FLIGHT": "Uçuşa Hazır",
+    "ASCENT": "Yükselme",
+    "MODEL_SATELLITE_DESCENT": "Model Uydu İniş",
+    "RELEASE": "Ayrılma",
+    "SCIENCE_PAYLOAD_DESCENT": "Görev Yükü İniş",
+    "RECOVERY": "Kurtarma" 
   }
   
