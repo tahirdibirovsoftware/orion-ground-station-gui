@@ -25,6 +25,27 @@
     "MODEL_SATELLITE_DESCENT": "Model Satellite Descent",
     "RELEASE": "Release",
     "SCIENCE_PAYLOAD_DESCENT": "Science Payload Descent",
-    "RECOVERY": "Recovery" 
+    "RECOVERY": "Recovery",
+    "SEND": "Send",
+    "OPEN": "Open",
+    "CLOSE": "Close",
+    "OPENED": "Open",
+    "CLOSED": "Close",
+    "PARACHUTE STATUS": "Parachute Status",
+    "CALIBRATE": "Calibrate",
+    "FLIGHT_MODE": "FLIGHT MODE",
+    "TERMINAL_MODE": "TERMINAL MODE",
+    "SOURCE": "Source",
+    "BAUDRATE": "Baud Rate",
+    "CONNECT": "CONNECT",
+    "FLIGHT_PORT_CONFIGURATION": "Flight Port Configuration",
+    "IOT_PORT_CONFIGURATION": "IoT Port Configuration",
+    "FILE_MANAGER": "File Manager",
+    "BROWSE OUTPUT FILES": "Browse output files",
+    "CONTAINER LANDING RATE FAILURE": "Container landing rate failure",
+    "SCIENCE PAYLOAD LANDING RATE FAILURE": "Science Payload landing rate failure",
+    "CONTAINER PRESSURE DATA FAILURE": "Container pressure data failure",
+    "SCIENCE PAYLOAD POSITION DATA FAILURE": "Science Payload position data failure",
+    "RELEASE FAILURE": "Release failure"
   }
   
