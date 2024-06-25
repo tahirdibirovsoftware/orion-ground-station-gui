@@ -1,10 +1,10 @@
-import { app, shell, BrowserWindow, ipcMain} from 'electron';
+import { app, shell, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import { portlist } from './PortConfig/lib/portList';
 import udev from 'udev';
-import { flightPortStarter, attachDbWriter, detachDbWriter } from './PortConfig/lib/flightPortManagement';
+import { flightPortStarter } from './PortConfig/lib/flightPortManagement';
 import { IIoTTelemetry, ITelemetry } from '../global/types/types';
 import { iotPortStarter } from './PortConfig/lib/iotPortManagement';
 import { serialize } from './PortConfig/lib/serializers';
@@ -46,8 +46,8 @@ function createWindow(): void {
 }
 
 app.whenReady().then(async () => {
-  httpService.clearSession()
-  clearSQLite(await db)
+  httpService.clearSession();
+  clearSQLite(await db);
   electronApp.setAppUserModelId('com.electron');
 
   app.on('browser-window-created', (_, window) => {
@@ -63,7 +63,7 @@ app.whenReady().then(async () => {
   const flightPorts = new Map();
   const iotPorts = new Map();
 
-  ipcMain.on('connect-to-flight', (event, data) => {
+  ipcMain.on('connect-to-flight', async (event, data) => {
     if (!data || !data.path || !data.baudRate) {
       console.error('Invalid connect-to-flight data:', data);
       return;
@@ -78,8 +78,7 @@ app.whenReady().then(async () => {
     }
     port = flightPortStarter(baudRate, path, async (data: ITelemetry) => {
       event.sender.send('flight-data', data);
-      attachDbWriter(port, await db)
-    });
+    }, await db);
     flightPorts.set(path, port);
   });
 
@@ -94,14 +93,10 @@ app.whenReady().then(async () => {
       if (port.isOpen) {
         port.close();
         await convertSQLiteToExcel(sqlitePath, excelPath);
-        detachDbWriter(port)
-        clearSQLite(await db)
+        clearSQLite(await db);
       }
       flightPorts.delete(path);
-      
     }
-    
-    
   });
 
   ipcMain.on('connect-to-iot', (event, data) => {
@@ -147,7 +142,7 @@ app.whenReady().then(async () => {
   });
 
   ipcMain.on('sent-iot-data', (_, { data, path }) => {
-    const port = flightPorts.get(path);
+    const port = iotPorts.get(path);
     if (port) {
       port.write(serialize(data));
     }
@@ -162,95 +157,11 @@ app.whenReady().then(async () => {
     return;
   });
 
-  // Database Configuration
 
-  // Start Writing to DB
-  ipcMain.on('start-db-writing', async (_, data: { baudRate: number, path: string }) => {
-    if (!data || !data.baudRate || !data.path) return;
-    const { path } = data;
-    if (!flightPorts.has(path)) {
-      console.error('Port not connected:', path);
-      return;
-    }
-    const port = flightPorts.get(path);
-    attachDbWriter(port, await db);
-  });
-
-  // Stop Writing to DB
-
-  ipcMain.on('stop-db-writing', async (_, { path }) => {
-    if (!flightPorts.has(path)) {
-      console.error('Port not connected:', path);
-      return;
-    }
-    const port = flightPorts.get(path);
-    try {
-      await convertSQLiteToExcel(sqlitePath, excelPath);
-      const database = await db;
-  
-      // Ensure no overlapping transactions
-      const beginTransaction = ():Promise<void> => {
-        return new Promise<void>((resolve, reject) => {
-          database.run('BEGIN TRANSACTION', (err) => {
-            if (err) {
-              console.error('Error starting transaction:', (err as Error).message);
-              reject(err);
-            } else {
-              resolve();
-            }
-          });
-        });
-      };
-  
-      const deleteData = ():Promise<void> => {
-        return new Promise<void>((resolve, reject) => {
-          database.run('DELETE FROM FLIGHT_DATA', (err) => {
-            if (err) {
-              console.error('Error deleting data:', (err as Error).message);
-              reject(err);
-            } else {
-              console.log('Data deletion query executed successfully.');
-              resolve();
-            }
-          });
-        });
-      };
-  
-      const commitTransaction = ():Promise<void> => {
-        return new Promise<void>((resolve, reject) => {
-          database.run('COMMIT', (err) => {
-            if (err) {
-              console.error('Error committing transaction:', (err as Error).message);
-              reject(err);
-            } else {
-              console.log('Transaction committed successfully.');
-              resolve();
-            }
-          });
-        });
-      };
-  
-      // Execute transaction sequentially
-      await beginTransaction();
-      await deleteData();
-      await commitTransaction();
-  
-      console.log('Database cleared successfully.');
-    } catch (error) {
-      console.error('Error during stop-db-writing:', (error as Error).message);
-    } finally {
-      detachDbWriter(port);
-    }
-  });
-  
-
-
-  //Handle Dialog
-
+  // Handle Dialog
   ipcMain.on('open-output-dir-dialog', async () => {
-   shell.openPath(outputPath)
+    shell.openPath(outputPath);
   });
-
 
   const monitor = udev.monitor();
   monitor.on('add', async () => {

@@ -26,7 +26,7 @@ const SatStatus:FC<ISatStatus> = ({flightData}):JSX.Element => {
 
     return(
         <div style={localStyles} className={style.SatStatus}>
-            <span>{isAvailable && satStatuses[satStatus].toUpperCase()}</span>
+            <span>{isAvailable && satStatuses[satStatus]?.toUpperCase()}</span>
         </div>
     )
 }

@@ -8,9 +8,9 @@ class HTTPService {
     constructor() {
         this.http = axios.create({
             baseURL: this.apiBase,
-            // headers: {
-            //     'Content-Type': 'application/json',
-            // },
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
     }
 

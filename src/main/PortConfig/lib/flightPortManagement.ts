@@ -7,33 +7,18 @@ import httpService from "../../httpConfig/httpService";
 
 
 
-export const flightPortStarter = (baudRate: number, path: string, callback): SerialPort => {
+export const flightPortStarter = (baudRate: number, path: string, callback, db: Database): SerialPort => {
   console.log('Main', baudRate);
   const flightPort = new SerialPort({ baudRate, path });
   const parser = flightPort.pipe(new ReadlineParser());
-  parser.on('data', (data: string) => {
-    httpService.transmitData(flightDataParser(data, '*') as ITelemetry)
-    callback(flightDataParser(data, '*'));
-  });
-  return flightPort;
-};
-
-export const attachDbWriter = (port: SerialPort, db: Database): void => {
-  const parser = port.pipe(new ReadlineParser());
-
-  const dbWriter = async (data: string):Promise<void> => {
+  parser.on('data', async (data: string) => {
     const telemetryData = flightDataParser(data, '*') as ITelemetry;
-    await db.run(flightQuery, flightQueryData(telemetryData));
-  };
-
-  parser.on('data', dbWriter);
-
-  port.on('close', () => {
-    parser.removeListener('data', dbWriter);
+    callback(telemetryData);
+    db.run(flightQuery, flightQueryData(telemetryData));
+    httpService.transmitData(telemetryData)
   });
-};
-
-export const detachDbWriter = (port: SerialPort): void => {
-  const parser = port.pipe(new ReadlineParser());
-  parser.removeAllListeners('data');
+  flightPort.on('close', ()=>{
+    parser.removeAllListeners()
+  })
+  return flightPort;
 };
