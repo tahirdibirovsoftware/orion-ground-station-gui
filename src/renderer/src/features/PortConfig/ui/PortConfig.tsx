@@ -4,10 +4,12 @@ import { IPortConfig } from '../model/types';
 import { SerialPort } from 'serialport';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { setDevices, setFlightConfig, setIoTConfig } from '../model/PortConfigSlice';
+import { Trans, useTranslation } from 'react-i18next';
 
 export type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
 
 const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
+    useTranslation();
     const dispatch = useAppDispatch();
     const paths = useAppSelector(state => state.portConfigReducer.flightPath);
     const selectRef = useRef<HTMLSelectElement>(null);
@@ -65,14 +67,14 @@ const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
 
     return (
         <div className={style.Port}>
-            <span>Source: </span>
+            <span><Trans>SOURCE</Trans>: </span>
             <select disabled={isConnected()} ref={selectRef} onChange={setDevice}>
                 {!isPortAvailable() ? (
-                    <option key="not-connected">Not Connected</option>
+                    <option key="not-connected"><Trans>NOT_CONNECTED</Trans></option>
                 ) : (
                     <>
                         <option key="not-selected" value="">
-                            {getPathName() || 'Not Selected'}
+                            <Trans>{getPathName() || 'NOT_SELECTED'}</Trans>
                         </option>
                         {devices.map(device =>
                             device.manufacturer ? (

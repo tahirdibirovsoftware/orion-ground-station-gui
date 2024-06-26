@@ -16,8 +16,8 @@ const Menu = ():JSX.Element => {
     return(
         <div style={themeSetter(theme)} className={style.Menu}>
             <MenuToggler styleOverride={{border: 'unset', marginBottom: '3%'}}></MenuToggler>
-            <PageSwitcher path='flight' title='flight Mode' styleOverride={{marginTop: '.5rem'}}/>
-            <PageSwitcher path='terminal' title='terminal mode' styleOverride={{borderTop: 'unset'}}/>
+            <PageSwitcher path='flight' title='flight_mode' styleOverride={{marginTop: '.5rem'}}/>
+            <PageSwitcher path='terminal' title='terminal_mode' styleOverride={{borderTop: 'unset'}}/>
             <DataConfig type='flight'/>
             <DataConfig type='iot'/>
             <FileManager/>

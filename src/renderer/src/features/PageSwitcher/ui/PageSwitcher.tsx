@@ -4,11 +4,12 @@ import { FC, useContext } from 'react'
 import { IPageSwitcher } from '../model/types'
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
 import { themeSetter } from '../../../shared/config/theme/themeSetter'
+import { Trans, useTranslation } from 'react-i18next'
 
 
 
 const PageSwitcher:FC<IPageSwitcher> = ({path, title, styleOverride}):JSX.Element => {
-
+    useTranslation()
     const {theme} = useContext(ThemeContext)
     
     const localLinkStyles:React.CSSProperties = {
@@ -26,7 +27,7 @@ const PageSwitcher:FC<IPageSwitcher> = ({path, title, styleOverride}):JSX.Elemen
 
     return(
          <div style={localElementStyles} className={style.PageSwitcher}>
-            <Link style={localLinkStyles} className={style.Link} to={`/${path}`}>{title.toUpperCase()}</Link>
+            <Link style={localLinkStyles} className={style.Link} to={`/${path}`}><Trans>{title.toUpperCase()}</Trans></Link>
         </div>    
     )
 }

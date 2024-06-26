@@ -7,12 +7,12 @@ import { getTitle } from '../lib/getTitle'
 import { PortConfig } from '../../../features/PortConfig'
 import { BaudRateConfig } from '../../../features/BaudRateConfig'
 import { Connector } from '../../../features/Connector'
+import { Trans, useTranslation } from 'react-i18next'
 
 const DataConfig:FC<IDataConfig> = ({type}):JSX.Element =>{
 
     const {theme} = useContext(ThemeContext) 
-
-    
+    useTranslation()
 
     const localStyles:React.CSSProperties = {
         ...themeSetter(theme),
@@ -24,7 +24,7 @@ const DataConfig:FC<IDataConfig> = ({type}):JSX.Element =>{
 
     return(
         <div className={style.DataConfig} style={localStyles}>
-            <span className={style.title}>{getTitle(type)}</span>
+            <span className={style.title}><Trans>{getTitle(type)}</Trans></span>
             <PortConfig type={type}/>
             <BaudRateConfig type={type}/>
             <Connector type={type}/>

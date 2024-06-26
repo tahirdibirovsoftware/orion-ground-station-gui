@@ -7,8 +7,10 @@ import { connectToFlight, connectToIoT } from '../model/connectorSlice';
 import { addTelemetry, resetTelemetry } from '@renderer/widgets/DataController/model/flightDataStoreSlice';
 import { IIoTTelemetry, ITelemetry } from 'src/global/types/types';
 import { addIotData, resetIotTelemetryData } from '@renderer/widgets/DataController/model/iotDataStoreSlice';
+import { Trans, useTranslation } from 'react-i18next';
 
 const Connector: FC<IConnector> = ({ type }): JSX.Element => {
+  useTranslation()
   const dispatch = useAppDispatch();
   const isConnected = useAppSelector(
     (state) => type === 'flight' ? state.connectorReducer.flightConnect : state.connectorReducer.iotConnect
@@ -61,11 +63,11 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
     <div className={style.Connector}>
       {(!isConnected) ? (
         <Button disabled={!isAvailable()} style={!isAvailable() ? { opacity: .3, cursor: 'default' } : {}} onClick={connectHandler} size="small" type="text" className={style.ButtonConnect}>
-          {'Connect'.toUpperCase()}
+          <Trans>{'Connect'.toUpperCase()}</Trans>
         </Button>
       ) : (
         <Button onClick={disconnectHandler} size="small" type="text" className={style.ButtonDisconnect}>
-          {'Disconnect'.toUpperCase()}
+          <Trans>{'Disconnect'.toUpperCase()}</Trans>
         </Button>
       )}
     </div>

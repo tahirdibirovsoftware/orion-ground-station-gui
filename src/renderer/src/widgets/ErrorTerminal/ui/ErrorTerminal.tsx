@@ -19,7 +19,7 @@ const ErrorTerminal: FC<IErrorTerminal> = ({ errorCode }): JSX.Element => {
         'Container pressure data failure',
         'Science Payload position data failure',
         'Release failure'
-    ]
+    ].map(error=>error.split(' ').join('_').toUpperCase())
     console.log(errorCode)
     const processedErrorCode = errorCode && errorCode.toString().split('').map(code => parseInt(code))
 

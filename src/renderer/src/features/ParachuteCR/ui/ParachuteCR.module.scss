@@ -2,8 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1%;
+    flex-direction: column;
+    padding: 5%;
+    border-radius: 5%;
     width: 100%;
+
 }
 
 .switchBtn{
@@ -17,4 +20,17 @@
     background-color: darkblue;
     color: white;
     outline: unset;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 5%;
+}
+
+.switchBtn:hover{
+    background-color: blue;
+}
+
+.parachuteStatus{
+    font-weight: 400 !important;
+    font-size: medium;
+    text-transform: uppercase;
 }

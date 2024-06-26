@@ -5,6 +5,7 @@ import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider
 import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { initiaControllingState, setMfm } from '@renderer/widgets/SatController/model/controllingData';
+import { Trans, useTranslation } from 'react-i18next';
 
 const Mfm = ():JSX.Element => {
 
@@ -17,7 +18,8 @@ const Mfm = ():JSX.Element => {
     const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath)
     const iotData = useAppSelector(state=>state.iotDataStoreReducer)
     const dispatch = useAppDispatch()
-
+    useTranslation()
+    
     
 
 
@@ -58,7 +60,7 @@ const Mfm = ():JSX.Element => {
                     commands.slice(0,4).map(command=><option key={command} value={command}>{command}</option>)
                 }
             </select>
-            <Button onClick={mfmHandler} type='primary'>Send</Button>
+            <Button onClick={mfmHandler} type='primary'><Trans>SEND</Trans></Button>
         </div>
     )
 }

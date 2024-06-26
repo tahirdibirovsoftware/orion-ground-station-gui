@@ -3,9 +3,10 @@ import style from './BaudRateConfig.module.scss'
 import { IBaudRateConfig } from '../model/types'
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks'
 import { setFlightBaudRate, setIoTBaudRate } from '../model/baudRateSlice'
+import { Trans, useTranslation } from 'react-i18next'
 
 const BaudRateConfig:FC<IBaudRateConfig> = ({type}): JSX.Element => {
-
+    useTranslation();
     const baudRates = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400, 460800, 921600]
     const dispatch = useAppDispatch()
     const isFlightConnected = useAppSelector(state=>state.connectorReducer.flightConnect)==='connected';
@@ -34,7 +35,7 @@ const BaudRateConfig:FC<IBaudRateConfig> = ({type}): JSX.Element => {
     return (
         <div className={style.BaudRate}>
 
-            <span>BaudRate: </span>
+            <span><Trans>BAUDRATE</Trans>: </span>
             <select disabled={isConnected()} onChange={baudRateHandler} defaultValue={getBaudRate() || baudRates[9]}>
                 {
                     baudRates.map(baudRate => <option key={baudRate} value={baudRate}>{baudRate}</option>)
