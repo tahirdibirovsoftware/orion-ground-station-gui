@@ -11,6 +11,7 @@ import { useAppSelector } from '@renderer/app/redux/hooks';
 
 // Import rocketPath for production mode
 import rocketPathFromModule from './STL/rocket.obj';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface ObjectTrackerProps {
   pitch: number;
@@ -19,6 +20,7 @@ interface ObjectTrackerProps {
 }
 
 const OtWithCallib = ({ pitch, yaw, roll }: ObjectTrackerProps): JSX.Element => {
+  useTranslation()
   const { theme } = useContext(ThemeContext);
   const ref = useRef<THREE.Group>(null);
   const object = useLoader(OBJLoader, rocketPathFromModule) as THREE.Group;
@@ -67,8 +69,8 @@ const OtWithCallib = ({ pitch, yaw, roll }: ObjectTrackerProps): JSX.Element => 
       )}
     {
         isActive && 
-        <div className={style.callibrationContainer}>
-    <button onClick={handleCalibrate}>Callibrate</button>
+        <div style={localStyles} className={style.callibrationContainer}>
+    <button style={localStyles} onClick={handleCalibrate}><Trans>CALIBRATE</Trans></button>
     </div>
     }
     </div>

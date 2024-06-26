@@ -3,19 +3,27 @@ import { Logo } from '../../../entities/Logo';
 import { MenuToggler } from '../../../features/MenuToggler';
 import { themeSetter } from '../../../shared/config/theme/themeSetter';
 import style from './Header.module.scss';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { IHeader } from '../model/types';
 import { LangToggler } from '@renderer/features/LangToggler';
 import { ThemeToggler } from '@renderer/features/ThemeToggler';
+import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 
-const localStyles: React.CSSProperties = {
-    ...themeSetter('dark'),
-    borderTop: 'unset',
-    borderRight: 'unset',
-    borderLeft: 'unset',
-}
+
 
 const Header:FC<IHeader> = ({flightData}):JSX.Element => {
+
+
+    const {theme} = useContext(ThemeContext)
+
+    const localStyles: React.CSSProperties = {
+        ...themeSetter(theme),
+        borderTop: 'unset',
+        borderRight: 'unset',
+        borderLeft: 'unset',
+    }
+
+
     return(
         <div style={localStyles} className={style.Header}>
             <MenuToggler/>

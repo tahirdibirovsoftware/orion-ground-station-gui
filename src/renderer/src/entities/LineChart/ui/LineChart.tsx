@@ -2,7 +2,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import style from './LineChart.module.scss';
 import { Line } from 'react-chartjs-2';
 import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { ILineChart } from '../model/types';
 import { filteredData } from '../lib/dataFilter';
@@ -34,6 +34,11 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
 
   const flightData = useAppSelector(state=>state.flightDataStoreReducer)
   const isActive = flightData[flightData.length -1].packetNumber > 0
+
+
+  useEffect(()=>{
+    setLocalStyles(themeSetter(theme))
+  },[theme])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const options: any = {
