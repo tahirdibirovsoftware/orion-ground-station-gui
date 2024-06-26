@@ -6,6 +6,7 @@ import style from './Header.module.scss';
 import { FC } from 'react';
 import { IHeader } from '../model/types';
 import { LangToggler } from '@renderer/features/LangToggler';
+import { ThemeToggler } from '@renderer/features/ThemeToggler';
 
 const localStyles: React.CSSProperties = {
     ...themeSetter('dark'),
@@ -21,6 +22,7 @@ const Header:FC<IHeader> = ({flightData}):JSX.Element => {
             <Logo size={2} title='Orion'/>
             <div className={style.HeaderWrapper}>
                 <LangToggler></LangToggler>
+                <ThemeToggler/>
             <StatusBar flightData={flightData}/>
             </div>
         </div>

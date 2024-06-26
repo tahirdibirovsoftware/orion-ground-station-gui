@@ -19,7 +19,7 @@ const ThemeToggler = (): JSX.Element => {
 
     return (
         <div className={style.ThemeToggler}>
-            <Switch onChange={() => toggleTheme(theme)} unCheckedChildren={<SunOutlined />} checkedChildren={<MoonOutlined />} />
+            <Switch onChange={() => toggleTheme(theme)} unCheckedChildren={<MoonOutlined />} checkedChildren={<SunOutlined />} />
         </div>
     )
 }
