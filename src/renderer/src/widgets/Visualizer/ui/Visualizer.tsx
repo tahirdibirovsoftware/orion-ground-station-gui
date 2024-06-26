@@ -6,6 +6,7 @@ import { Map } from '@renderer/entities/Map';
 import { Cam } from '@renderer/entities/Cam/ui/Cam';
 // import { ObjectTracker } from '@renderer/entities/ObjectTracker';
 import { OtWithCallib } from '@renderer/entities/OtWithCallib';
+import { useTranslation } from 'react-i18next';
 
 const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
   const mainPressureData = flightData.map((data) => data?.pressure1);
@@ -17,6 +18,7 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
   const pitch = flightData[flightData.length-1].pitch;
   const yaw = flightData[flightData.length-1].YAW;
   const roll = flightData[flightData.length-1].roll;
+  const {t} = useTranslation();
 
   const [currentPosition, setCurrentPosition] = useState<[number, number]>([40, 60]);
 
@@ -28,31 +30,31 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
   return (
     <div className={style.Visualizer}>
       <ParentLineChart
-        mainLabelTitle='Pressure 1'
-        optionalLabelTitle='Pressure 2'
+        mainLabelTitle={t('PRESSURE1')}
+        optionalLabelTitle={t('PRESSURE2')}
         mainData={mainPressureData}
         optionalData={optionalPressureData}
-        title='Pressure vs Time'
-        mainXTitle='Time (s)'
-        mainYTitle='Pressure (hPa)'
+        title={`${t('PRESSURE')} vs ${t('TIME')}`}
+        mainXTitle={t('TIME')}
+        mainYTitle={t('PRESSURE')}
       />
       <ParentLineChart
-        mainLabelTitle='Altitude 1'
-        optionalLabelTitle='Altitude 2'
+        mainLabelTitle={t('ALTITUDE1')}
+        optionalLabelTitle={t('ALTITUDE2')}
         mainData={mainAltitudeData}
         optionalData={optionalAltitudeData}
-        title='Altitude vs Time'
-        mainXTitle='Time (s)'
-        mainYTitle='Altitude (m)'
+        title={`${t('ALTITUDE')} vs ${t('TIME')}`}
+        mainXTitle={t('TIME')}
+        mainYTitle={t('ALTITUDE')}
       />
       <ParentLineChart
-        mainLabelTitle='Temperature'
-        optionalLabelTitle='IoT Temperature'
+        mainLabelTitle={t('TEMPERATURE')}
+        optionalLabelTitle={`IoT ${t('TEMPERATURE')}`}
         mainData={temperature}
         optionalData={iotTemp}
-        title='Temperature, IoT Temperature vs Time'
-        mainXTitle='Time'
-        mainYTitle='Temperature (&deg;C)'
+        title={`${t('TEMPERATURE')}, IoT ${t('TEMPERATURE')} vs ${t('TIME')}`}
+        mainXTitle={t('TIME')}
+        mainYTitle={t('TEMPERATURE')}
         optionalYTitle=''
       />
       <Map getGpsData={() => currentPosition}  />
