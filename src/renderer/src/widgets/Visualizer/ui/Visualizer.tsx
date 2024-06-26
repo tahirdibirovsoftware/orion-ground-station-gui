@@ -4,7 +4,6 @@ import { FC, useState, useEffect } from 'react';
 import { IVisualizer } from '../model/types';
 import { Map } from '@renderer/entities/Map';
 import { Cam } from '@renderer/entities/Cam/ui/Cam';
-// import { ObjectTracker } from '@renderer/entities/ObjectTracker';
 import { OtWithCallib } from '@renderer/entities/OtWithCallib';
 import { useTranslation } from 'react-i18next';
 
@@ -58,7 +57,6 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
         optionalYTitle=''
       />
       <Map getGpsData={() => currentPosition}  />
-      {/* <ObjectTracker pitch={pitch} yaw={yaw} roll={roll}/> */}
       <OtWithCallib pitch={pitch} yaw={yaw} roll={roll}/>
       <Cam/>
     </div>
