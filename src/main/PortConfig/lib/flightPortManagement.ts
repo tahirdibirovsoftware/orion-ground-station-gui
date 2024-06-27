@@ -4,6 +4,7 @@ import { Database } from "sqlite";
 import { flightQuery, flightQueryData } from "../../DbConfig/queries";
 import { ITelemetry } from "../../../global/types/types";
 import httpService from "../../httpConfig/httpService";
+import { log } from "console";
 
 
 
@@ -14,7 +15,7 @@ export const flightPortStarter = (baudRate: number, path: string, callback, db: 
   parser.on('data', async (data: string) => {
     const telemetryData = flightDataParser(data, '*') as ITelemetry;
     callback(telemetryData);
-    db.run(flightQuery, flightQueryData(telemetryData));
+    db.run(flightQuery, flightQueryData(telemetryData)).then(()=>log("SQLite success"));
     httpService.transmitData(telemetryData)
   });
   flightPort.on('close', ()=>{

@@ -55,16 +55,22 @@ export const initializeDb = async (): Promise<Database> => {
 };
 
 
-export const clearSQLite = (database: Database):Promise<void> => {
+
+export const clearSQLite = (database: Database): Promise<void> => {
   return new Promise<void>((resolve, reject) => {
-    database.run('DELETE FROM FLIGHT_DATA', (err) => {
-      if (err) {
-        console.error('Error deleting data:', (err as Error).message);
-        reject(err);
-      } else {
-        console.log('Data deletion query executed successfully.');
-        resolve();
-      }
-    });
+    console.log('Starting data deletion from FLIGHT_DATA table.');
+    try {
+      database.run('DELETE FROM FLIGHT_DATA');
+      console.log('Data deletion query executed successfully.');
+      resolve();
+    } catch (err) {
+      console.error('Error deleting data:', err);
+      reject(err);
+    }
   });
 };
+
+
+
+
+

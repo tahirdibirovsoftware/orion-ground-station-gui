@@ -13,9 +13,10 @@ import { clearSQLite, initializeDb } from './DbConfig';
 import { convertSQLiteToExcel } from './common/excelGen';
 import { excelPath, outputPath, sqlitePath } from './common/paths';
 import httpService from './httpConfig/httpService';
+import { Database } from 'sqlite';
 
 initBaseDir();
-const db = initializeDb();
+let db: Database
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -46,8 +47,9 @@ function createWindow(): void {
 }
 
 app.whenReady().then(async () => {
+  db = await initializeDb()
   httpService.clearSession();
-  clearSQLite(await db);
+  await clearSQLite(db);
   electronApp.setAppUserModelId('com.electron');
 
   app.on('browser-window-created', (_, window) => {
@@ -78,7 +80,7 @@ app.whenReady().then(async () => {
     }
     port = flightPortStarter(baudRate, path, async (data: ITelemetry) => {
       event.sender.send('flight-data', data);
-    }, await db);
+    }, db);
     flightPorts.set(path, port);
   });
 
@@ -92,8 +94,11 @@ app.whenReady().then(async () => {
       const port = flightPorts.get(path);
       if (port.isOpen) {
         port.close();
+        httpService.clearSession()
         await convertSQLiteToExcel(sqlitePath, excelPath);
-        clearSQLite(await db);
+        await clearSQLite(db)
+        await db.close()
+        
       }
       flightPorts.delete(path);
     }

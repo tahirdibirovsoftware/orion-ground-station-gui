@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance } from 'axios';
 import { ITelemetry } from '../../global/types/types';
 
 class HTTPService {
     private readonly apiBase: string = 'https://orion-server-oek4.onrender.com/api/telemetry';
     private readonly http: AxiosInstance;
+
+    // Retry mechanism
+    private maxRetries: number = 30;
+    private retryDelay: number = 1000; // 1 second
 
     constructor() {
         this.http = axios.create({
@@ -14,33 +19,43 @@ class HTTPService {
         });
     }
 
-    transmitData = async (data: ITelemetry): Promise<void> => {
+    private async retryOperation<T>(
+        operation: () => Promise<T>, 
+        retries: number = 0
+    ): Promise<T | undefined> {
         try {
+            return await operation();
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error(`Error in operation: ${error.response?.data || error.message}`);
+            } else {
+                console.error('Unexpected error:', error);
+            }
+
+            if (retries < this.maxRetries) {
+                console.log(`Retrying operation in ${this.retryDelay / 1000} seconds...`);
+                await new Promise(resolve => setTimeout(resolve, this.retryDelay));
+                return this.retryOperation(operation, retries + 1);
+            } else {
+                console.error('Max retries reached. Operation failed.');
+                return undefined; // Or throw an error if needed
+            }
+        }
+    }
+
+    transmitData = async (data: ITelemetry): Promise<void> => {
+        await this.retryOperation(async () => {
             const response = await this.http.post('/', data);
             console.log('Data transmitted successfully:', response.data);
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                console.error('Error transmitting data:', error.response?.data || error.message);
-            } else {
-                console.error('Unexpected error:', error);
-            }
-        }
-    }
+        });
+    };
 
     clearSession = async (): Promise<void> => {
-        try {
+        await this.retryOperation(async () => {
             const response = await this.http.delete('/');
-            console.log('Session cleared successfully:', response.data);
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                console.error('Error clearing session:', error.response?.data || error.message);
-               await this.clearSession()
-            } else {
-                console.error('Unexpected error:', error);
-                await this.clearSession()
-            }
-        }
-    }
+            console.log('Postgres session cleared successfully:', response.data);
+        });
+    };
 }
 
-export default new HTTPService()
+export default new HTTPService();
