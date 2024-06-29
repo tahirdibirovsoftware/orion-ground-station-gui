@@ -42,7 +42,7 @@
     "SOURCE": "Source",
     "BAUDRATE": "Baud Rate",
     "CONNECT": "CONNECT",
-    "DISCONNECT": "Disconnect",
+    "DISCONNECT": "DISCONNECT",
     "NOT_CONNECTED": "Not Connected",
     "NOT_SELECTED": "Not Selected",
     "FLIGHT_PORT_CONFIGURATION": "Flight Port Configuration",

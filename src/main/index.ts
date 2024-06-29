@@ -17,6 +17,7 @@ import { Database } from 'sqlite';
 
 initBaseDir();
 let db: Database
+let isDbOpened: boolean;
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -80,7 +81,7 @@ app.whenReady().then(async () => {
     }
     port = flightPortStarter(baudRate, path, async (data: ITelemetry) => {
       event.sender.send('flight-data', data);
-    }, db);
+    }, db, isDbOpened);
     flightPorts.set(path, port);
   });
 
