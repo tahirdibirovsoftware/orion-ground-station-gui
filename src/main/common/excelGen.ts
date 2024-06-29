@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as sqlite3 from 'sqlite3';
 import { Workbook } from 'exceljs';
+import { randomUUID } from 'crypto';
 
 /**
  * Converts an SQLite database to an Excel file.
@@ -9,6 +10,12 @@ import { Workbook } from 'exceljs';
  * @returns A promise that resolves when the Excel file is created.
  */
 export async function convertSQLiteToExcel(sqliteFilePath: string, excelFilePath: string): Promise<void> {
+
+  const id = randomUUID()
+  const excelFilePathAsArray = excelFilePath.split('.')
+  const modifiedPathBody = [excelFilePathAsArray[0], id].join('-')
+  const modifiedPath = [modifiedPathBody, excelFilePathAsArray[1]].join('.')
+
   return new Promise((resolve, reject) => {
     const db = new sqlite3.Database(sqliteFilePath, (err) => {
       if (err) {
@@ -47,7 +54,7 @@ export async function convertSQLiteToExcel(sqliteFilePath: string, excelFilePath
           });
 
           // Save the workbook to a file
-          await workbook.xlsx.writeFile(excelFilePath);
+          await workbook.xlsx.writeFile(modifiedPath);
           resolve();
         } catch (writeErr: any) {
           reject(new Error(`Error writing Excel file: ${writeErr.message}`));

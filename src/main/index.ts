@@ -11,7 +11,7 @@ import { serialize } from './PortConfig/lib/serializers';
 import { initBaseDir } from './common/dirConfig';
 import { clearSQLite, initializeDb } from './DbConfig';
 import { convertSQLiteToExcel } from './common/excelGen';
-import { excelPath, outputPath, sqlitePath } from './common/paths';
+import { documentPath, excelPath, sqlitePath } from './common/paths';
 import httpService from './httpConfig/httpService';
 import { Database } from 'sqlite';
 
@@ -166,7 +166,7 @@ app.whenReady().then(async () => {
 
   // Handle Dialog
   ipcMain.on('open-output-dir-dialog', async () => {
-    shell.openPath(outputPath);
+    shell.openPath(documentPath);
   });
 
   const monitor = udev.monitor();
