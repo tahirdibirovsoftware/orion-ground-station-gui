@@ -59,15 +59,15 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
     scales: {
       x: {
         ticks: {
-          color: 'white',
+          color: themeSetter(theme).color,
         },
         grid: {
-          color: 'white',
+          color: themeSetter(theme).color,
         },
         title: {
           display: true,
           text: `${mainXTitle}`,
-          color: 'white',
+          color: themeSetter(theme).color,
         },
       },
       y: {
@@ -75,15 +75,15 @@ const ParentLineChart: FC<ILineChart> = ({ title, mainLabelTitle, optionalLabelT
         display: true,
         position: 'left' as const,
         ticks: {
-          color: 'white',
+          color: themeSetter(theme).color,
         },
         grid: {
-          color: 'white',
+          color: themeSetter(theme).color,
         },
         title: {
           display: true,
           text: yTitle(),
-          color: 'white',
+          color: themeSetter(theme).color,
           font: {
             size: 10,
           },

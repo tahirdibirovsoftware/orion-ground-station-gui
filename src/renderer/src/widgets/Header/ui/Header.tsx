@@ -17,12 +17,10 @@ const Header:FC<IHeader> = ({flightData}):JSX.Element => {
     const {theme} = useContext(ThemeContext)
 
     const localStyles: React.CSSProperties = {
-        ...themeSetter(theme),
-        borderTop: 'unset',
-        borderRight: 'unset',
-        borderLeft: 'unset',
+        ...themeSetter(theme, {bb: false, bl: false, br: false, bt: false}),
     }
 
+    console.log('Header styles:', localStyles)
 
     return(
         <div style={localStyles} className={style.Header}>
