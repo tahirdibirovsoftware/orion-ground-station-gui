@@ -6,7 +6,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import * as THREE from 'three';
 import style from './OtWithCallib.module.scss';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import { useAppSelector } from '@renderer/app/redux/hooks';
 
 // Import rocketPath for production mode

@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react'
 import style from './Errorterminal.module.scss'
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
-import { themeSetter } from '../../../shared/config/theme/themeSetter'
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter'
 import { Error } from '../../../entities/Error'
 import { IErrorTerminal } from '../model/types'
 

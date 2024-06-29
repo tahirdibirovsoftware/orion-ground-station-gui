@@ -1,7 +1,7 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import style from './LineChart.module.scss';
 import { Line } from 'react-chartjs-2';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import { FC, useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { ILineChart } from '../model/types';

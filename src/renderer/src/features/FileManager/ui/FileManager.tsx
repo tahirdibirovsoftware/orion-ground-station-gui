@@ -11,7 +11,7 @@ const FileManager = ():JSX.Element => {
     return(
         <div className={style.FileManager}>
             <span className={style.title}><Trans>FILE_MANAGER</Trans></span>
-            <Button onClick={getOutputFiles}><Trans>BROWSE_OUTPUT_FILES</Trans></Button>
+            <Button type='primary' onClick={getOutputFiles}><Trans>BROWSE_OUTPUT_FILES</Trans></Button>
         </div>
     )
 }

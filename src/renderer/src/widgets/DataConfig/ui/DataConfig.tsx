@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react'
-import { themeSetter } from '../../../shared/config/theme/themeSetter'
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter'
 import style from './DataConfig.module.scss'
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
 import { IDataConfig } from '../model/types'

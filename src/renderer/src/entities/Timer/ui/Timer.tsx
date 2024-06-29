@@ -2,7 +2,7 @@ import { FC, useContext } from 'react';
 import style from './Timer.module.scss';
 import { ITimer } from '../model/types';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 
 const Timer:FC<ITimer> = ({flightData}):JSX.Element => {
 

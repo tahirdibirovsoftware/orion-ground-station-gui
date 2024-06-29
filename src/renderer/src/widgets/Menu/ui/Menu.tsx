@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import style from './Menu.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { PageSwitcher } from '../../../features/PageSwitcher';
@@ -15,9 +15,9 @@ const Menu = ():JSX.Element => {
 
     return(
         <div style={themeSetter(theme)} className={style.Menu}>
-            <MenuToggler styleOverride={{border: 'unset', marginBottom: '3%'}}></MenuToggler>
+            <MenuToggler ></MenuToggler>
             <PageSwitcher path='flight' title='flight_mode' styleOverride={{marginTop: '.5rem'}}/>
-            <PageSwitcher path='terminal' title='terminal_mode' styleOverride={{borderTop: 'unset'}}/>
+            <PageSwitcher path='terminal' title='terminal_mode'/>
             <DataConfig type='flight'/>
             <DataConfig type='iot'/>
             <FileManager/>

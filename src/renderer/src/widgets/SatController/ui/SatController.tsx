@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react'
-import { themeSetter } from '../../../shared/config/theme/themeSetter'
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter'
 import style from './Satcontroller.module.scss'
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
 import { Ias } from '../../../entities/Ias'

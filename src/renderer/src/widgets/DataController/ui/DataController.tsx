@@ -2,7 +2,7 @@ import style from './DataController.module.scss';
 
 import { DataFlow } from '../model/types';
 import { useContext, useState } from 'react';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { useAppSelector } from '@renderer/app/redux/hooks';
 

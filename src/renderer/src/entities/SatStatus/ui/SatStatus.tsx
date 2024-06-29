@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import style from './SatStatus.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
-import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import { ISatStatus } from '../model/types';
 import { Trans, useTranslation } from 'react-i18next';
 

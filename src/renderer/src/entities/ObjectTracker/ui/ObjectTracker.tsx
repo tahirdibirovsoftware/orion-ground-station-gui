@@ -6,7 +6,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import * as THREE from 'three';
 import style from './ObjectTracker.module.scss';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import { useAppSelector } from '@renderer/app/redux/hooks';
 
 // Conditionally set rocketPath based on the mode

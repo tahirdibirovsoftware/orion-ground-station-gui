@@ -1,7 +1,7 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import style from './BarChart.module.scss';
 import { Bar } from 'react-chartjs-2';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import React, { FC, useContext, useState } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { filteredData } from '@renderer/entities/LineChart';

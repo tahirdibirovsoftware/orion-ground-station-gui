@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import style from './IoTView.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
-import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import { IIOTView } from '../model/types';
 
 const IoTView: FC<IIOTView> = ({ iotData }): JSX.Element => {

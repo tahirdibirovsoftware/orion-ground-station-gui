@@ -1,7 +1,7 @@
 import { StatusBar } from '@renderer/widgets/StatusBar';
 import { Logo } from '../../../entities/Logo';
 import { MenuToggler } from '../../../features/MenuToggler';
-import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import style from './Header.module.scss';
 import { FC, useContext } from 'react';
 import { IHeader } from '../model/types';

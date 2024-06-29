@@ -1,12 +1,9 @@
-import { ThemeMode } from "./types";
+import { darkBorder, lightBorder } from "../constants";
+import { BorderColor, BoxShadowProps, IBorders, ThemeMode } from "../types";
 
-type BoxShadowProps = [number, number, number, number];
-interface IBorders {
-    bt: boolean,
-    bb: boolean,
-    br: boolean,
-    bl: boolean
-}
+
+
+
 
 export const themeSetter = (theme: ThemeMode, borders: IBorders = { bt: true, bb: true, br: true, bl: true }, boxShadow?: BoxShadowProps): React.CSSProperties => {
     let boxShadowStyle: string | undefined;
@@ -16,25 +13,26 @@ export const themeSetter = (theme: ThemeMode, borders: IBorders = { bt: true, bb
         boxShadowStyle = `${horizontalOffset}px ${verticalOffset}px ${blurRadius}px ${spreadRadius}px rgba(0, 0, 0, 0.5)`;
     }
 
-    const borderStyles: React.CSSProperties = {
-        borderTop: borders.bt ? '1px solid rgba(50, 50, 50, 1)' : undefined,
-        borderBottom: borders.bb ? '1px solid rgba(50, 50, 50, 1)' : undefined,
-        borderRight: borders.br ? '1px solid rgba(50, 50, 50, 1)' : undefined,
-        borderLeft: borders.bl ? '1px solid rgba(50, 50, 50, 1)' : undefined
-    };
+
+    const borderStyles = (borderColor: BorderColor): React.CSSProperties => ({
+        borderTop: borders.bt ? `1px solid ${borderColor}` : undefined,
+        borderBottom: borders.bb ? `1px solid ${borderColor}` : undefined,
+        borderRight: borders.br ? `1px solid ${borderColor}` : undefined,
+        borderLeft: borders.bl ? `1px solid ${borderColor}` : undefined
+})
 
     if (theme === 'dark') {
         return {
             backgroundColor: 'rgba(20, 20, 20, 1)',
             color: 'rgba(200, 200, 200, 1)',
-            ...borderStyles,
+            ...borderStyles(darkBorder),
             boxShadow: boxShadowStyle
         };
     } else if (theme === 'light') {
         return {
             backgroundColor: 'rgba(255, 255, 255, 1)',
             color: 'rgba(0, 0, 0, 0.87)',
-            ...borderStyles,
+            ...borderStyles(lightBorder),
             boxShadow: boxShadowStyle
         };
     }

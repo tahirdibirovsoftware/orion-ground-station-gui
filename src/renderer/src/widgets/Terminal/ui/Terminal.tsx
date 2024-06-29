@@ -2,7 +2,7 @@ import { FC, useContext, useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import style from './Terminal.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
-import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import { ITerminal } from '../model/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { routeHandler } from '../lib/routeHandler';

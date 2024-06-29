@@ -1,6 +1,6 @@
 import style from './DescentRate.module.scss';
 import { FC, useContext } from 'react';
-import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { IDescentRate } from '../model/types';
 import { Trans, useTranslation } from 'react-i18next';

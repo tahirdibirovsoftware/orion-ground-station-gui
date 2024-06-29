@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import style from './Mfm.module.scss';
-import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';

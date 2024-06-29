@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import style from './Map.module.scss';
 import { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';

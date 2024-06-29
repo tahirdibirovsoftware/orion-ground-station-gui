@@ -5,7 +5,7 @@ import BatteryGauge from 'react-battery-gauge';
 import React, { FC, useContext } from 'react';
 import { IStatusBar } from '../model/types';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 
 const StatusBar:FC<IStatusBar> = ({flightData}):JSX.Element =>{
     

@@ -1,7 +1,7 @@
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import style from './ParachuteCR.module.scss';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import { commandTheParachute, initiaControllingState } from '@renderer/widgets/SatController/model/controllingData';
 import { useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';

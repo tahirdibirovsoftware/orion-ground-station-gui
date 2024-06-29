@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import style from './Cam.module.scss';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
-import { themeSetter } from '@renderer/shared/config/theme/themeSetter';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 
 export const Cam = (): JSX.Element => {
   const { theme } = useContext(ThemeContext);

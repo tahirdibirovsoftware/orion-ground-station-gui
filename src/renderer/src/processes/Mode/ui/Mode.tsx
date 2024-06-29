@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react';
 import { Router } from '../../../pages';
-import { themeSetter } from '../../../shared/config/theme/themeSetter';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import style from './Mode.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { SatController } from '../../../widgets/SatController';
