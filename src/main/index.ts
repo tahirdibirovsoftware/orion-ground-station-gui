@@ -148,7 +148,7 @@ app.whenReady().then(async () => {
   });
 
   ipcMain.on('sent-iot-data', (_, { data, path }) => {
-    const port = iotPorts.get(path);
+    const port = flightPorts.get(path);
     if (port) {
       port.write(serialize(data));
     }
