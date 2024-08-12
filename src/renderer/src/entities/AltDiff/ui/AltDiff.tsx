@@ -1,30 +1,35 @@
-import { FC, useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
-import style from  './AltDiff.module.scss';
+import style from './AltDiff.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { IAltDiff } from '../model/types';
 import { Trans, useTranslation } from 'react-i18next';
 
+const AltDiffComponent: React.FC<IAltDiff> = ({ flightData }) => {
+  const { t } = useTranslation();
+  const { theme } = useContext(ThemeContext);
 
-const AltDiff:FC<IAltDiff> = ({flightData}):JSX.Element => {
+  const { altitudeDifference, isAvailable } = useMemo(() => {
+    const lastFlightData = flightData[flightData.length - 1] || {};
+    return {
+      altitudeDifference: lastFlightData.altitudeDifference,
+      isAvailable: (lastFlightData.packetNumber || 0) > 0
+    };
+  }, [flightData]);
 
-    useTranslation()
-    const altitudeDifference = flightData[flightData.length-1].altitudeDifference
-    const isAvailable = flightData[flightData.length-1].packetNumber>0
-    const { theme } = useContext(ThemeContext)
+  const localStyles = useMemo(() => themeSetter(theme), [theme]);
 
-    const localStyles:React.CSSProperties = {
-        ...themeSetter(theme)
-    }
+  if (!isAvailable) {
+    return null;
+  }
 
-    return(
-        <div style={localStyles} className={style.AltDiff}>
-            {
-                 isAvailable &&
-                <span><Trans>ALTITUDE_DIFFERENCE</Trans>: {altitudeDifference}m</span>
-            }
-        </div>
-    )
-}
+  return (
+    <div style={localStyles} className={style.AltDiff}>
+      <span>
+        <Trans>{t('ALTITUDE_DIFFERENCE')}</Trans>: {altitudeDifference}m
+      </span>
+    </div>
+  );
+};
 
-export {AltDiff}
+export const AltDiff = React.memo(AltDiffComponent);

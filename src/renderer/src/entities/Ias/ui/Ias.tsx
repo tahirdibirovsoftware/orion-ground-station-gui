@@ -1,23 +1,36 @@
-import { FC, useContext } from 'react'
-import { themeSetter } from '../../../shared/config/theme/model/themeSetter'
-import style from './Ias.module.scss'
-import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
-import { IIas } from '../model/types'
+import React, { useContext, useMemo } from 'react';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
+import style from './Ias.module.scss';
+import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
+import { IIas } from '../model/types';
 
-const Ias:FC<IIas> = ({errorCode}):JSX.Element => {
+export const Ias: React.FC<IIas> = ({ errorCode }) => {
+  const { theme } = useContext(ThemeContext);
 
-    const { theme } = useContext(ThemeContext)
-    const processedErrorCode = errorCode && errorCode.toString().split('').map(code=>!isNaN(Number(code)) ? parseInt(code): '');
+  const processedErrorCode = useMemo(() => {
+    if (!errorCode) return [];
+    return String(errorCode)
+      .split('')
+      .map((code) => {
+        const num = parseInt(code, 10);
+        return isNaN(num) ? '' : num;
+      });
+  }, [errorCode]);
 
-    return(
-        <div className={style.Ias} style={themeSetter(theme)}>
-            {
-               processedErrorCode && processedErrorCode.map((binary, idx)=>(
-                    binary ? <div className={style.ErrorBox} key={idx}>{binary}</div> : <div key={idx} className={style.SuccessBox}>{binary}</div>
-                ))
-            }
+  const themeStyles = useMemo(() => themeSetter(theme), [theme]);
+
+  return (
+    <div className={style.Ias} style={themeStyles}>
+      {processedErrorCode.map((binary, idx) => (
+        <div
+          key={idx}
+          className={binary ? style.ErrorBox : style.SuccessBox}
+        >
+          {binary}
         </div>
-    )
-}
+      ))}
+    </div>
+  );
+};
 
-export {Ias}
+export const MemoizedIas = React.memo(Ias);
