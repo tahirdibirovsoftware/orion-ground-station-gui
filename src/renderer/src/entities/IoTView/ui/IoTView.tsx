@@ -18,15 +18,15 @@ export const IoTView: React.FC<IIOTView> = ({ iotData }) => {
 
   const localStyles = useMemo(() => themeSetter(theme), [theme]);
 
-  if (!dataAvailable) {
-    return null;
-  }
-
   return (
     <div style={localStyles} className={style.IoTView}>
-      <span>{temperature} &deg;C</span>
-      <span>|</span>
-      <span>{humidity}%</span>
+      {dataAvailable && (
+        <>
+          <span>{temperature} &deg;C</span>
+          <span>|</span>
+          <span>{humidity}%</span>
+        </>
+      )}
     </div>
   );
 };

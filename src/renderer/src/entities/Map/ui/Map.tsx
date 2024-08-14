@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
+import React, { useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { MapContainer, TileLayer, Marker, Polyline, useMap, MapContainerProps } from 'react-leaflet';
+import L from "leaflet";
+import { useAppSelector } from '@renderer/app/redux/hooks';
+import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import style from './Map.module.scss';
-import { useContext, useState, useEffect } from 'react';
-import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
-import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-// import { ExpandAltOutlined } from '@ant-design/icons';
-import { useAppSelector } from '@renderer/app/redux/hooks';
 import icon from "leaflet/dist/images/marker-icon.png";
-import L from "leaflet";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
 const DefaultIcon = L.icon({
@@ -18,63 +17,81 @@ const DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
+type Coordinate = [number, number];
+
 interface MapProps {
-  getGpsData: () => [number, number]; // Function to get GPS data
+  getGpsData: () => Coordinate | undefined;
 }
 
-const Map: React.FC<MapProps> = ({ getGpsData }) => {
-  const { theme } = useContext(ThemeContext);
-  const [currentPosition, setCurrentPosition] = useState<[number, number]>();
-  const [positionHistory, setPositionHistory] = useState<[number, number][]>([]);
+interface MoveMapCenterProps {
+  position: Coordinate;
+}
 
-  const localStyles: React.CSSProperties = {
-    ...themeSetter(theme),
-  };
-
-  // Custom hook to move the map center
-  const MoveMapCenter = ({ position }: { position: [number, number] }): null => {
-    const map = useMap();
-    useEffect(() => {
-      map.setView(position);
-    }, [position, map]);
-    return null;
-  };
-
+const MoveMapCenter: React.FC<MoveMapCenterProps> = React.memo(({ position }) => {
+  const map = useMap();
   useEffect(() => {
-    const updatePosition = () :void=> {
-      const newPosition = getGpsData();
-      if (newPosition[0] !== 0 && newPosition[1] !== 0) {
-        setCurrentPosition(newPosition);
-        setPositionHistory(prevHistory => [...prevHistory, newPosition]);
-      }
-    };
+    if (map && position && position.length === 2) {
+      map.setView(position);
+    }
+  }, [position, map]);
+  return null;
+});
 
-    // Update position at regular intervals (e.g., every 5 seconds)
-    const intervalId = setInterval(updatePosition, 0);
+MoveMapCenter.displayName = 'MoveMapCenter';
 
-    return () => clearInterval(intervalId); // Clean up on unmount
+const isValidPosition = (pos: Coordinate | undefined): pos is Coordinate => {
+  return Array.isArray(pos) && pos.length === 2 && typeof pos[0] === 'number' && typeof pos[1] === 'number' && !isNaN(pos[0]) && !isNaN(pos[1]);
+};
+
+// Default coordinate to use when no valid position is available
+const DEFAULT_COORDINATE: Coordinate = [0, 0];
+
+export const Map: React.FC<MapProps> = React.memo(({ getGpsData }) => {
+  const { theme } = useContext(ThemeContext);
+  const [currentPosition, setCurrentPosition] = useState<Coordinate | undefined>(undefined);
+  const [positionHistory, setPositionHistory] = useState<Coordinate[]>([]);
+
+  const localStyles = useMemo(() => themeSetter(theme || 'light'), [theme]);
+
+  const updatePosition = useCallback(() => {
+    const newPosition = getGpsData();
+    if (isValidPosition(newPosition) && newPosition[0] !== 0 && newPosition[1] !== 0) {
+      setCurrentPosition(newPosition);
+      setPositionHistory(prevHistory => [...prevHistory, newPosition]);
+    }
   }, [getGpsData]);
 
+  useEffect(() => {
+    const intervalId = setInterval(updatePosition, 0);
+    return () => clearInterval(intervalId);
+  }, [updatePosition]);
+
   const flightData = useAppSelector(state => state.flightDataStoreReducer);
-  const isActive = flightData[flightData.length - 1].packetNumber > 0;
+  const isActive = useMemo(() => {
+    const lastData = flightData[flightData.length - 1];
+    return lastData && lastData.packetNumber > 0;
+  }, [flightData]);
+
+  if (!isActive || !isValidPosition(currentPosition)) {
+    return <div style={localStyles} className={style.MapWrapper} />;
+  }
+
+  const mapContainerProps: MapContainerProps = {
+    center: currentPosition || DEFAULT_COORDINATE,
+    zoom: 5,
+    style: { height: '100vh', width: '100%' }
+  };
 
   return (
     <div style={localStyles} className={style.MapWrapper}>
-      {isActive && currentPosition && (
-        <>
-          <MapContainer center={currentPosition} zoom={5} style={{ height: '100vh', width: '100%' }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={currentPosition} />
-            <Polyline positions={positionHistory} color="blue" />
-            <MoveMapCenter position={currentPosition} />
-          </MapContainer>
-        </>
-      )}
-       {/* <div className={style.zoomButton}>
-            <ExpandAltOutlined />
-          </div> */}
+      <MapContainer {...mapContainerProps}>
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {currentPosition && <Marker position={currentPosition} />}
+        {positionHistory.length > 1 && <Polyline positions={positionHistory} color="blue" />}
+        {currentPosition && <MoveMapCenter position={currentPosition} />}
+      </MapContainer>
     </div>
   );
-};
+});
 
-export { Map };
+Map.displayName = 'Map';

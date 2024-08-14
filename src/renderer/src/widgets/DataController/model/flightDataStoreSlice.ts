@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { ITelemetry } from '../../../../../global/types/types';
 
+const MAX_TELEMETRY_RECORDS = 30;
 
 export const initialState: Array<ITelemetry> = [
     {
@@ -33,9 +34,12 @@ const flightDataStoreSlice = createSlice({
     initialState,
     reducers: {
         addTelemetry: (state, action: PayloadAction<ITelemetry>) => {
+            if (state.length >= MAX_TELEMETRY_RECORDS) {
+                state.shift(); // Remove the oldest record
+            }
             state.push(action.payload);
         },
-        resetTelemetry: ()=>initialState
+        resetTelemetry: () => initialState
         // Add more reducers as needed
     },
 });
