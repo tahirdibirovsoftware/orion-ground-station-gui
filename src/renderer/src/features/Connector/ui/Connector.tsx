@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useCallback, useMemo } from 'react';
 import style from './Connector.module.scss';
 import { IConnector } from '../model/types';
 import { Button } from 'antd';
@@ -10,66 +10,68 @@ import { addIotData, resetIotTelemetryData } from '@renderer/widgets/DataControl
 import { Trans, useTranslation } from 'react-i18next';
 
 const Connector: FC<IConnector> = ({ type }): JSX.Element => {
-  useTranslation()
+  useTranslation();
   const dispatch = useAppDispatch();
-  const isConnected = useAppSelector(
-    (state) => type === 'flight' ? state.connectorReducer.flightConnect : state.connectorReducer.iotConnect
-  ) === 'connected';
-  const flightBaudRate = useAppSelector((state) => state.baudRateReducer.flightBaudRate);
-  const iotBaudRate = useAppSelector((state) => state.baudRateReducer.iotBaudRate);
-  const flightPath = useAppSelector((state) => state.portConfigReducer.flightPath);
-  const iotPath = useAppSelector((state) => state.portConfigReducer.iotPath);
 
-  const flightDataHandler = (data: ITelemetry): void => { dispatch(addTelemetry(data)); };
-  const iotDataHandler = (data: IIoTTelemetry): void => { dispatch(addIotData(data)); };
-  const isIoTReady = Boolean(iotPath);
-  const isFlightReady = Boolean(flightPath);
-  const isAvailable = (): boolean => type === 'flight' ? isFlightReady : isIoTReady;
+  const {
+    isConnected,
+    baudRate,
+    path,
+    isReady
+  } = useAppSelector((state) => ({
+    isConnected: type === 'flight' ? state.connectorReducer.flightConnect === 'connected' : state.connectorReducer.iotConnect === 'connected',
+    baudRate: type === 'flight' ? state.baudRateReducer.flightBaudRate : state.baudRateReducer.iotBaudRate,
+    path: type === 'flight' ? state.portConfigReducer.flightPath : state.portConfigReducer.iotPath,
+    isReady: type === 'flight' ? Boolean(state.portConfigReducer.flightPath) : Boolean(state.portConfigReducer.iotPath)
+  }));
+
+  const flightDataHandler = useCallback((data: ITelemetry): void => { dispatch(addTelemetry(data)); }, [dispatch]);
+  const iotDataHandler = useCallback((data: IIoTTelemetry): void => { dispatch(addIotData(data)); }, [dispatch]);
 
   useEffect(() => {
-    if (type === 'flight' && !flightPath) {
-      dispatch(connectToFlight('disconnected'));
+    if (!path) {
+      dispatch(type === 'flight' ? connectToFlight('disconnected') : connectToIoT('disconnected'));
     }
-    if (type === 'iot' && !iotPath) {
-      dispatch(connectToIoT('disconnected'));
-    }
-  }, [dispatch, type, flightPath, iotPath]);
+  }, [dispatch, type, path]);
 
-  const connectHandler = (): void => {
+  const connectHandler = useCallback((): void => {
     if (type === 'flight') {
-      window.api.connectToFlight(flightPath, Number(flightBaudRate));
+      window.api.connectToFlight(path, Number(baudRate));
       window.api.getFlightData(flightDataHandler);
       dispatch(connectToFlight('connected'));
-    } else if (type === 'iot') {
-      window.api.connectToIot(iotPath, iotBaudRate);
+    } else {
+      window.api.connectToIot(path, baudRate);
       window.api.getIotData(iotDataHandler);
       dispatch(connectToIoT('connected'));
     }
-  };
+  }, [dispatch, type, path, baudRate, flightDataHandler, iotDataHandler]);
 
-  const disconnectHandler = (): void => {
+  const disconnectHandler = useCallback((): void => {
     if (type === 'flight') {
-      window.api.disconnectFlight(flightPath);
+      window.api.disconnectFlight(path);
       dispatch(connectToFlight('disconnected'));
       dispatch(resetTelemetry());
-    } else if (type === 'iot') {
-      window.api.disconnectIot(iotPath);
+    } else {
+      window.api.disconnectIot(path);
       dispatch(connectToIoT('disconnected'));
       dispatch(resetIotTelemetryData());
     }
-  };
+  }, [dispatch, type, path]);
+
+  const buttonProps = useMemo(() => ({
+    size: "small" as const,
+    type: "text" as const,
+    className: isConnected ? style.ButtonDisconnect : style.ButtonConnect,
+    onClick: isConnected ? disconnectHandler : connectHandler,
+    disabled: !isConnected && !isReady,
+    style: !isConnected && !isReady ? { opacity: .3, cursor: 'default' } : {}
+  }), [isConnected, isReady, connectHandler, disconnectHandler]);
 
   return (
     <div className={style.Connector}>
-      {(!isConnected) ? (
-        <Button disabled={!isAvailable()} style={!isAvailable() ? { opacity: .3, cursor: 'default' } : {}} onClick={connectHandler} size="small" type="text" className={style.ButtonConnect}>
-          <Trans>{'Connect'.toUpperCase()}</Trans>
-        </Button>
-      ) : (
-        <Button onClick={disconnectHandler} size="small" type="text" className={style.ButtonDisconnect}>
-          <Trans>{'Disconnect'.toUpperCase()}</Trans>
-        </Button>
-      )}
+      <Button {...buttonProps}>
+        <Trans>{(isConnected ? 'Disconnect' : 'Connect').toUpperCase()}</Trans>
+      </Button>
     </div>
   );
 };

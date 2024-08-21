@@ -49,7 +49,7 @@ export const ParentLineChart: React.FC<ILineChart> = ({
 
   const options: ChartOptions<'line'> = useMemo(() => ({
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     aspectRatio: 1,
     interaction: {
       mode: 'index' as const,
@@ -117,8 +117,8 @@ export const ParentLineChart: React.FC<ILineChart> = ({
       setLocalStyles(prevStyles => ({
         ...prevStyles,
         zIndex: 100,
-        width: '60vw',
-        height: '80vh',
+        width: '95vw',
+        height: '90vh',
         position: 'fixed',
         top: '50%',
         left: '50%',

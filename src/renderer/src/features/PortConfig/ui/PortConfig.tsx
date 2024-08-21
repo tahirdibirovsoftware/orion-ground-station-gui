@@ -1,90 +1,88 @@
-import { FC, useEffect, useRef } from 'react';
-import style from './PortConfig.module.scss';
-import { IPortConfig } from '../model/types';
-import { SerialPort } from 'serialport';
+import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { setDevices, setFlightConfig, setIoTConfig } from '../model/PortConfigSlice';
-import { Trans, useTranslation } from 'react-i18next';
+import style from './PortConfig.module.scss';
+import { SerialPort } from 'serialport';
 
 export type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
 
-const PortConfig: FC<IPortConfig> = ({ type }): JSX.Element => {
+interface IPortConfig {
+    type: 'flight' | 'iot';
+}
+
+const PortConfig: React.FC<IPortConfig> = ({ type }) => {
     useTranslation();
     const dispatch = useAppDispatch();
-    const paths = useAppSelector(state => state.portConfigReducer.flightPath);
     const selectRef = useRef<HTMLSelectElement>(null);
-    const devices = useAppSelector(state => state.portConfigReducer.devices);
-    const flightPath = useAppSelector(state=>state.portConfigReducer.flightPath);
-    const iotPath = useAppSelector(state=>state.portConfigReducer.iotPath);
-    const isFlightConnected = useAppSelector(state=>state.connectorReducer.flightConnect)==='connected';
-    const isIotConnected = useAppSelector(state=>state.connectorReducer.iotConnect)==='connected';
-    
-    const deviceHandler = (devices: SerialPortListType): void => {
+
+    const {
+        devices,
+        path,
+        isConnected
+    } = useAppSelector(state => ({
+        devices: state.portConfigReducer.devices,
+        path: type === 'flight' ? state.portConfigReducer.flightPath : state.portConfigReducer.iotPath,
+        isConnected: type === 'flight'
+            ? state.connectorReducer.flightConnect === 'connected'
+            : state.connectorReducer.iotConnect === 'connected'
+    }));
+
+    const deviceHandler = useCallback((devices: SerialPortListType): void => {
         dispatch(setDevices(devices));
-    };
+    }, [dispatch]);
 
     useEffect(() => {
-        const fetchDevices = async ():Promise<void> => {
+        const fetchDevices = async (): Promise<void> => {
             const devices = await window.api.getPortList();
             deviceHandler(devices);
         };
 
         fetchDevices();
         window.api.onPortListUpdated(deviceHandler);
-    }, []);
+
+        return () => {
+            // Clean up listener if necessary
+            // window.api.removePortListUpdatedListener(deviceHandler);
+        };
+    }, [deviceHandler]);
 
     useEffect(() => {
-        console.log('paths: ', paths);
-        console.log('devices: ', devices);
-        if (!devices.filter(device => device.manufacturer).length) {
+        if (!devices.some(device => device.manufacturer)) {
             dispatch(setFlightConfig({ path: '' }));
             dispatch(setIoTConfig({ path: '' }));
         }
-    }, [devices]);
+    }, [devices, dispatch]);
 
-    const setDevice = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        if (type === 'flight') {
-            dispatch(setFlightConfig({ path: event.target.value }));
+    const setDevice = useCallback((event: React.ChangeEvent<HTMLSelectElement>): void => {
+        const action = type === 'flight' ? setFlightConfig : setIoTConfig;
+        dispatch(action({ path: event.target.value }));
+    }, [dispatch, type]);
+
+    const availableDevices = useMemo(() => devices.filter(device => device.manufacturer), [devices]);
+
+    const options = useMemo(() => {
+        if (!availableDevices.length) {
+            return [<option key="not-connected"><Trans>NOT_CONNECTED</Trans></option>];
         }
-        if (type === 'iot') {
-            dispatch(setIoTConfig({ path: event.target.value }));
-        }
-    };
 
-    const isPortAvailable = (): number | undefined => devices.filter(device => device.manufacturer).length;
-
-    const getPathName = ():string =>{
-        if(type==='flight') return flightPath
-        if(type==='iot') return iotPath
-        return ''
-    }
-
-    const isConnected = ():boolean => {
-        if(type==='flight') return isFlightConnected;
-        if(type==='iot') return isIotConnected;
-        return false;
-    }
+        return [
+            <option key="not-selected" value="">
+                <Trans>{path || 'NOT_SELECTED'}</Trans>
+            </option>,
+            ...availableDevices.map(device => (
+                <option key={device.path} value={device.path}>
+                    {device.manufacturer || 'Not Active'}
+                </option>
+            ))
+        ];
+    }, [availableDevices, path]);
 
     return (
         <div className={style.Port}>
             <span><Trans>SOURCE</Trans>: </span>
-            <select disabled={isConnected()} ref={selectRef} onChange={setDevice}>
-                {!isPortAvailable() ? (
-                    <option key="not-connected"><Trans>NOT_CONNECTED</Trans></option>
-                ) : (
-                    <>
-                        <option key="not-selected" value="">
-                            <Trans>{getPathName() || 'NOT_SELECTED'}</Trans>
-                        </option>
-                        {devices.map(device =>
-                            device.manufacturer ? (
-                                <option key={device.path} value={device.path}>
-                                    {device.manufacturer || 'Not Active'}
-                                </option>
-                            ) : null
-                        )}
-                    </>
-                )}
+            <select disabled={isConnected} ref={selectRef} onChange={setDevice}>
+                {options}
             </select>
         </div>
     );

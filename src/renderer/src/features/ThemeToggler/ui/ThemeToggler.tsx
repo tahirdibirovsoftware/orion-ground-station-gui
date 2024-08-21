@@ -1,27 +1,28 @@
-import { Switch } from 'antd'
-import style from './ThemeToggler.module.scss'
-import { MoonOutlined, SunOutlined } from '@ant-design/icons'
-import { useContext } from 'react'
-import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
-import { ThemeMode } from '../../../shared/config/theme/types'
+import React, { useContext, useCallback } from 'react';
+import { Switch } from 'antd';
+import { MoonOutlined, SunOutlined } from '@ant-design/icons';
+import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
+import { ThemeMode } from '../../../shared/config/theme/types';
+import style from './ThemeToggler.module.scss';
 
+const ThemeToggler: React.FC = () => {
+    const { theme, setTheme } = useContext(ThemeContext);
 
-const ThemeToggler = (): JSX.Element => {
-
-    const { theme, setTheme } = useContext(ThemeContext)
-
-    const toggleTheme = (theme: ThemeMode): ThemeMode => {
-        if (theme === 'dark') setTheme('light')
-        else if (theme === 'light') setTheme('dark')
-        return theme
-    }
-
+    const toggleTheme = useCallback(() => {
+        const newTheme: ThemeMode = theme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+    }, [theme, setTheme]);
 
     return (
         <div className={style.ThemeToggler}>
-            <Switch onChange={() => toggleTheme(theme)} unCheckedChildren={<MoonOutlined />} checkedChildren={<SunOutlined />} />
+            <Switch
+                onChange={toggleTheme}
+                checked={theme === 'light'}
+                unCheckedChildren={<MoonOutlined />}
+                checkedChildren={<SunOutlined />}
+            />
         </div>
-    )
-}
+    );
+};
 
-export { ThemeToggler }
+export { ThemeToggler };

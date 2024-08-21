@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { ITelemetry } from '../../../../../global/types/types';
 
-const MAX_TELEMETRY_RECORDS = 30;
+const MAX_TELEMETRY_RECORDS = Infinity;
 
 export const initialState: Array<ITelemetry> = [
     {
