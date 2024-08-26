@@ -14,7 +14,7 @@ CanSat Commander is an intuitive and robust ground station software tailored for
    git clone https://github.com/tahirdibirovsoftware/orion-ground-station-gui.git
 
 2. Navigate to the project directory:
-   cd cansat-commander
+   cd orion-ground-station-gui
 
 3. Install dependencies:
    npm install
