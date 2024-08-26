@@ -28,4 +28,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Contact
 
-For any questions or support, please open an issue in the GitHub repository or contact [your contact information].
+For any questions or support, please open an issue in the GitHub repository or contact [dibirovtahir@gmail.com].
