@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useRef } from 'react';
+import { FC, memo, useContext, useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import style from './Terminal.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
@@ -9,7 +9,7 @@ import { routeHandler } from '../lib/routeHandler';
 import { filterToLastData } from '../lib/filterData';
 import { ITelemetry } from 'src/global/types/types';
 
-const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => {
+const TerminalComponent: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => {
     useTranslation()
     const navigate = useNavigate();
     const location = useLocation();
@@ -108,4 +108,4 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
     );
 };
 
-export { Terminal };
+export const Terminal = memo(TerminalComponent);

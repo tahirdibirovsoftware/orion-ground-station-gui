@@ -1,20 +1,40 @@
-.Header{
+.Header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 6%;
+    min-height: 50px;
     width: 100%;
-    padding: 1%;
-    padding-left: 2%;
-}
-
-.HeaderWrapper{
+    padding: 1% 2%;
+  
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 2%;
+    }
+  }
+  
+  .HeaderWrapper {
     display: flex;
     gap: 1%;
-    width: 20%;
+    width: auto;
+    max-width: 60%;
     justify-content: flex-end;
     align-items: center;
-    border-radius: 5%;
-    padding: .3%;
+    border-radius: 5px;
+    padding: 0.3%;
     height: 100%;
-}
+  
+    @media (max-width: 768px) {
+      width: 100%;
+      max-width: 100%;
+      justify-content: space-between;
+      margin-top: 10px;
+      order: 3;
+    }
+  
+    @media (max-width: 480px) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }

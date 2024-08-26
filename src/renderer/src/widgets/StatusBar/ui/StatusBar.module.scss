@@ -1,12 +1,37 @@
-.StatusBar{
+.StatusBar {
     background-color: rgb(10,10,10);
-    padding: 0 1.5%;
-    border-radius: 8%;    
+    padding: 10px 2%;
+    border-radius: 8px;
     overflow: hidden;
     display: flex;
-    width: 43%;
-    height: 200%;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    min-height: 80px;
     gap: 3%;
     justify-content: center;
     align-items: center;
+}
+
+@media (min-width: 768px) {
+    .StatusBar {
+        width: 80%;
+        max-width: 800px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .StatusBar {
+        width: 60%;
+        max-width: 1000px;
+    }
+}
+
+@media (max-width: 480px) {
+    .StatusBar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        gap: 15px;
+    }
 }

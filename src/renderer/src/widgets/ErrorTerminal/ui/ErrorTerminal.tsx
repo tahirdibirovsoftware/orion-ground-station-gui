@@ -1,41 +1,40 @@
-import { FC, useContext } from 'react'
-import style from './Errorterminal.module.scss'
-import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
-import { themeSetter } from '../../../shared/config/theme/model/themeSetter'
-import { Error } from '../../../entities/Error'
-import { IErrorTerminal } from '../model/types'
+/* eslint-disable react/prop-types */
+import React, { FC, useContext, useMemo, useCallback } from 'react';
+import style from './Errorterminal.module.scss';
+import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
+import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
+import { Error } from '../../../entities/Error';
+import { IErrorTerminal } from '../model/types';
 
+const errorStatuses = [
+  'CONTAINER_LANDING_RATE_FAILURE',
+  'SCIENCE_PAYLOAD_LANDING_RATE_FAILURE',
+  'CONTAINER_PRESSURE_DATA_FAILURE',
+  'SCIENCE_PAYLOAD_POSITION_DATA_FAILURE',
+  'RELEASE_FAILURE'
+];
 
-const ErrorTerminal: FC<IErrorTerminal> = ({ errorCode }): JSX.Element => {
+const ErrorTerminal: FC<IErrorTerminal> = React.memo(({ errorCode }) => {
+  const { theme } = useContext(ThemeContext);
 
-    const { theme } = useContext(ThemeContext)
-    const localStyles: React.CSSProperties = {
-        ...themeSetter(theme)
-    }
+  const localStyles = useMemo(() => themeSetter(theme), [theme]);
 
-    const errorStatuses = [
-        'Container landing rate failure',
-        'Science Payload landing rate failure',
-        'Container pressure data failure',
-        'Science Payload position data failure',
-        'Release failure'
-    ].map(error=>error.split(' ').join('_').toUpperCase())
-    console.log(errorCode)
-    const processedErrorCode = errorCode && errorCode.toString().split('').map(code => parseInt(code))
+  const processErrorCode = useCallback((code: string | number) => {
+    if (typeof code !== 'string' && typeof code !== 'number') return [];
+    return code.toString().split('').map(Number);
+  }, []);
 
-    return (
-        <div style={localStyles} className={style.ErrorTerminal}>
-            {
+  const processedErrorCode = useMemo(() => processErrorCode(errorCode), [errorCode, processErrorCode]);
 
+  return (
+    <div style={localStyles} className={style.ErrorTerminal}>
+      {processedErrorCode.map((code, idx) => 
+        code === 1 && <Error key={errorStatuses[idx]} content={errorStatuses[idx]} />
+      )}
+    </div>
+  );
+});
 
-               processedErrorCode && processedErrorCode.map((code, idx) => (
-                   code===1 && <Error key={idx} content={errorStatuses[idx]} />
-                ))
+ErrorTerminal.displayName = 'ErrorTerminal';
 
-
-            }
-        </div>
-    )
-}
-
-export { ErrorTerminal }
+export { ErrorTerminal };

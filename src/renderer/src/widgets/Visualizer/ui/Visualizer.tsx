@@ -4,8 +4,8 @@ import { FC, useState, useEffect } from 'react';
 import { IVisualizer } from '../model/types';
 import { Map } from '@renderer/entities/Map';
 import { Cam } from '@renderer/entities/Cam/ui/Cam';
-import { OtWithCallib } from '@renderer/entities/OtWithCallib';
 import { useTranslation } from 'react-i18next';
+import { MemoizedOtWithCallib } from '@renderer/entities/OtWithCallib/ui/OtWithCallib';
 
 const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
   const mainPressureData = flightData.map((data) => data?.pressure1);
@@ -14,10 +14,7 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
   const optionalAltitudeData = flightData.map((data) => data.altitude2);
   const iotTemp = flightData.map((data) => data.iotData) as Array<number>;
   const temperature = flightData.map((data) => data.temp);
-  const pitch = flightData[flightData.length-1].pitch;
-  const yaw = flightData[flightData.length-1].YAW;
-  const roll = flightData[flightData.length-1].roll;
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const [currentPosition, setCurrentPosition] = useState<[number, number]>([40, 60]);
 
@@ -56,9 +53,9 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
         mainYTitle={t('TEMPERATURE')}
         optionalYTitle=''
       />
-      <Map getGpsData={() => currentPosition}  />
-      <OtWithCallib pitch={pitch} yaw={yaw} roll={roll}/>
-      <Cam/>
+      <Map getGpsData={() => currentPosition} />
+      <MemoizedOtWithCallib/>
+      <Cam />
     </div>
   );
 };

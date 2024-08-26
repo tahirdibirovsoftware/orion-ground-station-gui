@@ -1,4 +1,5 @@
-import { FC, useContext } from 'react'
+/* eslint-disable react/prop-types */
+import React, { FC, useContext, useMemo } from 'react'
 import { themeSetter } from '../../../shared/config/theme/model/themeSetter'
 import style from './Satcontroller.module.scss'
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider'
@@ -11,33 +12,31 @@ import { ParachuteCR } from '../../../features/ParachuteCR'
 import { SatStatus } from '../../../entities/SatStatus'
 import { ISatController } from '../model/types'
 import { DescentRate } from '@renderer/entities/DescentRate'
-// import { DataController } from '@renderer/widgets/DataController'
 
+const SatController: FC<ISatController> = React.memo(({ flightData, iotData }) => {
+  const { theme } = useContext(ThemeContext)
 
-const SatController:FC<ISatController> = ({flightData, iotData}):JSX.Element => {
+  const localStyles = useMemo(() => themeSetter(theme), [theme])
 
-    const { theme } = useContext(ThemeContext)
+  const errorCode = useMemo(() => {
+    const lastFlightData = flightData[flightData.length - 1]
+    return lastFlightData?.errorCode || ''  // Return an empty string if errorCode is undefined
+  }, [flightData])
 
-    const localStyles:React.CSSProperties = {
-        ...themeSetter(theme)
-    }
+  return (
+    <div style={localStyles} className={style.SatController}>
+      <SatStatus flightData={flightData} />
+      <Mfm />
+      <AltDiff flightData={flightData} />
+      <DescentRate flightData={flightData} />
+      <IoTManager iotData={iotData} />
+      <ParachuteCR />
+      <Ias errorCode={errorCode} />
+      <ErrorTerminal errorCode={errorCode} />
+    </div>
+  )
+})
 
-    
-    const errorCode = flightData[flightData.length-1].errorCode
+SatController.displayName = 'SatController'
 
-    return(
-        <div style={localStyles} className={style.SatController}>
-            <SatStatus flightData={flightData}/>
-            <Mfm/>
-            <AltDiff flightData={flightData}/>
-            <DescentRate flightData={flightData}/> 
-            <IoTManager iotData={iotData}/>
-            <ParachuteCR/>
-            <Ias errorCode={errorCode}/>
-            <ErrorTerminal errorCode={errorCode}/>
-            {/* <DataController/> */}
-        </div>
-    )
-}
-
-export {SatController}
+export { SatController }
