@@ -1,35 +1,31 @@
-# orion-ground-station-gui
+# CanSat Commander
 
-An Electron application with React and TypeScript
+CanSat Commander is an intuitive and robust ground station software tailored for managing and monitoring CanSat operations. Built using TypeScript, React, and Electron, this application offers a seamless and cross-platform user experience ideal for both amateur and professional aerospace enthusiasts.
 
-## Recommended IDE Setup
+## Features
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- Real-time data visualization
+- Mission control interface
+- Data logging and analysis tools
 
-## Project Setup
+## Installation
 
-### Install
+1. Clone the repository:
+   git clone https://github.com/tahirdibirovsoftware/orion-ground-station-gui.git
 
-```bash
-$ npm install
-```
+2. Navigate to the project directory:
+   cd cansat-commander
 
-### Development
+3. Install dependencies:
+   npm install
 
-```bash
-$ npm run dev
-```
+4. Start the application:
+   npm start
 
-### Build
+## License
 
-```bash
-# For windows
-$ npm run build:win
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-# For macOS
-$ npm run build:mac
+## Contact
 
-# For Linux
-$ npm run build:linux
-```
-# orion-ground-station-gui
+For any questions or support, please open an issue in the GitHub repository or contact [your contact information].
