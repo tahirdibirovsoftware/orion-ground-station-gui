@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import { FlightMode } from "./FlightMode"
 import { TerminalMode } from "./TerminalMode"
 import { IIoTTelemetry, ITelemetry } from "src/global/types/types"
 import { FC } from "react"
+import { FlightMode } from "./FlightMode"
 
 interface IRouter {
   flightData: Array<ITelemetry>

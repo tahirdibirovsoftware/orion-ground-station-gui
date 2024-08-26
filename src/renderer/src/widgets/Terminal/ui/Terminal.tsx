@@ -77,8 +77,8 @@ const Terminal: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => 
                 </thead>
                 <tbody className={style.TableBody}>
                     {flightData[flightData?.length - 1].packetNumber > 0 &&
-                        filterToLastData<ITelemetry>(flightData.slice(1), 30).map(data => (
-                            <tr key={data.packetNumber}>
+                        filterToLastData<ITelemetry>(flightData.slice(1), 30).map((data, index) => (
+                            <tr key={`${data.packetNumber}-${index}`}>
                                 <td style={thLocaleStyle}>{data.packetNumber}</td>
                                 <td style={thLocaleStyle}>{data.satelliteStatus}</td>
                                 <td style={thLocaleStyle}>{data.errorCode}</td>

@@ -15,7 +15,7 @@ const ThemeToggler: React.FC = () => {
 
     return (
         <div className={style.ThemeToggler}>
-            <Switch
+            <Switch 
                 onChange={toggleTheme}
                 checked={theme === 'light'}
                 unCheckedChildren={<MoonOutlined />}

@@ -11,10 +11,13 @@ const BaudRateConfig: FC<IBaudRateConfig> = ({ type }): JSX.Element => {
     useTranslation();
     const dispatch = useAppDispatch()
 
-    const { isConnected, baudRate } = useAppSelector(state => ({
-        isConnected: type === 'flight' ? state.connectorReducer.flightConnect === 'connected' : state.connectorReducer.iotConnect === 'connected',
-        baudRate: type === 'flight' ? state.baudRateReducer.flightBaudRate : state.baudRateReducer.iotBaudRate
-    }));
+    const isConnected = useAppSelector(state => 
+        type === 'flight' ? state.connectorReducer.flightConnect === 'connected' : state.connectorReducer.iotConnect === 'connected'
+    );
+
+    const baudRate = useAppSelector(state => 
+        type === 'flight' ? state.baudRateReducer.flightBaudRate : state.baudRateReducer.iotBaudRate
+    );
 
     const baudRateHandler = useCallback((event: React.ChangeEvent<HTMLSelectElement>): void => {
         const action = type === 'flight' ? setFlightBaudRate : setIoTBaudRate;

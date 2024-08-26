@@ -13,17 +13,19 @@ const Connector: FC<IConnector> = ({ type }): JSX.Element => {
   useTranslation();
   const dispatch = useAppDispatch();
 
-  const {
-    isConnected,
-    baudRate,
-    path,
-    isReady
-  } = useAppSelector((state) => ({
-    isConnected: type === 'flight' ? state.connectorReducer.flightConnect === 'connected' : state.connectorReducer.iotConnect === 'connected',
-    baudRate: type === 'flight' ? state.baudRateReducer.flightBaudRate : state.baudRateReducer.iotBaudRate,
-    path: type === 'flight' ? state.portConfigReducer.flightPath : state.portConfigReducer.iotPath,
-    isReady: type === 'flight' ? Boolean(state.portConfigReducer.flightPath) : Boolean(state.portConfigReducer.iotPath)
-  }));
+  const isConnected = useAppSelector((state) => 
+    type === 'flight' ? state.connectorReducer.flightConnect === 'connected' : state.connectorReducer.iotConnect === 'connected'
+  );
+
+  const baudRate = useAppSelector((state) => 
+    type === 'flight' ? state.baudRateReducer.flightBaudRate : state.baudRateReducer.iotBaudRate
+  );
+
+  const path = useAppSelector((state) => 
+    type === 'flight' ? state.portConfigReducer.flightPath : state.portConfigReducer.iotPath
+  );
+
+  const isReady = useMemo(() => Boolean(path), [path]);
 
   const flightDataHandler = useCallback((data: ITelemetry): void => { dispatch(addTelemetry(data)); }, [dispatch]);
   const iotDataHandler = useCallback((data: IIoTTelemetry): void => { dispatch(addIotData(data)); }, [dispatch]);

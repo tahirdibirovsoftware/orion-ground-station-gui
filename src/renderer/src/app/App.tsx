@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useEffect, useCallback } from 'react';
+import { createSelector } from 'reselect';
 import { Mode } from '../processes';
 import { Header } from '../widgets/Header';
 import { Menu } from '../widgets/Menu/ui/Menu';
@@ -7,13 +9,27 @@ import './styles/App.scss';
 import { resetTelemetry } from '@renderer/widgets/DataController/model/flightDataStoreSlice';
 import { resetIotTelemetryData } from '@renderer/widgets/DataController/model/iotDataStoreSlice';
 
+// Create a memoized selector
+const getAppData = createSelector(
+  [
+    state => state.menuReducer.isActive,
+    state => state.flightDataStoreReducer,
+    state => state.iotDataStoreReducer,
+    state => state.portConfigReducer.devices.length
+  ],
+  (menuActive, flightDataStore, iotDataStore, devicesCount) => ({
+    menuActive,
+    flightDataStore,
+    iotDataStore,
+    devices: devicesCount
+  })
+);
+
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   
-  const menuActive = useAppSelector(state => state.menuReducer.isActive);
-  const flightDataStore = useAppSelector(state => state.flightDataStoreReducer);
-  const iotDataStore = useAppSelector(state => state.iotDataStoreReducer);
-  const devices = useAppSelector(state => state.portConfigReducer.devices.length);
+  // Use the memoized selector
+  const { menuActive, flightDataStore, iotDataStore, devices } = useAppSelector(getAppData);
 
   const resetData = useCallback(() => {
     dispatch(resetTelemetry());

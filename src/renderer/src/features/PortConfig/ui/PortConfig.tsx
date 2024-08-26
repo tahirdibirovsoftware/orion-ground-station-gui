@@ -12,21 +12,19 @@ interface IPortConfig {
 }
 
 const PortConfig: React.FC<IPortConfig> = ({ type }) => {
-    useTranslation();
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const selectRef = useRef<HTMLSelectElement>(null);
 
-    const {
-        devices,
-        path,
-        isConnected
-    } = useAppSelector(state => ({
-        devices: state.portConfigReducer.devices,
-        path: type === 'flight' ? state.portConfigReducer.flightPath : state.portConfigReducer.iotPath,
-        isConnected: type === 'flight'
+    const devices = useAppSelector(state => state.portConfigReducer.devices);
+    const path = useAppSelector(state => 
+        type === 'flight' ? state.portConfigReducer.flightPath : state.portConfigReducer.iotPath
+    );
+    const isConnected = useAppSelector(state => 
+        type === 'flight'
             ? state.connectorReducer.flightConnect === 'connected'
             : state.connectorReducer.iotConnect === 'connected'
-    }));
+    );
 
     const deviceHandler = useCallback((devices: SerialPortListType): void => {
         dispatch(setDevices(devices));
@@ -63,25 +61,25 @@ const PortConfig: React.FC<IPortConfig> = ({ type }) => {
 
     const options = useMemo(() => {
         if (!availableDevices.length) {
-            return [<option key="not-connected"><Trans>NOT_CONNECTED</Trans></option>];
+            return [<option key="not-connected" value="not-connected">{t('NOT_CONNECTED')}</option>];
         }
 
         return [
             <option key="not-selected" value="">
-                <Trans>{path || 'NOT_SELECTED'}</Trans>
+                {path || t('NOT_SELECTED')}
             </option>,
             ...availableDevices.map(device => (
                 <option key={device.path} value={device.path}>
-                    {device.manufacturer || 'Not Active'}
+                    {device.manufacturer || t('NOT_ACTIVE')}
                 </option>
             ))
         ];
-    }, [availableDevices, path]);
+    }, [availableDevices, path, t]);
 
     return (
         <div className={style.Port}>
             <span><Trans>SOURCE</Trans>: </span>
-            <select disabled={isConnected} ref={selectRef} onChange={setDevice}>
+            <select disabled={isConnected} ref={selectRef} onChange={setDevice} value={path || ''}>
                 {options}
             </select>
         </div>

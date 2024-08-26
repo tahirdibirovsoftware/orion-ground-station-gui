@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { Terminal } from '../../../widgets/Terminal';
 import { Visualizer } from '../../../widgets/Visualizer';
 import style from './FlightMode.module.scss';
 import { IFlight } from '../model/types';
 
 
-const FlightMode:FC<IFlight> = ({flightData}):JSX.Element => {
+const FlightModeComponent:FC<IFlight> = ({flightData}):JSX.Element => {
   
     return(
         <div className={style.FlightMode}>
@@ -16,4 +16,4 @@ const FlightMode:FC<IFlight> = ({flightData}):JSX.Element => {
     )
 }
 
-export {FlightMode}
+export const FlightMode = memo(FlightModeComponent)

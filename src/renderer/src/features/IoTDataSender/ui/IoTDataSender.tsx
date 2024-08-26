@@ -1,23 +1,25 @@
 import React, { useCallback, useMemo } from 'react';
 import { Button } from 'antd';
-import style from './IoTDataSender.module.scss';
+import { Trans, useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { initiaControllingState, setIot } from '@renderer/widgets/SatController/model/controllingData';
-import { Trans, useTranslation } from 'react-i18next';
+import style from './IoTDataSender.module.scss';
 
 const IoTDataSender: React.FC = () => {
     useTranslation();
     const dispatch = useAppDispatch();
 
-    const { latestIotData, flightPath } = useAppSelector(state => ({
-        latestIotData: state.iotDataStoreReducer[state.iotDataStoreReducer.length - 1],
-        flightPath: state.portConfigReducer.flightPath
-    }));
+    const iotData = useAppSelector(state => state.iotDataStoreReducer);
+    const flightPath = useAppSelector(state => state.portConfigReducer.flightPath);
+
+    const latestIotData = useMemo(() => {
+        return iotData[iotData.length - 1];
+    }, [iotData]);
 
     const iotDataHandler = useCallback((): void => {
         if (latestIotData) {
             const sentData = JSON.stringify({
-                ...initiaControllingState,
+                ...initiaControllingState, 
                 iot: latestIotData.temperature
             });
             dispatch(setIot({ iot: latestIotData.temperature }));
@@ -25,15 +27,12 @@ const IoTDataSender: React.FC = () => {
         }
     }, [dispatch, latestIotData, flightPath]);
 
-    const isButtonDisabled = useMemo(() => !latestIotData || !flightPath, [latestIotData, flightPath]);
-
     return (
         <div className={style.IoTDataSender}>
-            <Button
-                onClick={iotDataHandler}
-                className={style.IoTButton}
-                type="primary"
-                disabled={isButtonDisabled}
+            <Button 
+                onClick={iotDataHandler} 
+                className={style.IoTButton} 
+                type='primary'
             >
                 <Trans>SEND</Trans>
             </Button>
