@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef, useContext, useCallback } from 'rea
 import style from './Cam.module.scss';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 export const Cam: React.FC = () => {
   const { theme } = useContext(ThemeContext);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [selectedDeviceId, setSelectedDeviceId] = useState<string>('');
 
-  const localStyles = React.useMemo(() => themeSetter(theme), [theme]);
+  const localStyles = React.useMemo(() => themeSetter(theme, ALL_BORDERS, [10,5,15,0]), [theme]);
 
   const updateDeviceList = useCallback(async () => {
     try {

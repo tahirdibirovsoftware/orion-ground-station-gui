@@ -9,6 +9,7 @@ import style from './Map.module.scss';
 import 'leaflet/dist/leaflet.css';
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 const DefaultIcon = L.icon({
   iconUrl: icon,
@@ -51,7 +52,7 @@ export const Map: React.FC<MapProps> = React.memo(({ getGpsData }) => {
   const [currentPosition, setCurrentPosition] = useState<Coordinate | undefined>(undefined);
   const [positionHistory, setPositionHistory] = useState<Coordinate[]>([]);
 
-  const localStyles = useMemo(() => themeSetter(theme || 'light'), [theme]);
+  const localStyles = useMemo(() => themeSetter(theme || 'light', ALL_BORDERS, [10,5,15,0]), [theme]);
 
   const updatePosition = useCallback(() => {
     const newPosition = getGpsData();

@@ -7,6 +7,7 @@ import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvide
 import { ILineChart } from '../model/types';
 import { filteredData } from '../lib/dataFilter';
 import { useAppSelector } from '@renderer/app/redux/hooks';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -23,7 +24,7 @@ export const ParentLineChart: React.FC<ILineChart> = ({
   const { theme } = useContext(ThemeContext);
   const [zoom, setZoom] = useState(false);
 
-  const themeStyles = useMemo(() => themeSetter(theme), [theme]);
+  const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [10,5,15,0]), [theme]);
 
   const initialLocalStyles = useMemo(() => ({
     ...themeStyles,
@@ -122,8 +123,7 @@ export const ParentLineChart: React.FC<ILineChart> = ({
         position: 'fixed',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        transform: 'translate(-50%, -50%)'
       }));
       setZoom(true);
     } else {

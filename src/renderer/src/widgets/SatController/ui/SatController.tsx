@@ -12,11 +12,12 @@ import { ParachuteCR } from '../../../features/ParachuteCR'
 import { SatStatus } from '../../../entities/SatStatus'
 import { ISatController } from '../model/types'
 import { DescentRate } from '@renderer/entities/DescentRate'
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants'
 
 const SatController: FC<ISatController> = React.memo(({ flightData, iotData }) => {
   const { theme } = useContext(ThemeContext)
 
-  const localStyles = useMemo(() => themeSetter(theme), [theme])
+  const localStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0,5,15,5]), [theme])
 
   const errorCode = useMemo(() => {
     const lastFlightData = flightData[flightData.length - 1]

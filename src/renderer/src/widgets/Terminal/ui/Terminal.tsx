@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { routeHandler } from '../lib/routeHandler';
 import { filterToLastData } from '../lib/filterData';
 import { ITelemetry } from 'src/global/types/types';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 const TerminalComponent: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.Element => {
     useTranslation()
@@ -17,13 +18,13 @@ const TerminalComponent: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.El
     const terminalRef = useRef<HTMLDivElement>(null);
 
     const localeStyles: React.CSSProperties = {
-        ...themeSetter(theme),
+        ...themeSetter(theme, ALL_BORDERS, [10,5,15,0]),
         height: mode === 'demo' ? '20%' : '100%',
         overflowY: 'auto', // Add vertical scroll
     };
 
     const thLocaleStyle: React.CSSProperties = {
-        ...themeSetter(theme),
+        ...themeSetter(theme, ALL_BORDERS, [10,5,15,0]),
         borderTop: 'unset',
         borderLeft: 'unset',
     };

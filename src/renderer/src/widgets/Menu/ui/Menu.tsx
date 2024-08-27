@@ -7,11 +7,12 @@ import { MenuToggler } from '../../../features/MenuToggler';
 import { DataConfig } from '../../DataConfig';
 import { FileManager } from '../../../features/FileManager';
 import { Footer } from '../../Footer';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 const Menu: React.FC = React.memo(() => {
   const { theme } = useContext(ThemeContext);
 
-  const themeStyles = useMemo(() => themeSetter(theme), [theme]);
+  const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [10,5,15,0]), [theme]);
 
   return (
     <div style={themeStyles} className={style.Menu}>

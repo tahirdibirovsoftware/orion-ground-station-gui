@@ -11,6 +11,7 @@ import { useAppSelector } from '@renderer/app/redux/hooks';
 import { Trans, useTranslation } from 'react-i18next';
 import rocketPathFromModule from './STL/rocket.obj';
 import styles from './OtWithCallib.module.scss';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 interface Calibration {
   pitch: number;
@@ -76,7 +77,7 @@ export const OtWithCallib: React.FC = () => {
     }
   }, [flightData]);
 
-  const localStyles = useMemo(() => themeSetter(theme || 'light'), [theme]);
+  const localStyles = useMemo(() => themeSetter(theme || 'light', ALL_BORDERS, [10,5,15,0]), [theme]);
 
   if (!isActive) {
     return <div style={localStyles} className={styles.OtWithCallib} />;

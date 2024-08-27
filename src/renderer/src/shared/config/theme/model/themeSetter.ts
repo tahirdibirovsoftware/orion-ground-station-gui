@@ -10,9 +10,12 @@ export const themeSetter = (theme: ThemeMode, borders: IBorders = { bt: true, bb
     
     if (boxShadow && boxShadow.length === 4) {
         const [horizontalOffset, verticalOffset, blurRadius, spreadRadius] = boxShadow;
-        boxShadowStyle = `${horizontalOffset}px ${verticalOffset}px ${blurRadius}px ${spreadRadius}px rgba(0, 0, 0, 0.5)`;
+        const boxPxParams = `${horizontalOffset}px ${verticalOffset}px ${blurRadius}px ${spreadRadius}px`;
+         boxShadowStyle = boxPxParams + (theme === 'dark' ? "#000000" : "#333333")  
     }
 
+
+    console.log("box: ", boxShadowStyle)
 
     const borderStyles = (borderColor: BorderColor): React.CSSProperties => ({
         borderTop: borders.bt ? `1px solid ${borderColor}` : undefined,
