@@ -10,15 +10,17 @@ import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 
-const batteryCustomization = {
-  batteryBody: { strokeColor: '#4a4a4a', strokeWidth: 2, cornerRadius: 3 },
-  batteryCap: { fill: '#4a4a4a', strokeWidth: 0 },
-  batteryMeter: { fill: '#4CAF50' },
-  readingText: { fontSize: 12, fill: '#ffffff' }
-};
+
 
 export const StatusBar: React.FC<IStatusBar> = React.memo(({ flightData }) => {
   const { theme } = useContext(ThemeContext);
+
+  const batteryCustomization = {
+    batteryBody: { strokeColor: '#4a4a4a', strokeWidth: 2, cornerRadius: 3 },
+    batteryCap: { fill: '#4a4a4a', strokeWidth: 0 },
+    batteryMeter: { fill: '#4CAF50' },
+    readingText: { fontSize: 12, fill: theme === 'dark' ? '#ffffff' : '#000000' }
+  };
 
   const { voltageLevel } = useMemo(() => {
     const lastData = flightData[flightData.length - 1] || {};
@@ -28,7 +30,7 @@ export const StatusBar: React.FC<IStatusBar> = React.memo(({ flightData }) => {
     };
   }, [flightData]);
 
-  const localStyles = useMemo(() => ({...themeSetter(theme, ALL_BORDERS, [0,0,10,0])}),[theme]);
+  const localStyles = useMemo(() => ({ ...themeSetter(theme, ALL_BORDERS, [0, 0, 10, 0]) }), [theme]);
   const batteryLevel = useMemo(() => getBatteryLevel(voltageLevel), [voltageLevel]);
 
   return (
@@ -36,15 +38,16 @@ export const StatusBar: React.FC<IStatusBar> = React.memo(({ flightData }) => {
       <div className={style.timerContainer}>
         <Timer flightData={flightData} size={100} />
       </div>
- 
-        <div className={style.batteryContainer}>
-          <BatteryGauge
-            customization={batteryCustomization}
-            size={60}
-            value={batteryLevel}
-          />
-        </div>
-    
+
+      <div className={style.batteryContainer}>
+        <BatteryGauge
+          animated
+          customization={batteryCustomization}
+          size={60}
+          value={batteryLevel}
+        />
+      </div>
+
     </div>
   );
 });

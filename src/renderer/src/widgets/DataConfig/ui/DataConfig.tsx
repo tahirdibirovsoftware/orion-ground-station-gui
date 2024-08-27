@@ -9,16 +9,14 @@ import { PortConfig } from '../../../features/PortConfig';
 import { BaudRateConfig } from '../../../features/BaudRateConfig';
 import { Connector } from '../../../features/Connector';
 import { Trans, useTranslation } from 'react-i18next';
+import { BORDER_ONLY_BOTTOM } from '@renderer/shared/config/theme/constants';
 
 const DataConfig: FC<IDataConfig> = React.memo(({ type }) => {
   const { theme } = useContext(ThemeContext);
   useTranslation(); // Note: This hook is called but not used. Consider removing if not needed.
 
   const localStyles = useMemo(() => ({
-    ...themeSetter(theme),
-    borderTop: 'unset',
-    borderRight: 'unset',
-    borderLeft: 'unset'
+    ...themeSetter(theme, BORDER_ONLY_BOTTOM),
   }), [theme]);
 
   const title = useMemo(() => getTitle(type), [type]);

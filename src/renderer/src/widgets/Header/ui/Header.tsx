@@ -10,12 +10,13 @@ import { LangToggler } from '@renderer/features/LangToggler';
 import { ThemeToggler } from '@renderer/features/ThemeToggler';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { HTTPStatus } from '@renderer/entities/HttpStatus';
+import { BORDER_ONLY_BOTTOM } from '@renderer/shared/config/theme/constants';
 
 const Header: FC<IHeader> = React.memo(({ flightData }) => {
   const { theme } = useContext(ThemeContext);
 
-  const localStyles = useMemo(() => 
-    themeSetter(theme, { bb: false, bl: false, br: false, bt: false }),
+  const localStyles = useMemo(() =>
+    themeSetter(theme, BORDER_ONLY_BOTTOM, [0, 10, 10, 1]),
     [theme]
   );
 
@@ -24,7 +25,7 @@ const Header: FC<IHeader> = React.memo(({ flightData }) => {
       <MenuToggler />
       <Logo size={2} title='Orion' />
       <div className={style.HeaderWrapper}>
-        <HTTPStatus/>
+        <HTTPStatus />
         <LangToggler />
         <ThemeToggler />
         <StatusBar flightData={flightData} />

@@ -6,6 +6,7 @@ import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { initiaControllingState, setMfm } from '@renderer/widgets/SatController/model/controllingData';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 const Mfm: React.FC = () => {
     useTranslation();
@@ -26,7 +27,7 @@ const Mfm: React.FC = () => {
     const numericCommands = useMemo(() => commands.slice(4), [commands]);
     const stringCommands = useMemo(() => commands.slice(0, 4), [commands]);
 
-    const localStyles = useMemo(() => themeSetter(theme), [theme]);
+    const localStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0, 0, 5, 2]), [theme]);
 
     const mfmHandler = useCallback(() => {
         const mfmData = `${firstCommand}${secondCommand}${thirdCommand}${fourthCommand}`;

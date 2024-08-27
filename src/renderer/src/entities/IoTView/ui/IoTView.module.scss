@@ -1,4 +1,4 @@
-.IoTView{
+.IoTView {
     padding: 1rem;
     border-radius: .3rem;
     width: 95%;
@@ -7,10 +7,9 @@
     justify-content: space-evenly;
     align-items: center;
     background-color: blue !important;
-    border: unset !important;
 }
 
-.IoTView > span{
+.IoTView>span {
     color: white;
     font-weight: 600;
     font-size: 90%;

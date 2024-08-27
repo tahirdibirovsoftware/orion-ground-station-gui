@@ -7,11 +7,11 @@ import { BorderColor, BoxShadowProps, IBorders, ThemeMode } from "../types";
 
 export const themeSetter = (theme: ThemeMode, borders: IBorders = { bt: true, bb: true, br: true, bl: true }, boxShadow?: BoxShadowProps): React.CSSProperties => {
     let boxShadowStyle: string | undefined;
-    
+
     if (boxShadow && boxShadow.length === 4) {
         const [horizontalOffset, verticalOffset, blurRadius, spreadRadius] = boxShadow;
         const boxPxParams = `${horizontalOffset}px ${verticalOffset}px ${blurRadius}px ${spreadRadius}px`;
-         boxShadowStyle = boxPxParams + (theme === 'dark' ? "#000000" : "#333333")  
+        boxShadowStyle = boxPxParams + (theme === 'dark' ? "#000000" : "#999999")
     }
 
 
@@ -22,7 +22,7 @@ export const themeSetter = (theme: ThemeMode, borders: IBorders = { bt: true, bb
         borderBottom: borders.bb ? `1px solid ${borderColor}` : undefined,
         borderRight: borders.br ? `1px solid ${borderColor}` : undefined,
         borderLeft: borders.bl ? `1px solid ${borderColor}` : undefined
-})
+    })
 
     if (theme === 'dark') {
         return {
