@@ -21,7 +21,7 @@ export const Timer: React.FC<ITimer> = React.memo(({ flightData }) => {
       return { hours: '00', minutes: '00', seconds: '00' };
     }
 
-    const padZero = (num: string):string => num.padStart(2, '0');
+    const padZero = (num: string): string => num.padStart(2, '0');
 
     return {
       hours: padZero(gpsArrayDate[3]),

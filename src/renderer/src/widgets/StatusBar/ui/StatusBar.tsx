@@ -9,8 +9,10 @@ import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvide
 import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 
 const batteryCustomization = {
-  batteryBody: { strokeColor: 'gray', strokeWidth: 1 },
-  batteryCap: { fill: 'gray', strokeWidth: 1 }
+  batteryBody: { strokeColor: '#4a4a4a', strokeWidth: 2, cornerRadius: 3 },
+  batteryCap: { fill: '#4a4a4a', strokeWidth: 0 },
+  batteryMeter: { fill: '#4CAF50' },
+  readingText: { fontSize: 12, fill: '#ffffff' }
 };
 
 export const StatusBar: React.FC<IStatusBar> = React.memo(({ flightData }) => {
@@ -29,13 +31,17 @@ export const StatusBar: React.FC<IStatusBar> = React.memo(({ flightData }) => {
 
   return (
     <div style={localStyles} className={style.StatusBar}>
-      <Timer flightData={flightData} size={100} />
+      <div className={style.timerContainer}>
+        <Timer flightData={flightData} size={100} />
+      </div>
       {isActive && (
-        <BatteryGauge 
-          customization={batteryCustomization} 
-          size={50} 
-          value={batteryLevel} 
-        />
+        <div className={style.batteryContainer}>
+          <BatteryGauge
+            customization={batteryCustomization}
+            size={40}
+            value={batteryLevel}
+          />
+        </div>
       )}
     </div>
   );

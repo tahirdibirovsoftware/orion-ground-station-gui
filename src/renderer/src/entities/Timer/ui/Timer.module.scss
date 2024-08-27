@@ -1,19 +1,35 @@
 @font-face {
     font-family: digital;
     src: url('../fonts/digital-7-font/Digital7-rg1mL.ttf');
-}
-
-.Timer{
+  }
+  
+  .Timer {
     background-color: rgb(40,40,40);
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: .2rem;
     overflow: hidden;
-    font-size: 160%;
-    width: 60% !important;
-}
-
-.Timer > span{
-    font-family: digital;
-}
+    font-size: clamp(1rem, 4vw, 2.5rem); // Responsive font size
+    width: 100% !important; // Make it full width
+    max-width: 300px; // Set a max-width for larger screens
+    margin: 0 auto; // Center the timer
+    padding: 0.5rem;
+  
+    > span {
+      font-family: digital;
+    }
+  }
+  
+  // Media queries for larger screens
+  @media (min-width: 768px) {
+    .Timer {
+      max-width: 400px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .Timer {
+      max-width: 500px;
+    }
+  }

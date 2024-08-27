@@ -1,37 +1,67 @@
 .StatusBar {
-    background-color: rgb(10,10,10);
-    padding: 10px 2%;
-    border-radius: 8px;
-    overflow: hidden;
     display: flex;
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    min-height: 80px;
-    gap: 3%;
-    justify-content: center;
     align-items: center;
-}
-
-@media (min-width: 768px) {
-    .StatusBar {
-        width: 80%;
-        max-width: 800px;
+    justify-content: flex-end;
+    padding: 8px 16px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .languageSelector {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+    font-size: 14px;
+  }
+  
+  .toggleSwitch {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+  
+    span {
+      margin-right: 4px;
     }
-}
-
-@media (min-width: 1024px) {
-    .StatusBar {
-        width: 60%;
-        max-width: 1000px;
+  
+    input[type="checkbox"] {
+      display: none;
     }
-}
-
-@media (max-width: 480px) {
-    .StatusBar {
-        flex-direction: column;
-        height: auto;
-        padding: 15px;
-        gap: 15px;
+  
+    label {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      background-color: #2196F3;
+      border-radius: 20px;
+      transition: all 0.3s;
+      cursor: pointer;
+  
+      &::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background-color: white;
+        top: 1px;
+        left: 1px;
+        transition: all 0.3s;
+      }
     }
-}
+  
+    input:checked + label::after {
+      left: 21px;
+    }
+  }
+  
+  .statusIndicator {
+    background-color: #4CAF50;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 16px;
+  }
