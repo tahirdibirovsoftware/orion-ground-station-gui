@@ -1,38 +1,38 @@
 @font-face {
+  font-family: digital;
+  src: url('../fonts/digital-7-font/Digital7-rg1mL.ttf');
+}
+
+.Timer {
+  background-color: rgb(40, 40, 40);
+  color: #00ff00 !important;
+  background-color: rgba($color: #333333, $alpha: 1.0) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: .2rem;
+  overflow: hidden;
+  font-size: clamp(.5rem, 3vw, 2rem); // Responsive font size
+  width: 10rem !important; // Make it full width
+  max-width: 300px; // Set a max-width for larger screens
+  margin: 0 0.03rem; // Center the timer
+  margin-right: .5rem;
+  padding: 0.1rem;
+
+  >span {
     font-family: digital;
-    src: url('../fonts/digital-7-font/Digital7-rg1mL.ttf');
   }
-  
+}
+
+// Media queries for larger screens
+@media (min-width: 768px) {
   .Timer {
-    background-color: rgb(40,40,40);
-    color: #00ff00 !important;
-    background-color: rgba($color: #333333, $alpha: 1.0) !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: .2rem;
-    overflow: hidden;
-    font-size: clamp(.5rem, 3vw, 2rem); // Responsive font size
-    width: 10rem !important; // Make it full width
-    max-width: 300px; // Set a max-width for larger screens
-    margin: 0 0.03rem; // Center the timer
-    margin-right: .5rem;
-    padding: 0.3rem;
-  
-    > span {
-      font-family: digital;
-    }
+    max-width: 400px;
   }
-  
-  // Media queries for larger screens
-  @media (min-width: 768px) {
-    .Timer {
-      max-width: 400px;
-    }
+}
+
+@media (min-width: 1024px) {
+  .Timer {
+    max-width: 500px;
   }
-  
-  @media (min-width: 1024px) {
-    .Timer {
-      max-width: 500px;
-    }
-  }
+}
