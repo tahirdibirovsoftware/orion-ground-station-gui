@@ -9,6 +9,7 @@ import { IHeader } from '../model/types';
 import { LangToggler } from '@renderer/features/LangToggler';
 import { ThemeToggler } from '@renderer/features/ThemeToggler';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
+import { HTTPStatus } from '@renderer/entities/HttpStatus';
 
 const Header: FC<IHeader> = React.memo(({ flightData }) => {
   const { theme } = useContext(ThemeContext);
@@ -23,6 +24,7 @@ const Header: FC<IHeader> = React.memo(({ flightData }) => {
       <MenuToggler />
       <Logo size={2} title='Orion' />
       <div className={style.HeaderWrapper}>
+        <HTTPStatus/>
         <LangToggler />
         <ThemeToggler />
         <StatusBar flightData={flightData} />
