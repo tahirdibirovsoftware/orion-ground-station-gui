@@ -7,7 +7,7 @@ import BatteryGauge from 'react-battery-gauge';
 import { IStatusBar } from '../model/types';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
-import { NO_BORDER } from '@renderer/shared/config/theme/constants';
+
 
 const batteryCustomization = {
   batteryBody: { strokeColor: '#4a4a4a', strokeWidth: 2, cornerRadius: 3 },
@@ -27,7 +27,7 @@ export const StatusBar: React.FC<IStatusBar> = React.memo(({ flightData }) => {
     };
   }, [flightData]);
 
-  const localStyles = useMemo(() => ({...themeSetter(theme), ...NO_BORDER}),[theme]);
+  const localStyles = useMemo(() => ({...themeSetter(theme)}),[theme]);
   const batteryLevel = useMemo(() => getBatteryLevel(voltageLevel), [voltageLevel]);
 
   return (

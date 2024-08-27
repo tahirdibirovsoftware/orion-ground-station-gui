@@ -1,48 +1,48 @@
 .LangToggler {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #ffffff;
-  
-    .label {
-      margin-right: 8px;
-      font-weight: 500;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--theme-text-color);
+  background-color: var(--theme-bg-color);
+
+  .label {
+    margin-right: 8px;
+    font-weight: 500;
+  }
+
+  :global(.ant-switch) {
+    background-color: var(--theme-switch-bg);
+    
+    &.ant-switch-checked {
+      background-color: #1890ff;
     }
-  
-    :global(.ant-switch) {
-      background-color: rgba(255, 255, 255, 0.3);
-      
-      &.ant-switch-checked {
-        background-color: #1890ff;
+
+    .ant-switch-handle {
+      &::before {
+        background-color: var(--theme-bg-color);
       }
-  
-      .ant-switch-handle {
-        &::before {
-          background-color: #ffffff;
-        }
-      }
-  
-      .ant-switch-inner {
-        color: #ffffff;
-        font-size: 12px;
-        font-weight: bold;
-      }
+    }
+
+    .ant-switch-inner {
+      color: var(--theme-switch-color);
+      font-size: 12px;
+      font-weight: bold;
     }
   }
-  
-  // Adjust these styles if needed to match your Ant Design theme
-  :global {
-    .ant-switch {
-      min-width: 44px;
-      height: 22px;
-      
-      .ant-switch-handle {
-        width: 18px;
-        height: 18px;
-      }
-  
-      &.ant-switch-checked .ant-switch-handle {
-        left: calc(100% - 20px);
-      }
+}
+
+:global {
+  .ant-switch {
+    min-width: 44px;
+    height: 22px;
+    
+    .ant-switch-handle {
+      width: 18px;
+      height: 18px;
+    }
+
+    &.ant-switch-checked .ant-switch-handle {
+      left: calc(100% - 20px);
     }
   }
+}
