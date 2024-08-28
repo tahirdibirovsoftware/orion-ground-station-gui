@@ -114,8 +114,8 @@ class HTTPService {
         }
     };
 
-    static async checkConnection(): Promise<number> {
-        const url = 'https://orion-server-oek4.onrender.com/api/telemetry';
+     async checkConnection(): Promise<number> {
+        const url = this.apiBase;
         const timeout = 30000; // 30 seconds
 
         try {

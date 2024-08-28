@@ -3,6 +3,9 @@
   "include": ["electron.vite.config.*", "src/main/**/*", "src/preload/**/*", "src/global/**/*"],
   "compilerOptions": {
     "composite": true,
-    "types": ["electron-vite/node", "unplugin-obj/obj"]
+    "types": ["electron-vite/node", "unplugin-obj/obj"],
+    "paths": {
+      "workers/*": ["./src/main/workers/*"]
+    }
   }
 }

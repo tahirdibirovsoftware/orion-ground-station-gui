@@ -1,5 +1,5 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron';
-import { join } from 'path';
+import path, { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import { portlist } from './PortConfig/lib/portList';
@@ -14,13 +14,19 @@ import { convertSQLiteToExcel } from './common/excelGen';
 import { documentPath, excelPath, sqlitePath } from './common/paths';
 import httpService from './httpConfig/httpService';
 import { Database } from 'sqlite';
+import { Worker } from 'worker_threads';
+
+let mainWindow: BrowserWindow;
+
+
+
 
 initBaseDir();
 let db: Database
 let isDbOpened: boolean;
 
 function createWindow(): void {
-  const mainWindow = new BrowserWindow({
+   mainWindow = new BrowserWindow({
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -33,12 +39,15 @@ function createWindow(): void {
   mainWindow.maximize();
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
+
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url);
     return { action: 'deny' };
   });
+
+ 
 
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
@@ -48,6 +57,19 @@ function createWindow(): void {
 }
 
 app.whenReady().then(async () => {
+
+  const networkWorker = new Worker(path.join(__dirname, 'worker.js'));
+  networkWorker.on('message', (data:boolean):void=>{
+    console.log("Main: ",data)
+    mainWindow.webContents.send("network-state", data)
+  })
+
+
+  networkWorker.on('error', ():void=>{
+    console.log("Main: ", false)
+    mainWindow.webContents.send("network-state", false)
+  })
+
   db = await initializeDb()
   httpService.clearSession();
   await clearSQLite(db);
@@ -163,11 +185,14 @@ app.whenReady().then(async () => {
     return;
   });
 
-
   // Handle Dialog
   ipcMain.on('open-output-dir-dialog', async () => {
     shell.openPath(documentPath);
   });
+
+
+ 
+
 
   const monitor = udev.monitor();
   monitor.on('add', async () => {

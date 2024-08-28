@@ -34,7 +34,8 @@ const api = {
   controlTheMfm: (data: string, path: string): void => { ipcRenderer.send('sent-mfm-data', {data, path}) },
   startDbWriting: (path:string, baudRate: number):void =>ipcRenderer.send('start-db-writing', {path, baudRate}),
   stopDbWriting: (path: string):void => ipcRenderer.send('stop-db-writing', {path}),
-  openOuputFiles: ():void=> ipcRenderer.send('open-output-dir-dialog')
+  openOuputFiles: ():void=> ipcRenderer.send('open-output-dir-dialog'),
+  getNetworkState: (setter):void => {ipcRenderer.on('network-state', (_, data)=>{setter(data); console.log("Preload: ", data)})}
 };
 
 if (process.contextIsolated) {

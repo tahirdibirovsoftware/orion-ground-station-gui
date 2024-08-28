@@ -16,7 +16,8 @@ declare global {
       controlTheMfm: (data: string, path: string) => void;
       startDbWriting: (path:string, baudRate: number) => void,
       stopDbWriting: (path: string)=>void,
-      openOuputFiles: ()=>void
+      openOuputFiles: ()=>void,
+      getNetworkState: (setter)=>void
     };
   }
 }
