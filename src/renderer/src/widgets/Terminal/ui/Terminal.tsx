@@ -18,13 +18,13 @@ const TerminalComponent: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.El
     const terminalRef = useRef<HTMLDivElement>(null);
 
     const localeStyles: React.CSSProperties = {
-        ...themeSetter(theme, ALL_BORDERS, [10,5,15,0]),
+        ...themeSetter(theme, ALL_BORDERS, [10, 5, 15, 0]),
         height: mode === 'demo' ? '20%' : '100%',
         overflowY: 'auto', // Add vertical scroll
     };
 
     const thLocaleStyle: React.CSSProperties = {
-        ...themeSetter(theme, ALL_BORDERS, [10,5,15,0]),
+        ...themeSetter(theme, ALL_BORDERS, [10, 5, 15, 0]),
         borderTop: 'unset',
         borderLeft: 'unset',
     };
@@ -78,7 +78,7 @@ const TerminalComponent: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.El
                 </thead>
                 <tbody className={style.TableBody}>
                     {flightData[flightData?.length - 1].packetNumber > 0 &&
-                        filterToLastData<ITelemetry>(flightData.slice(1), 30).map((data, index) => (
+                        filterToLastData<ITelemetry>(flightData.slice(1), 29).map((data, index) => (
                             <tr key={`${data.packetNumber}-${index}`}>
                                 <td style={thLocaleStyle}>{data.packetNumber}</td>
                                 <td style={thLocaleStyle}>{data.satelliteStatus}</td>

@@ -3,20 +3,20 @@ interface IFilteredData {
   time: Array<number>;
 }
 
-function generateRange(start, end):Array<number> {
-  const range:Array<number> = [];
-  for (let i:number = start; i <= end; i++) {
+function generateRange(start, end): Array<number> {
+  const range: Array<number> = [];
+  for (let i: number = start; i <= end; i++) {
     range.push(i);
   }
   return range;
 }
 
-export const filteredData = (data: Array<number>): IFilteredData=>{
-    if(data.length>=10000){
-      const startIndex = data.length - 10001
-      const seconds = generateRange(startIndex, data.length-1)
-      const filteredData = data.slice(startIndex)
-      return {outputData: filteredData, time: seconds}
-    }
-    else return {outputData: data, time: data.map((_,idx)=>idx)};
+export const filteredData = (data: Array<number>): IFilteredData => {
+  if (data.length >= 30) {
+    const startIndex = data.length - 31
+    const seconds = generateRange(startIndex, data.length - 1)
+    const filteredData = data.slice(startIndex)
+    return { outputData: filteredData, time: seconds }
   }
+  else return { outputData: data, time: data.map((_, idx) => idx) };
+}
