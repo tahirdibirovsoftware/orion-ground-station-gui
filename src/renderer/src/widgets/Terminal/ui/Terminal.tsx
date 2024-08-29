@@ -18,7 +18,7 @@ const TerminalComponent: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.El
     const terminalRef = useRef<HTMLDivElement>(null);
 
     const localeStyles: React.CSSProperties = {
-        ...themeSetter(theme, ALL_BORDERS, [10, 5, 15, 0]),
+        ...themeSetter(theme, ALL_BORDERS, [0, 5, 15, 0]),
         height: mode === 'demo' ? '20%' : '100%',
         overflowY: 'auto', // Add vertical scroll
     };
