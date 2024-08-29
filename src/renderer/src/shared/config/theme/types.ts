@@ -15,4 +15,4 @@ export interface IBorders {
 
 
 
-export type BorderColor = 'rgba(50, 50, 50, 1)' | 'rgba(150, 150, 150, 1)'
+export type BorderColor = '#BBBBBB' | '#111111'

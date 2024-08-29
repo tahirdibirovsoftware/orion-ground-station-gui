@@ -52,5 +52,5 @@ export const BORDER_ONLY_BOTTOM: IBorders = {
 }
 
 
-export const lightBorder: BorderColor = 'rgba(150, 150, 150, 1)'
-export const darkBorder: BorderColor = 'rgba(50, 50, 50, 1)'
+export const lightBorder: BorderColor = '#BBBBBB'
+export const darkBorder: BorderColor = '#111111'
