@@ -3,10 +3,10 @@ import { CloudSyncOutlined } from '@ant-design/icons';
 import style from './HttpStatus.module.scss';
 
 const HTTPStatusComponent = (): JSX.Element => {
-  type ISync = "green" | "red";
+  type ISync = "#00ff00" | "#ff0000";
 
   const [isSync, setIsSync] = useState<boolean>(false);
-  const getColor = (): ISync => isSync ? "green" : "red";
+  const getColor = (): ISync => isSync ? "#00ff00" : "#ff0000";
 
 
 
