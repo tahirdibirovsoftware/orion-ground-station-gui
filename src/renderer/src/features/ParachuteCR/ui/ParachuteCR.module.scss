@@ -1,4 +1,4 @@
-.ParachuteCR{
+.ParachuteCR {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@
 
 }
 
-.switchBtn{
+.switchBtn {
     padding: 5%;
     position: relative;
     width: 90%;
@@ -17,21 +17,19 @@
     font-size: 1rem;
     border: unset;
     cursor: pointer;
-    background-color: darkblue;
+    background-color: #1677ff;
     color: white;
     outline: unset;
-    text-transform: uppercase;
     font-weight: 600;
     margin-top: 5%;
 }
 
-.switchBtn:hover{
-    background-color: blue;
+.switchBtn:hover {
+    background-color: #3688ff;
 }
 
-.parachuteStatus{
+.parachuteStatus {
     font-weight: 500 !important;
     font-size: 92%;
     color: lightslategray;
-    text-transform: uppercase;
 }
