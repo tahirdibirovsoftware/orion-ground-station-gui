@@ -24,7 +24,7 @@ export const ParentLineChart: React.FC<ILineChart> = ({
   const { theme } = useContext(ThemeContext);
   const [zoom, setZoom] = useState(false);
 
-  const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [10,5,15,0]), [theme]);
+  const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0,0,10,0]), [theme]);
 
   const initialLocalStyles = useMemo(() => ({
     ...themeStyles,

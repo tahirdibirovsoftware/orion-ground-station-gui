@@ -5,6 +5,7 @@ import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider
 import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import { Error } from '../../../entities/Error';
 import { IErrorTerminal } from '../model/types';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 const errorStatuses = [
   'CONTAINER_LANDING_RATE_FAILURE',
@@ -17,7 +18,7 @@ const errorStatuses = [
 const ErrorTerminal: FC<IErrorTerminal> = React.memo(({ errorCode }) => {
   const { theme } = useContext(ThemeContext);
 
-  const localStyles = useMemo(() => themeSetter(theme), [theme]);
+  const localStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0,0,5,1]), [theme]);
 
   const processErrorCode = useCallback((code: string | number) => {
     if (typeof code !== 'string' && typeof code !== 'number') return [];

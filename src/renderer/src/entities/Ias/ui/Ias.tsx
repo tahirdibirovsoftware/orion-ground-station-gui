@@ -3,6 +3,7 @@ import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import style from './Ias.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { IIas } from '../model/types';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 export const Ias: React.FC<IIas> = ({ errorCode }) => {
   const { theme } = useContext(ThemeContext);
@@ -17,7 +18,7 @@ export const Ias: React.FC<IIas> = ({ errorCode }) => {
       });
   }, [errorCode]);
 
-  const themeStyles = useMemo(() => themeSetter(theme), [theme]);
+  const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0,0,5,1]), [theme]);
 
   return (
     <div className={style.Ias} style={themeStyles}>

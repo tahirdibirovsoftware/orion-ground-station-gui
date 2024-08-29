@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 import { commandTheParachute, initiaControllingState } from '@renderer/widgets/SatController/model/controllingData';
 import style from './ParachuteCR.module.scss';
+import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 const ParachuteCR: React.FC = () => {
     useTranslation();
@@ -29,7 +30,7 @@ const ParachuteCR: React.FC = () => {
         window.api?.controlTheParachute(sentData, flightPath);
     }, [isParachuteOpened, latestIotData, flightPath, dispatch]);
 
-    const themeStyles = useMemo(() => themeSetter(theme), [theme]);
+    const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0,0,5,1]), [theme]);
 
     return (
         <div style={themeStyles} className={style.ParachuteCR}>
