@@ -26,14 +26,14 @@ export const themeSetter = (theme: ThemeMode, borders: IBorders = { bt: true, bb
 
     if (theme === 'dark') {
         return {
-            backgroundColor: 'rgba(20, 20, 20, 1)',
+            backgroundColor: '#222222',
             color: 'rgba(200, 200, 200, 1)',
             ...borderStyles(darkBorder),
             boxShadow: boxShadowStyle
         };
     } else if (theme === 'light') {
         return {
-            backgroundColor: 'rgba(255, 255, 255, 1)',
+            backgroundColor: '#eeffef',
             color: 'rgba(0, 0, 0, 0.87)',
             ...borderStyles(lightBorder),
             boxShadow: boxShadowStyle
