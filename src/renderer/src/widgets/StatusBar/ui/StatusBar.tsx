@@ -16,10 +16,10 @@ export const StatusBar: React.FC<IStatusBar> = React.memo(({ flightData }) => {
   const { theme } = useContext(ThemeContext);
 
   const batteryCustomization = {
-    batteryBody: { strokeColor: '#4a4a4a', strokeWidth: 2, cornerRadius: 3 },
-    batteryCap: { fill: '#4a4a4a', strokeWidth: 0 },
-    batteryMeter: { fill: '#4CAF50' },
-    readingText: { fontSize: 12, fill: theme === 'dark' ? '#ffffff' : '#000000' }
+    batteryBody: { strokeColor: '#111111', strokeWidth: 2, cornerRadius: 3 },
+    batteryCap: { fill: '#000000', strokeWidth: 0 },
+    batteryMeter: { fill: '#00ff00' },
+    readingText: { fontSize: 12, fill: theme === 'dark' ? '#000000' : '#000000' }
   };
 
   const { voltageLevel } = useMemo(() => {
