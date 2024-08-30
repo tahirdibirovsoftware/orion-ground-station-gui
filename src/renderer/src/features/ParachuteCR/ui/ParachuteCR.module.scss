@@ -12,20 +12,20 @@
 .switchBtn {
     padding: 4%;
     position: relative;
-    width: 85%;
+    width: 75%;
     border-radius: 5%;
     font-size: 1rem;
     border: unset;
     cursor: pointer;
-    background-color: #1677ff;
-    color: white;
+    background-color: #00CC66;
+    color: #000000;
     outline: unset;
     font-weight: 600;
     margin-top: 5%;
 }
 
 .switchBtn:hover {
-    background-color: #3688ff;
+    background-color: #00E673;
 }
 
 .parachuteStatus {
