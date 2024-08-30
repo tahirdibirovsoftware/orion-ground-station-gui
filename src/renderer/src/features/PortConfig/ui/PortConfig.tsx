@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
 import { setDevices, setFlightConfig, setIoTConfig } from '../model/PortConfigSlice';
 import style from './PortConfig.module.scss';
 import { SerialPort } from 'serialport';
+import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
+import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
 
 export type SerialPortListType = Awaited<ReturnType<typeof SerialPort.list>>;
 
@@ -15,7 +17,7 @@ const PortConfig: React.FC<IPortConfig> = ({ type }) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const selectRef = useRef<HTMLSelectElement>(null);
-
+    const { theme } = useContext(ThemeContext);
     const devices = useAppSelector(state => state.portConfigReducer.devices);
     const path = useAppSelector(state => 
         type === 'flight' ? state.portConfigReducer.flightPath : state.portConfigReducer.iotPath
@@ -79,7 +81,7 @@ const PortConfig: React.FC<IPortConfig> = ({ type }) => {
     return (
         <div className={style.Port}>
             <span><Trans>SOURCE</Trans>: </span>
-            <select disabled={isConnected} ref={selectRef} onChange={setDevice} value={path || ''}>
+            <select style={themeSetter(theme)} disabled={isConnected} ref={selectRef} onChange={setDevice} value={path || ''}>
                 {options}
             </select>
         </div>
