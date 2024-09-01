@@ -14,8 +14,8 @@ const api = {
     });
   },
   connectToFlight: (path: string, baudRate: number): void => {
-    console.log('Sending connect-to-flight event');
-    console.log(`Path: ${path}, BaudRate: ${baudRate}`);
+    // console.log('Sending connect-to-flight event');
+    // console.log(`Path: ${path}, BaudRate: ${baudRate}`);
     ipcRenderer.send('connect-to-flight', { path, baudRate });
   },
   getFlightData: (callback: (data: ITelemetry) => void): void => {
@@ -29,13 +29,13 @@ const api = {
     ipcRenderer.on('iot-data', (_, data) => callback(data));
   },
   disconnectIot: (path: string): void => ipcRenderer.send('disconnect-iot', { path }),
-  controlTheParachute: (data: string, path: string): void => { ipcRenderer.send('sent-parachute-data', {data, path}) },
-  sendIotData: (data: string, path: string): void => { ipcRenderer.send('sent-iot-data', {data, path}) },
-  controlTheMfm: (data: string, path: string): void => { ipcRenderer.send('sent-mfm-data', {data, path}) },
-  startDbWriting: (path:string, baudRate: number):void =>ipcRenderer.send('start-db-writing', {path, baudRate}),
-  stopDbWriting: (path: string):void => ipcRenderer.send('stop-db-writing', {path}),
-  openOuputFiles: ():void=> ipcRenderer.send('open-output-dir-dialog'),
-  getNetworkState: (setter):void => {ipcRenderer.on('network-state', (_, data)=>{setter(data); console.log("Preload: ", data)})}
+  controlTheParachute: (data: string, path: string): void => { ipcRenderer.send('sent-parachute-data', { data, path }) },
+  sendIotData: (data: string, path: string): void => { ipcRenderer.send('sent-iot-data', { data, path }) },
+  controlTheMfm: (data: string, path: string): void => { ipcRenderer.send('sent-mfm-data', { data, path }) },
+  startDbWriting: (path: string, baudRate: number): void => ipcRenderer.send('start-db-writing', { path, baudRate }),
+  stopDbWriting: (path: string): void => ipcRenderer.send('stop-db-writing', { path }),
+  openOuputFiles: (): void => ipcRenderer.send('open-output-dir-dialog'),
+  getNetworkState: (setter): void => { ipcRenderer.on('network-state', (_, data) => { setter(data) }) }
 };
 
 if (process.contextIsolated) {

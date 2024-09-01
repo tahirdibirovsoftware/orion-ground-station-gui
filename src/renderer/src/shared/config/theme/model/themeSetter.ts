@@ -14,9 +14,6 @@ export const themeSetter = (theme: ThemeMode, borders: IBorders = { bt: true, bb
         boxShadowStyle = boxPxParams + (theme === 'dark' ? "#000000" : "#999999")
     }
 
-
-    console.log("box: ", boxShadowStyle)
-
     const borderStyles = (borderColor: BorderColor): React.CSSProperties => ({
         borderTop: borders.bt ? `1px solid ${borderColor}` : undefined,
         borderBottom: borders.bb ? `1px solid ${borderColor}` : undefined,
