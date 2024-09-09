@@ -10,6 +10,7 @@ import 'leaflet/dist/leaflet.css';
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
+import './leaflet.css';
 
 const DefaultIcon = L.icon({
   iconUrl: icon,
