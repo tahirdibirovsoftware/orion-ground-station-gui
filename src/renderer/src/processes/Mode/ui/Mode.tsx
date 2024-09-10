@@ -6,16 +6,13 @@ import style from './Mode.module.scss';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { SatController } from '../../../widgets/SatController';
 import { IMode } from '../model/types';
+import { NO_BORDER } from '@renderer/shared/config/theme/constants';
 
 const Mode: FC<IMode> = React.memo(({ flightData, iotData }) => {
   const { theme } = useContext(ThemeContext);
 
   const localStyles = useMemo(() => ({
-    ...themeSetter(theme),
-    borderTop: 'unset',
-    borderRight: 'unset',
-    borderLeft: 'unset',
-    borderBottom: 'unset'
+    ...themeSetter(theme, NO_BORDER)
   }), [theme]);
 
   return (

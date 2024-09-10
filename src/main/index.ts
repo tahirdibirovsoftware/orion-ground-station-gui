@@ -60,13 +60,11 @@ app.whenReady().then(async () => {
 
   const networkWorker = new Worker(path.join(__dirname, 'worker.js'));
   networkWorker.on('message', (data: boolean): void => {
-    console.log("Main: ", data)
     mainWindow.webContents.send("network-state", data)
   })
 
 
   networkWorker.on('error', (): void => {
-    console.log("Main: ", false)
     mainWindow.webContents.send("network-state", false)
   })
 
@@ -193,7 +191,7 @@ app.whenReady().then(async () => {
 
 
 
-
+  //Linux only
   const monitor = udev.monitor();
   monitor.on('add', async () => {
     const ports = await portlist();
@@ -208,6 +206,8 @@ app.whenReady().then(async () => {
       window.webContents.send('port-list-updated', ports);
     });
   });
+  //
+
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();

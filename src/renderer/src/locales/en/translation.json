@@ -53,6 +53,7 @@
     "SCIENCE_PAYLOAD_LANDING_RATE_FAILURE": "Science Payload landing rate failure",
     "CONTAINER_PRESSURE_DATA_FAILURE": "Container pressure data failure",
     "SCIENCE_PAYLOAD_POSITION_DATA_FAILURE": "Science Payload position data failure",
-    "RELEASE_FAILURE": "Release failure"
+    "RELEASE_FAILURE": "Release failure",
+    "VIDEO_SOURCE_NOT_FOUND": "Video source not found"
   }
   

@@ -53,5 +53,6 @@
   "SCIENCE_PAYLOAD_LANDING_RATE_FAILURE": "Görev yükü iniş hızı sapması",
   "CONTAINER_PRESSURE_DATA_FAILURE": "Taşıyıcı basınç verisi alınamadı",
   "SCIENCE_PAYLOAD_POSITION_DATA_FAILURE": "Görev yükü konum verisi alınamadı",
-  "RELEASE_FAILURE": "Ayrılma gerçekleşmedi"
+  "RELEASE_FAILURE": "Ayrılma gerçekleşmedi",
+  "VIDEO_SOURCE_NOT_FOUND": "Video kaynağı bulunamadı"
 }
