@@ -26,7 +26,7 @@ let db: Database
 let isDbOpened: boolean;
 
 function createWindow(): void {
-   mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -47,7 +47,7 @@ function createWindow(): void {
     return { action: 'deny' };
   });
 
- 
+
 
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
@@ -59,13 +59,13 @@ function createWindow(): void {
 app.whenReady().then(async () => {
 
   const networkWorker = new Worker(path.join(__dirname, 'worker.js'));
-  networkWorker.on('message', (data:boolean):void=>{
-    console.log("Main: ",data)
+  networkWorker.on('message', (data: boolean): void => {
+    console.log("Main: ", data)
     mainWindow.webContents.send("network-state", data)
   })
 
 
-  networkWorker.on('error', ():void=>{
+  networkWorker.on('error', (): void => {
     console.log("Main: ", false)
     mainWindow.webContents.send("network-state", false)
   })
@@ -121,7 +121,7 @@ app.whenReady().then(async () => {
         await convertSQLiteToExcel(sqlitePath, excelPath);
         await clearSQLite(db)
         await db.close()
-        
+
       }
       flightPorts.delete(path);
     }
@@ -191,7 +191,7 @@ app.whenReady().then(async () => {
   });
 
 
- 
+
 
 
   const monitor = udev.monitor();

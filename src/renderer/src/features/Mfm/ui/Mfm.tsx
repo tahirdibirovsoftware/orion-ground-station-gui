@@ -5,7 +5,7 @@ import style from './Mfm.module.scss';
 import { themeSetter } from '../../../shared/config/theme/model/themeSetter';
 import { ThemeContext } from '../../../app/providers/ThemeProvider/ThemeProvider';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
-import { initiaControllingState, setMfm } from '@renderer/widgets/SatController/model/controllingData';
+import { setMfm } from '@renderer/widgets/SatController/model/controllingData';
 import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 
 const Mfm: React.FC = () => {
@@ -31,7 +31,7 @@ const Mfm: React.FC = () => {
 
     const mfmHandler = useCallback(() => {
         const mfmData = `${firstCommand}${secondCommand}${thirdCommand}${fourthCommand}`;
-        const mfmSendData = JSON.stringify({ ...initiaControllingState, mfm: mfmData, iot: latestIotData });
+        const mfmSendData = JSON.stringify({ parachuteState: 2, mfm: mfmData, iot: latestIotData });
         dispatch(setMfm({ mfm: mfmData }));
         window.api?.controlTheMfm(mfmSendData, flightPath);
     }, [dispatch, firstCommand, secondCommand, thirdCommand, fourthCommand, latestIotData, flightPath]);

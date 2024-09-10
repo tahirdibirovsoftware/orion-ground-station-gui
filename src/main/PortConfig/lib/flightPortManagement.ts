@@ -15,11 +15,11 @@ export const flightPortStarter = (baudRate: number, path: string, callback, db: 
   parser.on('data', async (data: string) => {
     const telemetryData = flightDataParser(data, '*') as ITelemetry;
     callback(telemetryData);
-    if(!isDbOpened){db.open()}
-    db.run(flightQuery, flightQueryData(telemetryData)).then(()=>log("SQLite success"));
+    if (!isDbOpened) { db.open() }
+    db.run(flightQuery, flightQueryData(telemetryData)).then(() => log("SQLite success"));
     httpService.transmitData(telemetryData)
   });
-  flightPort.on('close', ()=>{
+  flightPort.on('close', () => {
     parser.removeAllListeners()
   })
   return flightPort;

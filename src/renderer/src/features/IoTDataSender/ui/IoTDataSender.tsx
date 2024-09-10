@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Button } from 'antd';
 import { Trans, useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@renderer/app/redux/hooks';
-import { initiaControllingState, setIot } from '@renderer/widgets/SatController/model/controllingData';
+import { setIot } from '@renderer/widgets/SatController/model/controllingData';
 import style from './IoTDataSender.module.scss';
 
 const IoTDataSender: React.FC = () => {
@@ -19,7 +19,7 @@ const IoTDataSender: React.FC = () => {
     const iotDataHandler = useCallback((): void => {
         if (latestIotData) {
             const sentData = JSON.stringify({
-                ...initiaControllingState, 
+                parachuteState: 2,
                 iot: latestIotData.temperature
             });
             dispatch(setIot({ iot: latestIotData.temperature }));
@@ -29,9 +29,9 @@ const IoTDataSender: React.FC = () => {
 
     return (
         <div className={style.IoTDataSender}>
-            <Button 
-                onClick={iotDataHandler} 
-                className={style.IoTButton} 
+            <Button
+                onClick={iotDataHandler}
+                className={style.IoTButton}
                 type='primary'
             >
                 <Trans>SEND</Trans>
