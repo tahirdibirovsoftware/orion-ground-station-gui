@@ -24,7 +24,7 @@ const TerminalComponent: FC<ITerminal> = ({ mode = 'demo', flightData }): JSX.El
     };
 
     const thLocaleStyle: React.CSSProperties = {
-        ...themeSetter(theme, ALL_BORDERS, [10, 5, 15, 0]),
+        ...themeSetter(theme, ALL_BORDERS, [0, 5, 15, 0]),
         borderTop: 'unset',
         borderLeft: 'unset',
     };
