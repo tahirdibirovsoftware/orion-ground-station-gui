@@ -53,7 +53,7 @@ export const Map: React.FC<MapProps> = React.memo(({ getGpsData }) => {
   const [currentPosition, setCurrentPosition] = useState<Coordinate | undefined>(undefined);
   const [positionHistory, setPositionHistory] = useState<Coordinate[]>([]);
 
-  const localStyles = useMemo(() => themeSetter(theme || 'light', ALL_BORDERS, [10,5,15,0]), [theme]);
+  const localStyles = useMemo(() => themeSetter(theme || 'light', ALL_BORDERS, [0,5,15,0]), [theme]);
 
   const updatePosition = useCallback(() => {
     const newPosition = getGpsData();
