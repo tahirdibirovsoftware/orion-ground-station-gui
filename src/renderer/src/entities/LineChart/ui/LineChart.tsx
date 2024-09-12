@@ -8,6 +8,7 @@ import { ILineChart } from '../model/types';
 import { filteredData } from '../lib/dataFilter';
 import { useAppSelector } from '@renderer/app/redux/hooks';
 import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
+import { LoadingOutlined } from '@ant-design/icons';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -24,7 +25,7 @@ export const ParentLineChart: React.FC<ILineChart> = ({
   const { theme } = useContext(ThemeContext);
   const [zoom, setZoom] = useState(false);
 
-  const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0,0,10,0]), [theme]);
+  const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0, 0, 10, 0]), [theme]);
 
   const initialLocalStyles = useMemo(() => ({
     ...themeStyles,
@@ -134,7 +135,7 @@ export const ParentLineChart: React.FC<ILineChart> = ({
 
   return (
     <div onClick={zoomer} style={localStyles} className={style.LineChart}>
-      {isActive && <Line options={options} data={chartData} />}
+      {isActive ? <Line options={options} data={chartData} /> : <LoadingOutlined className={style.loader} />}
     </div>
   );
 };
