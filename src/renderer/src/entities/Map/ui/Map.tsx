@@ -5,12 +5,13 @@ import L from "leaflet";
 import { useAppSelector } from '@renderer/app/redux/hooks';
 import { ThemeContext } from '@renderer/app/providers/ThemeProvider/ThemeProvider';
 import { themeSetter } from '@renderer/shared/config/theme/model/themeSetter';
-import style from './Map.module.scss';
+import styles from './Map.module.scss';
 import 'leaflet/dist/leaflet.css';
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { ALL_BORDERS } from '@renderer/shared/config/theme/constants';
 import './leaflet.css';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const DefaultIcon = L.icon({
   iconUrl: icon,
@@ -45,7 +46,6 @@ const isValidPosition = (pos: Coordinate | undefined): pos is Coordinate => {
   return Array.isArray(pos) && pos.length === 2 && typeof pos[0] === 'number' && typeof pos[1] === 'number' && !isNaN(pos[0]) && !isNaN(pos[1]);
 };
 
-// Default coordinate to use when no valid position is available
 const DEFAULT_COORDINATE: Coordinate = [0, 0];
 
 export const Map: React.FC<MapProps> = React.memo(({ getGpsData }) => {
@@ -60,11 +60,13 @@ export const Map: React.FC<MapProps> = React.memo(({ getGpsData }) => {
     if (isValidPosition(newPosition) && newPosition[0] !== 0 && newPosition[1] !== 0) {
       setCurrentPosition(newPosition);
       setPositionHistory(prevHistory => [...prevHistory, newPosition]);
+    } else {
+      setCurrentPosition(undefined);
     }
   }, [getGpsData]);
 
   useEffect(() => {
-    const intervalId = setInterval(updatePosition, 0);
+    const intervalId = setInterval(updatePosition, 1000);
     return () => clearInterval(intervalId);
   }, [updatePosition]);
 
@@ -75,17 +77,21 @@ export const Map: React.FC<MapProps> = React.memo(({ getGpsData }) => {
   }, [flightData]);
 
   if (!isActive || !isValidPosition(currentPosition)) {
-    return <div style={localStyles} className={style.MapWrapper} />;
+    return (
+      <div style={localStyles} className={styles.MapWrapper}>
+        <div className={styles.NoDataText}><LoadingOutlined/></div>
+      </div>
+    );
   }
 
   const mapContainerProps: MapContainerProps = {
     center: currentPosition || DEFAULT_COORDINATE,
     zoom: 5,
-    style: { height: '100vh', width: '100%' }
+    style: { height: '100%', width: '100%' }
   };
 
   return (
-    <div style={localStyles} className={style.MapWrapper}>
+    <div style={localStyles} className={styles.MapWrapper}>
       <MapContainer {...mapContainerProps}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {currentPosition && <Marker position={currentPosition} />}
