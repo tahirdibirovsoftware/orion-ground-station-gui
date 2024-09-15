@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron';
+import { app, shell, BrowserWindow, ipcMain, powerSaveBlocker } from 'electron';
 import path, { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
@@ -17,7 +17,7 @@ import { Database } from 'sqlite';
 import { Worker } from 'worker_threads';
 
 let mainWindow: BrowserWindow;
-
+let powerSaveBlockerId: null | number = null;
 
 
 
@@ -57,7 +57,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(async () => {
-
+  powerSaveBlockerId = powerSaveBlocker.start('prevent-display-sleep');
   const networkWorker = new Worker(path.join(__dirname, 'worker.js'));
   networkWorker.on('message', (data: boolean): void => {
     mainWindow.webContents.send("network-state", data)
@@ -218,4 +218,12 @@ app.whenReady().then(async () => {
       app.quit();
     }
   });
+});
+
+
+app.on('will-quit', () => {
+  // Stop the power save blocker when the app is about to quit
+  if (powerSaveBlockerId !== null) {
+    powerSaveBlocker.stop(powerSaveBlockerId);
+  }
 });
