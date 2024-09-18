@@ -12,15 +12,20 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
+
 export const ParentLineChart: React.FC<ILineChart> = ({
   title,
   mainLabelTitle,
   optionalLabelTitle,
+  additionalLabel1Title,
+  additionalLabel2Title,
   mainXTitle,
   mainYTitle,
   optionalYTitle,
   mainData,
-  optionalData
+  optionalData,
+  additionalData1,
+  additionalData2
 }) => {
   const { theme } = useContext(ThemeContext);
   const [zoom, setZoom] = useState(false);
@@ -110,9 +115,23 @@ export const ParentLineChart: React.FC<ILineChart> = ({
           backgroundColor: 'rgba(53, 162, 235, 0.5)',
           yAxisID: 'y',
         }] : []),
+        ...(additionalData1 ? [{
+          label: additionalLabel1Title,
+          data: filteredData(additionalData1).outputData,
+          borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          yAxisID: 'y',
+        }] : []),
+        ...(additionalData2 ? [{
+          label: additionalLabel2Title,
+          data: filteredData(additionalData2).outputData,
+          borderColor: 'rgb(255, 159, 64)',
+          backgroundColor: 'rgba(255, 159, 64, 0.5)',
+          yAxisID: 'y',
+        }] : []),
       ],
     };
-  }, [mainData, optionalData, mainLabelTitle, optionalLabelTitle]);
+  }, [mainData, optionalData, additionalData1, additionalData2, mainLabelTitle, optionalLabelTitle, additionalLabel1Title, additionalLabel2Title]);
 
   const zoomer = useCallback(() => {
     if (!zoom && isActive) {

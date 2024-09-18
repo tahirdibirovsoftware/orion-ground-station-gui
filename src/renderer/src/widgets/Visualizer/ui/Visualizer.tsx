@@ -14,6 +14,8 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
   const optionalAltitudeData = flightData.map((data) => data.altitude2);
   const iotTemp = flightData.map((data) => data.iotData) as Array<number>;
   const temperature = flightData.map((data) => data.temp);
+  const descentRate = flightData.map((data) => data.descentRate);
+  const batteryVoltage = flightData.map((data) => data.voltageLevel);
   const { t } = useTranslation();
 
   const [currentPosition, setCurrentPosition] = useState<[number, number]>([40, 60]);
@@ -41,7 +43,9 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
         optionalData={optionalAltitudeData}
         title={`${t('ALTITUDE')} vs ${t('TIME')}`}
         mainXTitle={t('TIME')}
-        mainYTitle={t('ALTITUDE')}
+        mainYTitle={`${t('ALTITUDE')}/${t('DESCENT_RATE')}`}
+        additionalData1={descentRate}
+        additionalLabel1Title={`${t('DESCENT_RATE')}`}
       />
       <ParentLineChart
         mainLabelTitle={t('TEMPERATURE')}
@@ -50,11 +54,13 @@ const Visualizer: FC<IVisualizer> = ({ flightData }): JSX.Element => {
         optionalData={iotTemp}
         title={`${t('TEMPERATURE')}, IoT ${t('TEMPERATURE')} vs ${t('TIME')}`}
         mainXTitle={t('TIME')}
-        mainYTitle={t('TEMPERATURE')}
+        mainYTitle={`${t('TEMPERATURE')}/${t('BATTERY_VOLTAGE')}`}
         optionalYTitle=''
+        additionalData2={batteryVoltage}
+        additionalLabel2Title={t('BATTERY_VOLTAGE')}
       />
       <Map getGpsData={() => currentPosition} />
-      <MemoizedOtWithCallib/>
+      <MemoizedOtWithCallib />
       <Cam />
     </div>
   );
