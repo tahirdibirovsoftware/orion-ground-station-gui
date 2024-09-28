@@ -71,8 +71,8 @@ export const ParentLineChart: React.FC<ILineChart> = ({
     },
     scales: {
       x: {
-        ticks: { color: themeStyles.color },
-        grid: { color: themeStyles.color },
+        ticks: { color: theme === 'dark' ? '#ffffff' : '#000000' },
+        grid: { color: '#55555555' },
         title: {
           display: true,
           text: mainXTitle,
@@ -83,8 +83,8 @@ export const ParentLineChart: React.FC<ILineChart> = ({
         type: 'linear' as const,
         display: true,
         position: 'left' as const,
-        ticks: { color: themeStyles.color },
-        grid: { color: themeStyles.color },
+        ticks: { color: theme === 'dark' ? '#ffffff' : '#000000' },
+        grid: { color: '#55555555' },
         title: {
           display: true,
           text: yTitle(),

@@ -31,7 +31,7 @@ const Mfm: React.FC = () => {
 
     const mfmHandler = useCallback(() => {
         const mfmData = `${firstCommand}${secondCommand}${thirdCommand}${fourthCommand}`;
-        const mfmSendData = JSON.stringify({ parachuteState: 2, mfm: mfmData, iot: latestIotData });
+        const mfmSendData = JSON.stringify({ parachuteState: NaN, mfm: mfmData, iot: 0 });
         dispatch(setMfm({ mfm: mfmData }));
         window.api?.controlTheMfm(mfmSendData, flightPath);
     }, [dispatch, firstCommand, secondCommand, thirdCommand, fourthCommand, latestIotData, flightPath]);

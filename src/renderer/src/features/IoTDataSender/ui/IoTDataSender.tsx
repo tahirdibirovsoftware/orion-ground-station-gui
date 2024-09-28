@@ -19,7 +19,7 @@ const IoTDataSender: React.FC = () => {
     const iotDataHandler = useCallback((): void => {
         if (latestIotData) {
             const sentData = JSON.stringify({
-                parachuteState: 2,
+                parachuteState: NaN,
                 iot: latestIotData.temperature
             });
             dispatch(setIot({ iot: latestIotData.temperature }));

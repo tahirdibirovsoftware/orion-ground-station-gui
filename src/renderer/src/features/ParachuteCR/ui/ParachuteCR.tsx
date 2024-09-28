@@ -23,14 +23,14 @@ const ParachuteCR: React.FC = () => {
         const sentData = JSON.stringify({
             ...initiaControllingState,
             parachuteState: newParachuteState,
-            iot: latestIotData
+            iot: 0
         });
 
         dispatch(commandTheParachute({ parachuteState: newParachuteState }));
         window.api?.controlTheParachute(sentData, flightPath);
     }, [isParachuteOpened, latestIotData, flightPath, dispatch]);
 
-    const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0,0,5,1]), [theme]);
+    const themeStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0, 0, 5, 1]), [theme]);
 
     return (
         <div style={themeStyles} className={style.ParachuteCR}>
