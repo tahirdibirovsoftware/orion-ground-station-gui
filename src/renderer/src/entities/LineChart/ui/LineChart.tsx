@@ -58,6 +58,15 @@ export const ParentLineChart: React.FC<ILineChart> = ({
     responsive: true,
     maintainAspectRatio: false,
     aspectRatio: 1,
+    elements: {
+      point: {
+        radius: 0
+      },
+      line: {
+        borderWidth: 1,
+        tension: 0.1
+      }
+    },
     interaction: {
       mode: 'index' as const,
       intersect: false,

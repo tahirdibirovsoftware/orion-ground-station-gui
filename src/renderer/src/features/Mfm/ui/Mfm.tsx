@@ -27,7 +27,7 @@ const Mfm: React.FC = () => {
     const numericCommands = useMemo(() => commands.slice(4), [commands]);
     const stringCommands = useMemo(() => commands.slice(0, 4), [commands]);
 
-    const localStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0, 0, 5, 2]), [theme]);
+    const localStyles = useMemo(() => themeSetter(theme, ALL_BORDERS, [0, 0, 3, 0]), [theme]);
 
     const mfmHandler = useCallback(() => {
         const mfmData = `${firstCommand}${secondCommand}${thirdCommand}${fourthCommand}`;
